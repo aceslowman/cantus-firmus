@@ -27,7 +27,7 @@ body,
   overflow: hidden;
   display: flex;
   justify-content: flex-end;
-  align-items: center;  
+  align-items: center;
   -webkit-transition: width 1s ease-in-out;
   -moz-transition: width 1s ease-in-out;
   -o-transition: width 1s ease-in-out;
@@ -47,12 +47,10 @@ body,
 .settingsInner {
   background-color: #FAEBD7;
   padding: 15px;
-  width: 50px;
-  min-height: 100px;
   display: flex;
   flex-flow: column;
-  flex-grow: 2;
   color: #602500;
+  align-content: stretch;
   z-index: 2;
 }
 
@@ -60,10 +58,11 @@ body,
   padding: 5px 0px;
 }
 
-.settingsInner button {  
+.settingsInner button {
   background-color: #ffecbff;
   color: #602500;
-  border: 1px solid #602500;
+  border: 1px solid #602500;  
+  padding: 0px 5px;
 }
 
 .settingsInner input {
@@ -74,7 +73,6 @@ body,
 
 .settingsInner > div {
   display: flex;
-  align-self: flex-end;  
   padding-bottom: 15px;
 }
 
@@ -84,6 +82,11 @@ body,
 
 .buttonGroup {
   flex-flow: row;
+  width:100%;
+}
+
+.buttonGroup button {
+  flex-grow: 2;
 }
 
 .credits {
@@ -102,7 +105,7 @@ body,
 }
 
 .STAFF {
-  flex-grow: 2;  
+  flex-grow: 2;
   /*  allows child to grow  */
   position: relative;
   overflow: overlay;
@@ -117,8 +120,8 @@ body,
 .MEASURELINES {
   display: flex;
   flex-flow: column;
-  justify-content: space-between;  
-  position:absolute;
+  justify-content: space-between;
+  position: absolute;
   box-sizing: border-box;
 }
 
@@ -134,17 +137,17 @@ body,
 .noteWrapper {
   padding: 0px 50px;
   align-self: center;
-  width:100%;
-  display:flex;
+  width: 100%;
+  display: flex;
   justify-content: center;
 }
 
 .note {
-  width:50px;
-  justify-content:center;
+  width: 50px;
+  justify-content: center;
   background-color: #602500;
   cursor: grab;
-  position: relative;  
+  position: relative;
   display: flex;
   flex-flow: row;
   font-size: 1.4em;
@@ -156,7 +159,7 @@ body,
   flex-flow: row;
   justify-content: flex-start;
   flex-grow: 2;
-  position:relative;
+  position: relative;
 }
 
 .flex-fix {
@@ -173,4 +176,3 @@ body,
   min-height: 100px;
   margin: 15%;
 }
-
