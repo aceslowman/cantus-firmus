@@ -16,6 +16,15 @@ const App = () => {
 
   const synth = new Tone.Synth().toDestination();
   let sequence;
+  
+  React.useEffect(() => {
+    const keybindings = (e) => {
+      console.log('key', e.keyCode)
+    }
+    
+    document.addEventListener('onkeydown', keybindings, false)
+    return (document.removeEventListener('onkeydown', keybindings, false))
+  }, []);
 
   React.useEffect(() => {
     const initMIDI = async () => {

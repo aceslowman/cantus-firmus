@@ -40,7 +40,7 @@ const MusicStaff = props => {
             borderRight: `${
               isLastMeasure ? "8px solid" : "1px solid"
             } #6e2a00`,
-            margin: `${lineHeight * 2}px 0px`,
+            margin: `${lineHeight * 3}px 0px`,
             paddingRight: isLastMeasure ? "20px" : "0px"
           }}
         >
@@ -48,7 +48,7 @@ const MusicStaff = props => {
           <img
             className="CLEF"
             style={{height: lineRef.current.getBoundingClientRect().height * 2}}
-            src="https://cdn.glitch.com/5952eddf-3ee4-437e-93ff-001a65fa1cf4%2FTreble_clef.svg?v=1614748701228"
+            src="https://cdn.glitch.com/5952eddf-3ee4-437e-93ff-001a65fa1cf4%2FTreble_clef.svg?v=1614749305855"
           ></img>
         )}
           <div className="flex-fix">

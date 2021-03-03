@@ -1,3 +1,8 @@
+/* 
+  dark: #602500
+  light: #FAEBD7
+*/
+
 html,
 body,
 #APP {
@@ -31,7 +36,7 @@ body,
 }
 
 .toggleSettings {
-  background-color: brown;
+  background-color: #602500;
   width: 20px;
   height: 20px;
   transform: translate(10px, -0px) rotate(45deg);
@@ -47,7 +52,7 @@ body,
   display: flex;
   flex-flow: column;
   flex-grow: 2;
-  color: brown;
+  color: #602500;
   z-index: 2;
 }
 
@@ -57,8 +62,8 @@ body,
 
 .settingsInner input {
   background-color: #ffecbff;
-  color: #6e2a00;
-  border: 1px dotted #6e2a00;
+  color: #602500;
+  border: 1px dotted #602500;
 }
 
 .settingsInner > div {
@@ -71,7 +76,7 @@ body,
 .credits {
   position: absolute;
   bottom: 5px;
-  color: #6e2a00;
+  color: #602500;
   line-break: anywhere;
   white-space: pre;
 }
@@ -85,6 +90,7 @@ body,
   flex-grow: 2;  
   /*  allows child to grow  */
   position: relative;
+  overflow: overlay;
 }
 
 .LINES {
@@ -102,7 +108,7 @@ body,
 }
 
 .MEASURELINES > div {
-  border-top: 1px solid #6e2a00;
+  border-top: 1px solid #602500;
 }
 
 .NOTES {
@@ -120,7 +126,7 @@ body,
 .note {
   width:50px;
   justify-content:center;
-  background-color: #6e2a00;
+  background-color: #602500;
   cursor: grab;
   position: relative;  
   display: flex;
