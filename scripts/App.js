@@ -46,8 +46,22 @@ const App = () => {
       if (!midiInputs || !midiOutputs) {
         await navigator.requestMIDIAccess().then(access => {
           // Get lists of available MIDI controllers
-          const inputs = access.inputs.values();
-          const outputs = access.outputs.values();
+          
+          let inputs, outputs = {};
+                
+          for(const input of access.inputs.values()) {
+            inputs = {
+              ...inputs,
+              [input.id]: input
+            }            
+          };
+                
+          for(const output of access.outputs.values()) {         
+            outputs = {
+              ...outputs,
+              [output.id]: output
+            }
+          };
 
           setMidiInputs(inputs);
           setMidiOutputs(outputs);
@@ -78,7 +92,7 @@ const App = () => {
       sequence = new Tone.Sequence(
         (time, note) => {
           synth.triggerAttackRelease(note, 0.1, time);
-          activeMidiInput.send([144,40,41]);
+          activeMidiOutput.send([144,40,41]);
         },
         melody,
         "4n"
@@ -86,7 +100,7 @@ const App = () => {
     }
 
     Tone.Transport.start();
-  }, [melody]);
+  }, [melody, activeMidiOutput]);
 
   function handleLoopToggle(e) {
     if (sequence) sequence.loop.value = !loop;
@@ -136,7 +150,7 @@ const App = () => {
     let device_id = e.target.value;
 
     // set input/output
-    setActiveMidiInput([...inputs][0]);
+    setActiveMidiInput(midiInputs[device_id]);
   };
 
   const handleMidiOutputChange = e => {
@@ -144,7 +158,7 @@ const App = () => {
     let device_id = e.target.value;
 
     // set input/output
-    setActiveMidiOutput([...outputs][0]);
+    setActiveMidiOutput(midiOutputs[device_id]);
   };
 
   const handlePressPlay = e => {
