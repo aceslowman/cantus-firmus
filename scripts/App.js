@@ -101,7 +101,7 @@ const App = () => {
           // [NOTE ON, NOTE, VELOCITY]
           activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
           
-          setCurrentStep(prev => prev = prev + )
+          setCurrentStep(prev => prev = (prev + 1) % (sequence.events.length * 4));
         },
         melody,
         "1m"
