@@ -114,13 +114,13 @@ const MusicStaff = props => {
 
             return (
               <Note
-                tabIndex={iter}
+                tabIndex={iter+1}
                 key={m_i + "_" + n_i}
                 onKeyDown={e => props.onNoteChange(e, m_i, n_i)}
                 value={note}
                 style={{
                   bottom: position,
-                    outline: props.currentStep === iter ? '2px' : 'none'
+                    border: (props.currentStep+1) === iter ? '2px solid violet' : 'none'
                 }}
               />
             );
