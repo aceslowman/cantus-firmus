@@ -2,6 +2,8 @@
 const MusicStaff = props => {
   let lineRef = React.useRef();
   let [ready, setReady] = React.useState(0);
+  
+  let [staffHeight, setStaffHeight] = React.useState(0);
 
   function isAccidental(note) {
     return note.match(/[#b]/g) ? true : false;
@@ -9,11 +11,21 @@ const MusicStaff = props => {
 
   React.useEffect(() => {
     setReady(true);
+    
+    window.onresize = () => {
+      setStaffHeight(lineRef.current.getBoundingClientRect().height);
+    }
   }, []);
+  
+  // resize with window
+  React.useEffect(() => {
+    
+  }, [])
 
   let iter = 0;
   let measure = ready && props.melody.map((measure, m_i) => {
-    let staffHeight = lineRef.current.getBoundingClientRect().height;
+    staffHeight = lineRef.current.getBoundingClientRect().height;    
+    
     let lineHeight = staffHeight / 8;
 
     let isLastMeasure = props.melody.length - 1 === m_i;

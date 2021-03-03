@@ -116,13 +116,11 @@ const App = () => {
   };
 
   const handlePressPlay = e => {
-    console.log("i");
     Tone.start();
     Tone.Transport.start();
   };
   
   const handlePressStop = e => {
-    console.log("i");
     Tone.Transport.stop();
   };
 
