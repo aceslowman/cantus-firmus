@@ -119,7 +119,8 @@ const MusicStaff = props => {
                 onKeyDown={e => props.onNoteChange(e, m_i, n_i)}
                 value={note}
                 style={{
-                  bottom: position
+                  bottom: position,
+                    outline: props.currentStep === iter ? '2px' : 'none'
                 }}
               />
             );

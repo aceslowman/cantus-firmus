@@ -14,6 +14,7 @@ const App = () => {
   let [midiOutputs, setMidiOutputs] = React.useState(null);
   let [activeMidiInput, setActiveMidiInput] = React.useState(null);
   let [activeMidiOutput, setActiveMidiOutput] = React.useState(null);
+  let [currentStep, setCurrentStep] = React.useState(0);
 
   const synth = new Tone.Synth().toDestination();
   let sequence;
@@ -184,8 +185,10 @@ const App = () => {
         midiOutputs={midiOutputs}
         activeMidiInput={activeMidiInput}
         activeMidiOutput={activeMidiOutput}
+        currentStep={currentStep}
       />
-      <MusicStaff melody={melody} onNoteChange={handleNoteChange} />
+      <MusicStaff melody={melody} onNoteChange={handleNoteChange} 
+        currentStep={currentStep}/>
     </React.Fragment>
   );
 };
