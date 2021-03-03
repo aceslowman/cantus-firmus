@@ -11,7 +11,9 @@ const App = () => {
 
   let [selectedNote, setSelectedNote] = React.useState(null);
   let [midiInputs, setMidiInputs] = React.useState(null);
+  let [activeMidiInput, setActiveMidiInput] = React.useState(null);
   let [midiOutputs, setMidiOutputs] = React.useState(null);
+  let [activeMidiOutput, setActiveMidiOutput] = React.useState(null);
   let [bpm, setBPM] = React.useState(120);
 
   const synth = new Tone.Synth().toDestination();
@@ -47,8 +49,13 @@ const App = () => {
           const inputs = access.inputs.values();
           const outputs = access.outputs.values();
 
-          setMidiInputs([...inputs]);
-          setMidiOutputs([...outputs]);
+          setMidiInputs(inputs);
+          setMidiOutputs(outputs);
+          
+          console.log("INPUTS", outputs)
+          
+          // setActiveMidiInput([...inputs][0]);
+          // setActiveMidiOutput([...outputs][0]);
 
           access.onstatechange = function(e) {
             // Print information about the (dis)connected MIDI controller
@@ -71,6 +78,7 @@ const App = () => {
       sequence = new Tone.Sequence(
         (time, note) => {
           synth.triggerAttackRelease(note, 0.1, time);
+          activeMidiInput.send([144,40,41]);
         },
         melody,
         "4n"
@@ -128,6 +136,7 @@ const App = () => {
     let device_id = e.target.value;
 
     // set input/output
+    setActiveMidiInput([...inputs][0]);
   };
 
   const handleMidiOutputChange = e => {
@@ -135,6 +144,7 @@ const App = () => {
     let device_id = e.target.value;
 
     // set input/output
+    setActiveMidiOutput([...outputs][0]);
   };
 
   const handlePressPlay = e => {
