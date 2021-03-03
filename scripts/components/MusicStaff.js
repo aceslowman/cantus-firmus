@@ -21,7 +21,7 @@ const MusicStaff = props => {
   React.useEffect(() => {}, []);
 
   let iter = 0;
-  let measure =
+  let measures =
     ready &&
     props.melody.map((measure, m_i) => {
       staffHeight = lineRef.current.getBoundingClientRect().height;
@@ -29,6 +29,7 @@ const MusicStaff = props => {
       let lineHeight = staffHeight / 8;
 
       let isLastMeasure = props.melody.length - 1 === m_i;
+      let isFirstMeasure = m_i === 0;
 
       return (
         <div
@@ -43,6 +44,13 @@ const MusicStaff = props => {
             paddingRight: isLastMeasure ? "20px" : "0px"
           }}
         >
+          {isFirstMeasure && (
+          <img
+            className="CLEF"
+            style={{height: lineRef.current.getBoundingClientRect().height * 2}}
+            src="https://cdn.glitch.com/5952eddf-3ee4-437e-93ff-001a65fa1cf4%2FTreble_clef.svg?v=1614748701228"
+          ></img>
+        )}
           <div className="flex-fix">
             <div
               className="MEASURELINES"
@@ -122,14 +130,7 @@ const MusicStaff = props => {
 
   return (
     <div className="STAFF">
-      <div className="flex-fix">
-        {/*ready && (
-          <img
-            className="CLEF"
-            style={{height: lineRef.current.getBoundingClientRect().height * 2}}
-            src="https://cdn.glitch.com/5952eddf-3ee4-437e-93ff-001a65fa1cf4%2FTreble_clef.svg?v=1614616900606"
-          ></img>
-        )*/}
+      <div className="flex-fix">        
         {/*
             this LINES div gives me the reference height for the measures.
             these aren't visible
@@ -143,7 +144,7 @@ const MusicStaff = props => {
         </div>
       </div>
       <div className="flex-fix">
-        <div className="NOTES">{measure}</div>
+        <div className="NOTES">{measures}</div>
       </div>
     </div>
   );

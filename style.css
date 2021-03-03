@@ -78,6 +78,7 @@ body,
 
 .CLEF {
   height: 100%;
+  align-self: center;
 }
 
 .STAFF {
@@ -92,15 +93,10 @@ body,
   justify-content: space-between;
 }
 
-.LINES > div {
-/*   border-top: 1px solid #6e2a00; */
-}
-
 .MEASURELINES {
   display: flex;
   flex-flow: column;
   justify-content: space-between;  
-/*   width:100%; */
   position:absolute;
   box-sizing: border-box;
 }
@@ -122,19 +118,20 @@ body,
 }
 
 .note {
+  width:50px;
   justify-content:center;
-  background-color: #FAEBD7;
+  background-color: #6e2a00;
   cursor: grab;
   position: relative;  
   display: flex;
   flex-flow: row;
   font-size: 1.4em;
+  color: #FAEBD7;
 }
 
 .measure {
   display: flex;
   flex-flow: row;
-/*   justify-content: space-around; */
   justify-content: flex-start;
   flex-grow: 2;
   position:relative;
