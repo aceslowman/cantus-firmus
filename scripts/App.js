@@ -12,9 +12,9 @@ const App = () => {
   let [selectedNote, setSelectedNote] = React.useState(null);
   let [midiInputs, setMidiInputs] = React.useState(null);
   let [midiOutputs, setMidiOutputs] = React.useState(null);
-  let [activeMidiInput, setActiveMidiInput] = React.useState(null);  
+  let [activeMidiInput, setActiveMidiInput] = React.useState(null);
   let [activeMidiOutput, setActiveMidiOutput] = React.useState(null);
-  
+
   const synth = new Tone.Synth().toDestination();
   let sequence;
 
@@ -51,7 +51,6 @@ const App = () => {
       if (!midiInputs || !midiOutputs) {
         await navigator.requestMIDIAccess().then(access => {
           // Get lists of available MIDI controllers
-
           let inputs,
             outputs = {};
 
@@ -96,7 +95,7 @@ const App = () => {
       // set up toneJS to repeat melody in sequence
       sequence = new Tone.Sequence(
         (time, note) => {
-          console.log('progress', sequence.events.length)
+          console.log("progress", sequence.events.length);
           // synth.triggerAttackRelease(note, 0.1, time);
           // [NOTE ON, NOTE, VELOCITY]
           activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
@@ -148,36 +147,26 @@ const App = () => {
   }
 
   const handleMidiInputChange = e => {
-    console.log("input", e.target.value);
-    let device_id = e.target.value;
-
-    // set input/output
-    setActiveMidiInput(midiInputs[device_id]);
+    setActiveMidiInput(midiInputs[e.target.value]);
   };
 
   const handleMidiOutputChange = e => {
-    console.log("output", e.target.value);
-    let device_id = e.target.value;
-
-    // set input/output
-    setActiveMidiOutput(midiOutputs[device_id]);
+    setActiveMidiOutput(midiOutputs[e.target.value]);
   };
 
-  const handlePressPlay = e => {    
-    console.log('progress', sequence.progress)
+  const handlePressPlay = e => {
     Tone.start();
     Tone.Transport.start();
   };
 
-  const handlePressStop = e => {    
-    console.log('progress', sequence.progress)
+  const handlePressStop = e => {
     Tone.Transport.stop();
   };
 
   const handleRandomize = e => {
-    
-  }
-  
+    // TODO: loop over the melody and fill procedurally
+  };
+
   return (
     <React.Fragment>
       <Settings
