@@ -51,13 +51,11 @@ const Settings = props => {
               className="randomizeButton"
               >randomize</button>
         </div>
-        <div>
+        <div className="buttonGroup">
             <button
               onClick={props.onPressPlay}
               className="playButton"
               >play</button>
-        </div>
-        <div>
             <button
               onClick={props.onPressStop}
               className="stopButton"

@@ -173,6 +173,10 @@ const App = () => {
     Tone.Transport.stop();
   };
 
+  const handleRandomize = e => {
+    
+  }
+  
   return (
     <React.Fragment>
       <Settings
@@ -183,6 +187,7 @@ const App = () => {
         onToggleLoop={handleLoopToggle}
         onNumBarsChange={handleNumBarsChange}
         onBPMChange={handleBPMChange}
+        onRandomize={handleRandomize}
         bpm={bpm}
         loop={loop}
         midiInputs={midiInputs}

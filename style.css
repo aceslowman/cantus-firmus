@@ -73,6 +73,13 @@ body,
   padding-bottom: 15px;
 }
 
+.inputGr
+
+.buttonGroup {
+  display: flex;
+  flex-flow: row wrap;
+}
+
 .credits {
   position: absolute;
   bottom: 5px;
@@ -80,6 +87,8 @@ body,
   line-break: anywhere;
   white-space: pre;
 }
+
+/* MUSIC STAFF */
 
 .CLEF {
   height: 100%;
@@ -120,6 +129,8 @@ body,
   padding: 0px 50px;
   align-self: center;
   width:100%;
+  display:flex;
+  justify-content: center;
 }
 
 .note {
@@ -156,3 +167,4 @@ body,
   min-height: 100px;
   margin: 15%;
 }
+
