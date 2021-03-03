@@ -117,7 +117,6 @@ body,
 }
 
 .noteWrapper {
-  justify-content: space-between;
   padding: 0px 50px;
   align-self: center;
   width:100%;

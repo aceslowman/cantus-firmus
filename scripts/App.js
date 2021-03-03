@@ -8,17 +8,19 @@ const App = () => {
 
   let [loop, setLoop] = React.useState(false);
   let [numBars, setNumBars] = React.useState(1);
-
+  let [bpm, setBPM] = React.useState(120);
   let [selectedNote, setSelectedNote] = React.useState(null);
   let [midiInputs, setMidiInputs] = React.useState(null);
-  let [activeMidiInput, setActiveMidiInput] = React.useState(null);
   let [midiOutputs, setMidiOutputs] = React.useState(null);
+  let [activeMidiInput, setActiveMidiInput] = React.useState(null);  
   let [activeMidiOutput, setActiveMidiOutput] = React.useState(null);
-  let [bpm, setBPM] = React.useState(120);
-
+  
   const synth = new Tone.Synth().toDestination();
   let sequence;
 
+  /*
+    set up keybindings
+  */
   React.useEffect(() => {
     const keybindings = function(e) {
       console.log("key", e.keyCode);
@@ -41,6 +43,9 @@ const App = () => {
     return () => document.removeEventListener("keydown", keybindings, false);
   }, []);
 
+  /*
+    set up midi
+  */
   React.useEffect(() => {
     const initMIDI = async () => {
       if (!midiInputs || !midiOutputs) {
@@ -67,8 +72,6 @@ const App = () => {
           setMidiInputs(inputs);
           setMidiOutputs(outputs);
 
-          console.log("INPUTS", outputs);
-
           setActiveMidiInput(inputs[Object.keys(inputs)[0]]);
           setActiveMidiOutput(outputs[Object.keys(outputs)[0]]);
 
@@ -83,6 +86,7 @@ const App = () => {
     initMIDI();
   }, [midiInputs, midiOutputs]);
 
+  /* create and update melody */
   React.useEffect(() => {
     Tone.Transport.cancel();
 
@@ -109,10 +113,7 @@ const App = () => {
     setLoop(prev => !prev);
   }
 
-  function handleNumBarsChange(e) {
-    // state.pauseAfterWord = e.target.value;
-    // restartSynth();
-  }
+  function handleNumBarsChange(e) {}
 
   function handleBPMChange(e) {
     setBPM(parseFloat(e.target.value));
@@ -124,21 +125,19 @@ const App = () => {
     let newMelody = [...melody];
 
     switch (e.keyCode) {
-      case 37: // left
-        // shift focus to prev element
+      case 37: // prev note
         break;
-      case 38: // up
+      case 38: // note up
         newMelody[measure_id][note_id] = Tone.Frequency(currentNote)
           .transpose(1)
           .toNote();
         break;
-      case 40: // down
+      case 40: // note down
         newMelody[measure_id][note_id] = Tone.Frequency(currentNote)
           .transpose(-1)
           .toNote();
         break;
-      case 41: // right
-        // shift focus to next element
+      case 41: // next note
         break;
       default:
         break;
@@ -163,16 +162,16 @@ const App = () => {
     setActiveMidiOutput(midiOutputs[device_id]);
   };
 
-  const handlePressPlay = e => {
+  const handlePressPlay = e => {    
+    console.log('progress', sequence.progress)
     Tone.start();
     Tone.Transport.start();
   };
 
-  const handlePressStop = e => {
+  const handlePressStop = e => {    
+    console.log('progress', sequence.progress)
     Tone.Transport.stop();
   };
-
-  if (sequence) console.log("HEY CHECK HERE", sequence.progress);
 
   return (
     <React.Fragment>
