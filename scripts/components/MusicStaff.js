@@ -18,7 +18,7 @@ const MusicStaff = props => {
   }, []);
 
   // resize with window
-  React.useEffect(() => {}, []);
+  React.useEffect(() => {}, []);  
 
   let iter = 0;
   let measures =

@@ -145,6 +145,9 @@ const App = () => {
   const handlePressStop = e => {
     Tone.Transport.stop();
   };
+  
+  if(sequence)
+    console.log("HEY CHECK HERE", sequence.progress)
 
   return (
     <React.Fragment>
