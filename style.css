@@ -62,7 +62,8 @@ body,
   background-color: #ffecbff;
   color: #602500;
   border: 1px solid #602500;  
-  padding: 0px 5px;
+  margin: 0px 5px;
+  flex-grow; 2;
 }
 
 .settingsInner input {

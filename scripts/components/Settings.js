@@ -45,7 +45,7 @@ const Settings = props => {
             />
           </label>
         </div>
-        <div>
+        <div className="buttonGroup">
             <button
               onClick={props.onRandomize}
               className="randomizeButton"
