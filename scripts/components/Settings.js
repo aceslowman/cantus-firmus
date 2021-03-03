@@ -14,7 +14,7 @@ const Settings = props => {
   return (
     <div className="SETTINGS" style={{width: expanded ? '28%' : '0%'}}>
       <div className="settingsInner">
-        <div>
+        <div className="inputGroup">
           <label>number of bars</label>
           <input
             onChange={props.onNumBarsChange}
@@ -24,7 +24,7 @@ const Settings = props => {
             value="1"
           />
         </div>
-        <div>
+        <div className="inputGroup">
           <label>tempo</label>
           <input
             onChange={props.onBPMChange}
@@ -34,7 +34,7 @@ const Settings = props => {
             value={props.bpm}
           />
         </div>
-        <div>
+        <div className="inputGroup">
           <label>
             loop
             <input
@@ -61,7 +61,7 @@ const Settings = props => {
               className="stopButton"
               >stop</button>
         </div>
-        <div>
+        <div className="inputGroup">
           <label htmlFor="midiinputs">Midi Input</label>
           <select name="midiinputs" value={props.activeMidiInput ? props.activeMidiInput.id : ''} onChange={props.onMidiInputChange}>
             <option>select an input</option>
@@ -72,7 +72,7 @@ const Settings = props => {
             })}
           </select>
         </div>
-        <div>
+        <div className="inputGroup">
           <label htmlFor="midioutputs">Midi Output</label>
           <select name="midioutputs" value={props.activeMidiOutput ? props.activeMidiOutput.id : ''} onChange={props.onMidiOutputChange}>
             <option>select an output</option>

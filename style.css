@@ -60,6 +60,12 @@ body,
   padding: 5px 0px;
 }
 
+.settingsInner button {  
+  background-color: #ffecbff;
+  color: #602500;
+  border: 1px solid #602500;
+}
+
 .settingsInner input {
   background-color: #ffecbff;
   color: #602500;
@@ -68,16 +74,16 @@ body,
 
 .settingsInner > div {
   display: flex;
-  align-self: flex-end;
-  flex-flow: column;
+  align-self: flex-end;  
   padding-bottom: 15px;
 }
 
-.inputGr
+.inputGroup {
+  flex-flow: column;
+}
 
 .buttonGroup {
-  display: flex;
-  flex-flow: row wrap;
+  flex-flow: row;
 }
 
 .credits {
