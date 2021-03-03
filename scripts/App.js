@@ -22,17 +22,17 @@ const App = () => {
   React.useEffect(() => {
     const keybindings = function(e) {
       console.log("key", e.keyCode);
-      console.log(Tone.Transport.state)
-      switch(e.keyCode) {
+      console.log(Tone.Transport.state);
+      switch (e.keyCode) {
         case 32: // space bar
-          if(Tone.Transport.state === "started") {            
+          if (Tone.Transport.state === "started") {
             Tone.Transport.stop();
           } else {
             Tone.start();
             Tone.Transport.start();
           }
           break;
-        default:          
+        default:
           break;
       }
     };
@@ -46,30 +46,31 @@ const App = () => {
       if (!midiInputs || !midiOutputs) {
         await navigator.requestMIDIAccess().then(access => {
           // Get lists of available MIDI controllers
-          
-          let inputs, outputs = {};
-                
-          for(const input of access.inputs.values()) {
+
+          let inputs,
+            outputs = {};
+
+          for (const input of access.inputs.values()) {
             inputs = {
               ...inputs,
               [input.id]: input
-            }            
-          };
-                
-          for(const output of access.outputs.values()) {         
+            };
+          }
+
+          for (const output of access.outputs.values()) {
             outputs = {
               ...outputs,
               [output.id]: output
-            }
-          };
+            };
+          }
 
           setMidiInputs(inputs);
           setMidiOutputs(outputs);
-          
-          console.log("INPUTS", outputs)
-          
-          // setActiveMidiInput([...inputs][0]);
-          // setActiveMidiOutput([...outputs][0]);
+
+          console.log("INPUTS", outputs);
+
+          setActiveMidiInput(inputs[Object.keys(inputs)[0]]);
+          setActiveMidiOutput(outputs[Object.keys(outputs)[0]]);
 
           access.onstatechange = function(e) {
             // Print information about the (dis)connected MIDI controller
@@ -92,7 +93,8 @@ const App = () => {
       sequence = new Tone.Sequence(
         (time, note) => {
           synth.triggerAttackRelease(note, 0.1, time);
-          activeMidiOutput.send([144,40,41]);
+          // [NOTE ON, NOTE, VELOCITY]
+          activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
         },
         melody,
         "4n"
@@ -169,9 +171,8 @@ const App = () => {
   const handlePressStop = e => {
     Tone.Transport.stop();
   };
-  
-  if(sequence)
-    console.log("HEY CHECK HERE", sequence.progress)
+
+  if (sequence) console.log("HEY CHECK HERE", sequence.progress);
 
   return (
     <React.Fragment>
@@ -187,6 +188,8 @@ const App = () => {
         loop={loop}
         midiInputs={midiInputs}
         midiOutputs={midiOutputs}
+        activeMidiInput={activeMidiInput}
+        activeMidiOutput={activeMidiOutput}
       />
       <MusicStaff melody={melody} onNoteChange={handleNoteChange} />
     </React.Fragment>

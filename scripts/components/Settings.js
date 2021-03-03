@@ -65,7 +65,7 @@ const Settings = props => {
         </div>
         <div>
           <label htmlFor="midiinputs">Midi Input</label>
-          <select name="midiinputs" onChange={props.onMidiInputChange}>
+          <select name="midiinputs" value={props.activeMidiInput ? props.activeMidiInput.id : ''} onChange={props.onMidiInputChange}>
             <option>select an input</option>
             {props.midiInputs && Object.keys(props.midiInputs).map(e => {
               return (
@@ -76,7 +76,7 @@ const Settings = props => {
         </div>
         <div>
           <label htmlFor="midioutputs">Midi Output</label>
-          <select name="midioutputs" onChange={props.onMidiOutputChange}>
+          <select name="midioutputs" value={props.activeMidiOutput ? props.activeMidiOutput.id : ''} onChange={props.onMidiOutputChange}>
             <option>select an output</option>
             {props.midiOutputs && Object.keys(props.midiOutputs).map(e => {
               return (
