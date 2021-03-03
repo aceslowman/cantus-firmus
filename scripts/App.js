@@ -16,14 +16,27 @@ const App = () => {
 
   const synth = new Tone.Synth().toDestination();
   let sequence;
-  
+
   React.useEffect(() => {
-    const keybindings = (e) => {
-      console.log('key', e.keyCode)
-    }
-    
-    document.addEventListener('onkeydown', keybindings, false)
-    return (document.removeEventListener('onkeydown', keybindings, false))
+    const keybindings = function(e) {
+      console.log("key", e.keyCode);
+      console.log(Tone.Transport.state)
+      switch(e.keyCode) {
+        case 32: // space bar
+          if(Tone.Transport.state === "started") {            
+            Tone.Transport.stop();
+          } else {
+            Tone.start();
+            Tone.Transport.start();
+          }
+          break;
+        default:          
+          break;
+      }
+    };
+
+    document.addEventListener("keydown", keybindings, false);
+    return () => document.removeEventListener("keydown", keybindings, false);
   }, []);
 
   React.useEffect(() => {
@@ -33,7 +46,7 @@ const App = () => {
           // Get lists of available MIDI controllers
           const inputs = access.inputs.values();
           const outputs = access.outputs.values();
-          
+
           setMidiInputs([...inputs]);
           setMidiOutputs([...outputs]);
 
@@ -50,7 +63,7 @@ const App = () => {
 
   React.useEffect(() => {
     Tone.Transport.cancel();
-    
+
     if (sequence) {
       sequence.events = melody;
     } else {
@@ -68,7 +81,7 @@ const App = () => {
   }, [melody]);
 
   function handleLoopToggle(e) {
-    if(sequence) sequence.loop.value = !loop;
+    if (sequence) sequence.loop.value = !loop;
     setLoop(prev => !prev);
   }
 
@@ -128,7 +141,7 @@ const App = () => {
     Tone.start();
     Tone.Transport.start();
   };
-  
+
   const handlePressStop = e => {
     Tone.Transport.stop();
   };
@@ -136,7 +149,7 @@ const App = () => {
   return (
     <React.Fragment>
       <Settings
-        onPressPlay={handlePressPlay}        
+        onPressPlay={handlePressPlay}
         onPressStop={handlePressStop}
         onMidiInputChange={handleMidiInputChange}
         onMidiOutputChange={handleMidiOutputChange}
