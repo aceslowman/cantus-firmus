@@ -112,12 +112,9 @@ body,
 .NOTES {
   display: flex;
   flex-flow: row wrap;
-  justify-content: start; 
-  align-items: center;
 }
 
 .noteWrapper {
-/*   background-color: orange; */
   justify-content: space-between;
   padding: 0px 50px;
   align-self: center;
@@ -127,23 +124,20 @@ body,
 .note {
   justify-content:center;
   background-color: #FAEBD7;
-    cursor: grab;
-    position: relative;  
+  cursor: grab;
+  position: relative;  
   display: flex;
   flex-flow: row;
   font-size: 1.4em;
 }
 
 .measure {
-/*   background-color: Violet; */
   display: flex;
   flex-flow: row;
-  justify-content: space-around;
-/*   height: 100%; */
-/*   border-right: 2px solid #6e2a00; */
+/*   justify-content: space-around; */
+  justify-content: flex-start;
   flex-grow: 2;
   position:relative;
-/*   align-self: normal; */
 }
 
 .flex-fix {
@@ -152,12 +146,11 @@ body,
   position: absolute;
   display: flex;
   align-items: center;
-/*   align-items: flex-start; */
   justify-content: center;
 }
 
 .flex-fix > div {
   width: 100%;
-  min-height: 200px;
+  min-height: 100px;
   margin: 15%;
 }
