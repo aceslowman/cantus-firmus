@@ -1,18 +1,18 @@
 /* global Tone, ReactDOM, React */
 const Settings = props => {
   let [expanded, setExpanded] = React.useState();
-  
+
   let style = {
-    width: '0%'
-  }
-  
+    width: "0%"
+  };
+
   // SETTINGS TOGGLE
   function toggleSettings() {
-    setExpanded(prev => !prev)
+    setExpanded(prev => !prev);
   }
-  
+
   return (
-    <div className="SETTINGS" style={{width: expanded ? '28%' : '0%'}}>
+    <div className="SETTINGS" style={{ width: expanded ? "28%" : "0%" }}>
       <div className="settingsInner">
         <div className="inputGroup">
           <label>number of bars</label>
@@ -46,41 +46,65 @@ const Settings = props => {
           </label>
         </div>
         <div className="buttonGroup">
-            <button
-              onClick={props.onRandomize}
-              className="randomizeButton"
-              >randomize</button>
+          <button onClick={props.onRandomize} className="randomizeButton">
+            randomize
+          </button>
         </div>
         <div className="buttonGroup">
-            <button
-              onClick={props.onPressPlay}
-              className="playButton"
-              >play</button>
-            <button
-              onClick={props.onPressStop}
-              className="stopButton"
-              >stop</button>
+          <button
+            onClick={props.onPressPlay}
+            className="playButton"
+            style={{
+              backgroundColor: props.isPlaying ? '#602500' : '#ffecbff'
+            }}
+          >
+            play
+          </button>
+          <button
+            onClick={props.onPressStop}
+            className="stopButton"
+            style={{
+              backgroundColor: !props.isPlaying ? '#602500' : '#ffecbff'
+            }}
+          >
+            stop
+          </button>            
+          
         </div>
         <div className="inputGroup">
           <label htmlFor="midiinputs">Midi Input</label>
-          <select name="midiinputs" value={props.activeMidiInput ? props.activeMidiInput.id : ''} onChange={props.onMidiInputChange}>
+          <select
+            name="midiinputs"
+            value={props.activeMidiInput ? props.activeMidiInput.id : ""}
+            onChange={props.onMidiInputChange}
+          >
             <option>select an input</option>
-            {props.midiInputs && Object.keys(props.midiInputs).map(e => {
-              return (
-                <option key={e} value={props.midiInputs[e].id}>{props.midiInputs[e].name}</option>
-              )
-            })}
+            {props.midiInputs &&
+              Object.keys(props.midiInputs).map(e => {
+                return (
+                  <option key={e} value={props.midiInputs[e].id}>
+                    {props.midiInputs[e].name}
+                  </option>
+                );
+              })}
           </select>
         </div>
         <div className="inputGroup">
           <label htmlFor="midioutputs">Midi Output</label>
-          <select name="midioutputs" value={props.activeMidiOutput ? props.activeMidiOutput.id : ''} onChange={props.onMidiOutputChange}>
+          <select
+            name="midioutputs"
+            value={props.activeMidiOutput ? props.activeMidiOutput.id : ""}
+            onChange={props.onMidiOutputChange}
+          >
             <option>select an output</option>
-            {props.midiOutputs && Object.keys(props.midiOutputs).map(e => {
-              return (
-                <option key={e} value={props.midiOutputs[e].id}>{props.midiOutputs[e].name}</option>
-              )
-            })}
+            {props.midiOutputs &&
+              Object.keys(props.midiOutputs).map(e => {
+                return (
+                  <option key={e} value={props.midiOutputs[e].id}>
+                    {props.midiOutputs[e].name}
+                  </option>
+                );
+              })}
           </select>
         </div>
       </div>

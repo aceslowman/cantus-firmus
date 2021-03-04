@@ -136,7 +136,7 @@ body,
 }
 
 .noteWrapper {
-  padding: 0px 50px;
+  padding: 0px 40px;
   align-self: center;
   width: 100%;
   display: flex;
@@ -155,6 +155,8 @@ body,
   color: #FAEBD7;  
   box-sizing: border-box;
 }
+
+
 
 .measure {
   display: flex;

@@ -120,8 +120,7 @@ const MusicStaff = props => {
                 value={note}
                 style={{
                   bottom: position,
-                  border:
-                    props.currentStep + 1 === iter ? "2px dotted white" : "none"
+                  backgroundColor: props.currentStep + 1 === iter ? '#ff5454' : '#602500'
                 }}
               />
             );
