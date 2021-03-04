@@ -152,7 +152,8 @@ body,
   display: flex;
   flex-flow: row;
   font-size: 1.4em;
-  color: #FAEBD7;
+  color: #FAEBD7;  
+  box-sizing: border-box;
 }
 
 .measure {

@@ -96,7 +96,6 @@ const App = () => {
       // set up toneJS to repeat melody in sequence
       sequence = new Tone.Sequence(
         (time, note) => {
-          console.log("progress", sequence.events.length);
           // synth.triggerAttackRelease(note, 0.1, time);
           // [NOTE ON, NOTE, VELOCITY]
           activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);

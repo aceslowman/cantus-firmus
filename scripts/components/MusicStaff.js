@@ -18,7 +18,7 @@ const MusicStaff = props => {
   }, []);
 
   // resize with window
-  React.useEffect(() => {}, []);  
+  React.useEffect(() => {}, []);
 
   let iter = 0;
   let measures =
@@ -37,20 +37,20 @@ const MusicStaff = props => {
           className="measure"
           style={{
             height: staffHeight,
-            borderRight: `${
-              isLastMeasure ? "8px solid" : "1px solid"
-            } #6e2a00`,
+            borderRight: `${isLastMeasure ? "8px solid" : "1px solid"} #6e2a00`,
             margin: `${lineHeight * 3}px 0px`,
             paddingRight: isLastMeasure ? "20px" : "0px"
           }}
         >
           {isFirstMeasure && (
-          <img
-            className="CLEF"
-            style={{height: lineRef.current.getBoundingClientRect().height * 2}}
-            src="https://cdn.glitch.com/5952eddf-3ee4-437e-93ff-001a65fa1cf4%2FTreble_clef.svg?v=1614749305855"
-          />
-        )}
+            <img
+              className="CLEF"
+              style={{
+                height: lineRef.current.getBoundingClientRect().height * 2
+              }}
+              src="https://cdn.glitch.com/5952eddf-3ee4-437e-93ff-001a65fa1cf4%2FTreble_clef.svg?v=1614749305855"
+            />
+          )}
           <div className="flex-fix">
             <div
               className="MEASURELINES"
@@ -114,13 +114,14 @@ const MusicStaff = props => {
 
             return (
               <Note
-                tabIndex={iter+1}
+                tabIndex={iter + 1}
                 key={m_i + "_" + n_i}
                 onKeyDown={e => props.onNoteChange(e, m_i, n_i)}
                 value={note}
                 style={{
                   bottom: position,
-                    border: (props.currentStep+1) === iter ? '2px solid violet' : 'none'
+                  border:
+                    props.currentStep + 1 === iter ? "2px dotted white" : "none"
                 }}
               />
             );
@@ -131,7 +132,7 @@ const MusicStaff = props => {
 
   return (
     <div className="STAFF">
-      <div className="flex-fix">        
+      <div className="flex-fix">
         {/*
             this LINES div gives me the reference height for the measures.
             these aren't visible
