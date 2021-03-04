@@ -172,7 +172,10 @@ const App = () => {
     // TODO: loop over the melody and fill procedurally
     
     setMelody(melody.map((measure, m_i) => {
-      return 
+      return measure.map((note, n_i) => {
+        console.log('check', note)
+        return note;
+      })
     }))
   };
 
