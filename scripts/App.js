@@ -15,6 +15,7 @@ const App = () => {
   let [activeMidiInput, setActiveMidiInput] = React.useState(null);
   let [activeMidiOutput, setActiveMidiOutput] = React.useState(null);
   let [currentStep, setCurrentStep] = React.useState(0);
+  let [isPlaying, setIsPlaying] = React.useState(false);
 
   const synth = new Tone.Synth().toDestination();
   let sequence;
@@ -30,9 +31,11 @@ const App = () => {
         case 32: // space bar
           if (Tone.Transport.state === "started") {
             Tone.Transport.stop();
+            setIsPlaying(false)
           } else {
             Tone.start();
             Tone.Transport.start();
+            setIsPlaying(true)
           }
           break;
         default:
@@ -160,13 +163,15 @@ const App = () => {
     setActiveMidiOutput(midiOutputs[e.target.value]);
   };
 
-  const handlePressPlay = e => {
-    Tone.start();
-    Tone.Transport.start();
-  };
-
-  const handlePressStop = e => {
-    Tone.Transport.stop();
+  const handleTogglePlay = e => {
+    if(Tone.Transport.state === 'started') {
+      Tone.Transport.stop();
+      setIsPlaying(stop);
+    } else {      
+      Tone.start();
+      Tone.Transport.start();
+      setIsPlaying(true);
+    }
   };
 
   const handleRandomize = (e, type = "jitter") => {
@@ -193,8 +198,7 @@ const App = () => {
   return (
     <React.Fragment>
       <Settings
-        onPressPlay={handlePressPlay}
-        onPressStop={handlePressStop}
+        onTogglePlay={handleTogglePlay}        
         onMidiInputChange={handleMidiInputChange}
         onMidiOutputChange={handleMidiOutputChange}
         onToggleLoop={handleLoopToggle}
@@ -203,6 +207,7 @@ const App = () => {
         onRandomize={handleRandomize}
         bpm={bpm}
         loop={loop}
+        isPlaying={isPlaying}
         midiInputs={midiInputs}
         midiOutputs={midiOutputs}
         activeMidiInput={activeMidiInput}

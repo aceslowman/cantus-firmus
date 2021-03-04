@@ -52,24 +52,15 @@ const Settings = props => {
         </div>
         <div className="buttonGroup">
           <button
-            onClick={props.onPressPlay}
+            onClick={props.onTogglePlay}
             className="playButton"
             style={{
-              backgroundColor: props.isPlaying ? '#602500' : '#ffecbff'
+              color: props.isPlaying ? "#fff" : "#602500",
+              backgroundColor: props.isPlaying ? "#602500" : "#fff"
             }}
           >
-            play
+            {props.isPlaying ? "stop" : "play"}
           </button>
-          <button
-            onClick={props.onPressStop}
-            className="stopButton"
-            style={{
-              backgroundColor: !props.isPlaying ? '#602500' : '#ffecbff'
-            }}
-          >
-            stop
-          </button>            
-          
         </div>
         <div className="inputGroup">
           <label htmlFor="midiinputs">Midi Input</label>
