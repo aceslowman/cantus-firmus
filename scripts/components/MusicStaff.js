@@ -130,7 +130,7 @@ const MusicStaff = props => {
     });
 
   return (
-    <div className="STAFF">
+    <div className="STAFF">      
       <div className="flex-fix">
         {/*
             this LINES div gives me the reference height for the measures.
@@ -145,6 +145,9 @@ const MusicStaff = props => {
         </div>
       </div>
       <div className="flex-fix">
+                <div className="tempo-marker">
+        bpm 120
+      </div>
         <div className="NOTES">{measures}</div>
       </div>
     </div>
