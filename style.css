@@ -180,3 +180,9 @@ body,
   min-height: 100px;
   margin: 15%;
 }
+ 
+.tempo-marker {
+  width: auto;
+  align-self: start;
+  margin: 0px !important;
+}
