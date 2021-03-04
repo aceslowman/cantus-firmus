@@ -116,7 +116,9 @@ const App = () => {
     setLoop(prev => !prev);
   }
 
-  function handleNumBarsChange(e) {}
+  function handleNumBarsChange(e) {
+    setNumBars(e.target.value);
+  }
 
   function handleBPMChange(e) {
     setBPM(parseFloat(e.target.value));
@@ -168,6 +170,10 @@ const App = () => {
 
   const handleRandomize = e => {
     // TODO: loop over the melody and fill procedurally
+    
+    setMelody(melody.map((measure, m_i) => {
+      return 
+    }))
   };
 
   return (
@@ -189,8 +195,11 @@ const App = () => {
         activeMidiOutput={activeMidiOutput}
         currentStep={currentStep}
       />
-      <MusicStaff melody={melody} onNoteChange={handleNoteChange} 
-        currentStep={currentStep}/>
+      <MusicStaff 
+        melody={melody} 
+        onNoteChange={handleNoteChange} 
+        currentStep={currentStep}
+      />
     </React.Fragment>
   );
 };
