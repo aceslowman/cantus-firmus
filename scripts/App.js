@@ -168,13 +168,19 @@ const App = () => {
     Tone.Transport.stop();
   };
 
-  const handleRandomize = e => {
+  const handleRandomize = (e,type = 'jitter') => {
     // TODO: loop over the melody and fill procedurally
+    /*
+      random techniques...
+      
+      jitter: move notes up or down at random, in variable steps
+      drunk: step up or down from the beginning within a certain range
+    */
     
     setMelody(melody.map((measure, m_i) => {
       return measure.map((note, n_i) => {
-        console.log('check', note)
-        return note;
+        let jitter_amount = 2;
+        return Tone.Frequency(note).transpose(((Math.random()*2)-1)*jitter_amount)
       })
     }))
   };
