@@ -102,7 +102,8 @@ const App = () => {
           // synth.triggerAttackRelease(note, 0.1, time);
           // [NOTE ON, NOTE, VELOCITY]
           activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
-
+          console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
+          
           setCurrentStep(
             prev => (prev = (prev + 1) % (sequence.events.length * 4))
           );
