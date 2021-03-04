@@ -100,8 +100,10 @@ const App = () => {
           // synth.triggerAttackRelease(note, 0.1, time);
           // [NOTE ON, NOTE, VELOCITY]
           activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
-          
-          setCurrentStep(prev => prev = (prev + 1) % (sequence.events.length * 4));
+
+          setCurrentStep(
+            prev => (prev = (prev + 1) % (sequence.events.length * 4))
+          );
         },
         melody,
         "1m"
@@ -168,21 +170,25 @@ const App = () => {
     Tone.Transport.stop();
   };
 
-  const handleRandomize = (e,type = 'jitter') => {
-    // TODO: loop over the melody and fill procedurally
+  const handleRandomize = (e, type = "jitter") => {
     /*
       random techniques...
       
       jitter: move notes up or down at random, in variable steps
       drunk: step up or down from the beginning within a certain range
     */
-    
-    setMelody(melody.map((measure, m_i) => {
-      return measure.map((note, n_i) => {
-        let jitter_amount = 2;
-        return Tone.Frequency(note).transpose(((Math.random()*2)-1)*jitter_amount)
+    let jitter_amount = 2;
+
+    setMelody(
+      melody.map((measure, m_i) => {
+        return measure.map((note, n_i) => {
+          let tr = (Math.random() * 2 - 1) * jitter_amount;
+          return Tone.Frequency(note)
+            .transpose(tr)
+            .toNote();
+        });
       })
-    }))
+    );
   };
 
   return (
@@ -204,9 +210,9 @@ const App = () => {
         activeMidiOutput={activeMidiOutput}
         currentStep={currentStep}
       />
-      <MusicStaff 
-        melody={melody} 
-        onNoteChange={handleNoteChange} 
+      <MusicStaff
+        melody={melody}
+        onNoteChange={handleNoteChange}
         currentStep={currentStep}
       />
     </React.Fragment>
