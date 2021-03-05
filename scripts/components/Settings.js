@@ -45,28 +45,21 @@ const Settings = props => {
             />
           </label>
         </div>
-        <fieldset>
-          <legend>random</legend>
+        <div>
+          <label htmlFor="jitter_amount">amount</label>
+          <input
+            id="jitter_amount"
+            onChange={props.onJitterAmountChange}
+            className="jitterAmountInput"
+            type="number"
+            step="1"
+            value={props.jitterAmount}
+          />
 
-          <fieldset style={{
-              display:'flex'
-            }}>
-            <legend>jitter</legend>
-            <label htmlFor="jitter_amount">amount</label>
-            <input
-              id="jitter_amount"
-              onChange={props.onJitterAmountChange}
-              className="jitterAmountInput"
-              type="number"
-              step="1"
-              value={props.jitterAmount}
-            />
-
-            <button onClick={props.onRandomize} className="randomizeButton">
-              random jitter
-            </button>
-          </fieldset>
-        </fieldset>
+          <button onClick={props.onRandomize} className="randomizeButton">
+            random jitter
+          </button>
+        </div>
         <div className="buttonGroup">
           <button
             onClick={props.onTogglePlay}
