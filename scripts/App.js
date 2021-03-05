@@ -17,6 +17,7 @@ const App = () => {
   let [currentStep, setCurrentStep] = React.useState(0);
   let [isPlaying, setIsPlaying] = React.useState(false);
   let [subdivisions, setSubdivisions] = React.useState(4);
+  let [jitterAmount, setJitterAmount] = React.useState(2);
 
   const synth = new Tone.Synth().toDestination();
   let sequence;
@@ -174,6 +175,8 @@ const App = () => {
 
   const handleMidiOutputChange = e =>
     setActiveMidiOutput(midiOutputs[e.target.value]);
+  
+  const handleJitterAmountChange = e => setJitterAmount(e.target.value);
 
   const handleTogglePlay = e => {
     if (Tone.Transport.state === "started") {
@@ -226,6 +229,8 @@ const App = () => {
         activeMidiInput={activeMidiInput}
         activeMidiOutput={activeMidiOutput}
         currentStep={currentStep}
+        onJitterAmountChange={handleJitterAmountChange}
+        jitterAmount={jitterAmount}
       />
       <MusicStaff
         melody={melody}

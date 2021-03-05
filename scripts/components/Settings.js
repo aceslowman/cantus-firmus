@@ -51,11 +51,11 @@ const Settings = props => {
           </button>
           <label>jitter amount</label>
           <input
-            onChange={props.onBPMChange}
-            className="tempoInput"
+            onChange={props.onJitterAmountChange}
+            className="jitterAmountInput"
             type="number"
             step="1"
-            value={props.bpm}
+            value={props.jitterAmount}
           />
         </div>
         <div className="buttonGroup">
