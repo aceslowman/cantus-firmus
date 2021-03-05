@@ -9,7 +9,7 @@ const MIDILog = props => {
       console.log("getting message", m);
       log.push(m.data);
       // log.shift();
-      setLog([...log]);
+      setLog(log);
     };
 
     if (props.device) {
