@@ -46,14 +46,16 @@ const Settings = props => {
           </label>
         </div>
         <div className="buttonGroup">
-          <label>amount</label>
-          <input
-            onChange={props.onJitterAmountChange}
-            className="jitterAmountInput"
-            type="number"
-            step="1"
-            value={props.jitterAmount}
-          />
+          <div className="inputGroup">
+            <label>jitter amount</label>
+            <input
+              onChange={props.onJitterAmountChange}
+              className="jitterAmountInput"
+              type="number"
+              step="1"
+              value={props.jitterAmount}
+            />
+          </div>
           <button onClick={props.onRandomize} className="randomizeButton">
             random jitter
           </button>
