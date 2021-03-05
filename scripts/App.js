@@ -25,8 +25,6 @@ const App = () => {
   */
   React.useEffect(() => {
     const keybindings = function(e) {
-      console.log("key", e.keyCode);
-      console.log(Tone.Transport.state);
       switch (e.keyCode) {
         case 32: // space bar
           if (Tone.Transport.state === "started") {
