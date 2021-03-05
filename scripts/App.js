@@ -90,10 +90,22 @@ const App = () => {
   React.useEffect(() => {
     Tone.Transport.bpm.value = parseFloat(bpm);
   }, [bpm]);
-  
+
   React.useEffect(() => {
-    Tone.Transport.bpm.value = parseFloat(bpm);
-  }, [numBars]);
+    // if numBars is greater than melody.length
+    if (numBars > melody.length) {
+      // create a new array element and fill it with the subdivisions
+      let subdivisions = 4; // TEMP!!!! needs to be state variable
+      let newMeasure = [];
+      for(let i = 0; i < subdivisions; i++) {
+        newMeasure.push('B4'); // TEMP: TODO: should initialize as REST
+      }
+      setMelody(prev => [...prev, newMeasure])
+    } else if (numBars < melody.length) {
+      
+      setMelody(prev => prev.pop())
+    }
+  }, [numBars, melody]);
 
   /* create and update melody */
   React.useEffect(() => {
