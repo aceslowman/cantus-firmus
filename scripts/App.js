@@ -29,11 +29,11 @@ const App = () => {
         case 32: // space bar
           if (Tone.Transport.state === "started") {
             Tone.Transport.stop();
-            setIsPlaying(false)
+            setIsPlaying(false);
           } else {
             Tone.start();
             Tone.Transport.start();
-            setIsPlaying(true)
+            setIsPlaying(true);
           }
           break;
         default:
@@ -86,10 +86,14 @@ const App = () => {
 
     initMIDI();
   }, [midiInputs, midiOutputs]);
-  
-  React.useEffect(() => {    
+
+  React.useEffect(() => {
     Tone.Transport.bpm.value = parseFloat(bpm);
-  }, [bpm])
+  }, [bpm]);
+  
+  React.useEffect(() => {
+    Tone.Transport.bpm.value = parseFloat(bpm);
+  }, [numBars]);
 
   /* create and update melody */
   React.useEffect(() => {
@@ -104,9 +108,9 @@ const App = () => {
           // synth.triggerAttackRelease(note, 0.1, time);
           // [NOTE ON, NOTE, VELOCITY]
           activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
-          
+
           // console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
-          
+
           setCurrentStep(
             prev => (prev = (prev + 1) % (sequence.events.length * 4))
           );
@@ -122,14 +126,6 @@ const App = () => {
   function handleLoopToggle(e) {
     if (sequence) sequence.loop.value = !loop;
     setLoop(prev => !prev);
-  }
-
-  function handleNumBarsChange(e) {
-    setNumBars(e.target.value);
-  }
-
-  function handleBPMChange(e) {
-    setBPM(parseFloat(e.target.value));
   }
 
   function handleNoteChange(e, measure_id, note_id) {
@@ -158,19 +154,21 @@ const App = () => {
     setMelody(newMelody);
   }
 
-  const handleMidiInputChange = e => {
-    setActiveMidiInput(midiInputs[e.target.value]);
-  };
+  const handleNumBarsChange = e => setNumBars(e.target.value);
 
-  const handleMidiOutputChange = e => {
+  const handleBPMChange = e => setBPM(parseFloat(e.target.value));
+
+  const handleMidiInputChange = e =>
+    setActiveMidiInput(midiInputs[e.target.value]);
+
+  const handleMidiOutputChange = e =>
     setActiveMidiOutput(midiOutputs[e.target.value]);
-  };
 
   const handleTogglePlay = e => {
-    if(Tone.Transport.state === 'started') {
+    if (Tone.Transport.state === "started") {
       Tone.Transport.stop();
       setIsPlaying(stop);
-    } else {      
+    } else {
       Tone.start();
       Tone.Transport.start();
       setIsPlaying(true);
@@ -201,7 +199,7 @@ const App = () => {
   return (
     <React.Fragment>
       <Settings
-        onTogglePlay={handleTogglePlay}        
+        onTogglePlay={handleTogglePlay}
         onMidiInputChange={handleMidiInputChange}
         onMidiOutputChange={handleMidiOutputChange}
         onToggleLoop={handleLoopToggle}
@@ -210,6 +208,7 @@ const App = () => {
         onRandomize={handleRandomize}
         bpm={bpm}
         loop={loop}
+        numBars={numBars}
         isPlaying={isPlaying}
         midiInputs={midiInputs}
         midiOutputs={midiOutputs}
