@@ -47,8 +47,16 @@ const Settings = props => {
         </div>
         <div className="buttonGroup">
           <button onClick={props.onRandomize} className="randomizeButton">
-            randomize
+            random jitter
           </button>
+          <label>jitter amount</label>
+          <input
+            onChange={props.onBPMChange}
+            className="tempoInput"
+            type="number"
+            step="1"
+            value={props.bpm}
+          />
         </div>
         <div className="buttonGroup">
           <button
