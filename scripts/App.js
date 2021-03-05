@@ -88,6 +88,10 @@ const App = () => {
 
     initMIDI();
   }, [midiInputs, midiOutputs]);
+  
+  React.useEffect(() => {    
+    Tone.Transport.bpm.value = parseFloat(bpm);
+  }, [bpm])
 
   /* create and update melody */
   React.useEffect(() => {
@@ -102,7 +106,8 @@ const App = () => {
           // synth.triggerAttackRelease(note, 0.1, time);
           // [NOTE ON, NOTE, VELOCITY]
           activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
-          console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
+          
+          // console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
           
           setCurrentStep(
             prev => (prev = (prev + 1) % (sequence.events.length * 4))
@@ -127,7 +132,6 @@ const App = () => {
 
   function handleBPMChange(e) {
     setBPM(parseFloat(e.target.value));
-    Tone.Transport.bpm.value = parseFloat(e.target.value);
   }
 
   function handleNoteChange(e, measure_id, note_id) {
