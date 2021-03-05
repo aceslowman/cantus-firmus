@@ -190,3 +190,7 @@ body,
   align-self: start;
   margin: 0px !important;
 }
+
+.MIDILog {
+  overflow: scroll;
+}
