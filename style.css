@@ -3,6 +3,10 @@
   light: #FAEBD7
 */
 
+* {
+  box-sizing:border-box;
+}
+
 html,
 body,
 #APP {
@@ -50,6 +54,8 @@ body,
   display: flex;
   flex-flow: column;
   color: #602500;
+  width: 100%;
+  box-sizing: border-box;
   align-content: stretch;
   z-index: 2;
 }
@@ -61,9 +67,9 @@ body,
 .settingsInner button {
   background-color: #fff;
   color: #602500;
-  border: 1px solid #602500;  
-  margin: 0px 5px;
-  flex-grow; 2;
+  border: 1px solid #602500;
+  /*   margin: 0px 5px; */
+  flex-grow: 2;
 }
 
 .settingsInner input {
@@ -83,7 +89,7 @@ body,
 
 .buttonGroup {
   flex-flow: row;
-  width:100%;
+  width: 100%;
 }
 
 .buttonGroup button {
@@ -152,11 +158,9 @@ body,
   display: flex;
   flex-flow: row;
   font-size: 1.4em;
-  color: #FAEBD7;  
+  color: #FAEBD7;
   box-sizing: border-box;
 }
-
-
 
 .measure {
   display: flex;
@@ -180,7 +184,7 @@ body,
   min-height: 100px;
   margin: 15%;
 }
- 
+
 .tempo-marker {
   width: auto;
   align-self: start;
