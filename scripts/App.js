@@ -93,17 +93,17 @@ const App = () => {
   }, [bpm]);
 
   React.useEffect(() => {
-    // if numBars is greater than melody.length
     if (numBars > melody.length) {
-      // create a new array element and fill it with the subdivisions
       let newMeasure = [];
+      
       for(let i = 0; i < subdivisions; i++) {
         newMeasure.push('B4'); // TEMP: TODO: should initialize as REST
       }
+      
       setMelody(prev => [...prev, newMeasure])
-    } else if (numBars < melody.length) {      
+    } else if (numBars < melody.length && numBars > 0) {      
       setMelody(prev => prev.splice(-1,1));
-    }
+    } 
   }, [numBars, melody]);
 
   /* create and update melody */
