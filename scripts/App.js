@@ -7,7 +7,7 @@ const App = () => {
   ]);
 
   let [loop, setLoop] = React.useState(false);
-  let [numBars, setNumBars] = React.useState(1);
+  let [numBars, setNumBars] = React.useState(3);
   let [bpm, setBPM] = React.useState(120);
   let [selectedNote, setSelectedNote] = React.useState(null);
   let [midiInputs, setMidiInputs] = React.useState(null);
@@ -16,6 +16,7 @@ const App = () => {
   let [activeMidiOutput, setActiveMidiOutput] = React.useState(null);
   let [currentStep, setCurrentStep] = React.useState(0);
   let [isPlaying, setIsPlaying] = React.useState(false);
+  let [subdivisions, setSubdivisions] = React.useState(4);
 
   const synth = new Tone.Synth().toDestination();
   let sequence;
@@ -95,15 +96,13 @@ const App = () => {
     // if numBars is greater than melody.length
     if (numBars > melody.length) {
       // create a new array element and fill it with the subdivisions
-      let subdivisions = 4; // TEMP!!!! needs to be state variable
       let newMeasure = [];
       for(let i = 0; i < subdivisions; i++) {
         newMeasure.push('B4'); // TEMP: TODO: should initialize as REST
       }
       setMelody(prev => [...prev, newMeasure])
-    } else if (numBars < melody.length) {
-      
-      setMelody(prev => prev.pop())
+    } else if (numBars < melody.length) {      
+      setMelody(prev => prev.splice(-1,1));
     }
   }, [numBars, melody]);
 
