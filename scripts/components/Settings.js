@@ -45,7 +45,7 @@ const Settings = props => {
             />
           </label>
         </div>
-        <div>
+        <div className="buttonGroup">
           <label htmlFor="jitter_amount">amount</label>
           <input
             id="jitter_amount"
