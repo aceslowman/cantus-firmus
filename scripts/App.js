@@ -1,13 +1,13 @@
 /* global Tone, ReactDOM, React */
 const App = () => {
   let [melody, setMelody] = React.useState([
-    ["C4", "D4", "E4", "F#4"],
-    ["G4", "A#4", "G4", "B4"],
-    ["A#4", "G4", "F#4", "B4"]
+    [["C4"], ["D4"], ["E4"], ["F#4"]],
+    [["G4"], ["A#4"], ["G4"], ["B4"]],
+    [["A#4"], ["G4"], ["F#4"], ["B4"]]
   ]);
-
-  let [loop, setLoop] = React.useState(false);
+  
   let [numBars, setNumBars] = React.useState(3);
+  let [loop, setLoop] = React.useState(false);
   let [bpm, setBPM] = React.useState(120);
   let [selectedNote, setSelectedNote] = React.useState(null);
   let [midiInputs, setMidiInputs] = React.useState(null);
