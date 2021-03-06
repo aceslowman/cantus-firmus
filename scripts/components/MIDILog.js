@@ -7,7 +7,8 @@ const MIDILog = props => {
   React.useEffect(() => {
     const handleDeviceLog = m => {
       console.log("getting message", m);
-      log.push(m.data);
+      let [noteon, pitch, velocity] = m.data;
+      log.push(`${}`);
       // log.shift();
       setLog(log);
     };
@@ -20,7 +21,11 @@ const MIDILog = props => {
   }, [props.device, log, setLog]);
 
   return (
-    <div className="MIDILog">
+    <div
+      style={{
+        overflow: scroll
+      }}
+    >
       <label htmlFor="midilog">MIDI log: </label>
       {enable && <pre id="midilog">{log}</pre>}
     </div>
