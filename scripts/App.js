@@ -141,19 +141,19 @@ const App = () => {
   }
 
   function handleNoteChange(e, measure_id, voice_id, note_id) {
-    let currentNote = melody[measure_id][][note_id];
+    let currentNote = melody[measure_id][voice_id][note_id];
     let newMelody = [...melody];
 
     switch (e.keyCode) {
       case 37: // prev note
         break;
       case 38: // note up
-        newMelody[measure_id][note_id] = Tone.Frequency(currentNote)
+        newMelody[measure_id][voice_id][note_id] = Tone.Frequency(currentNote)
           .transpose(1)
           .toNote();
         break;
       case 40: // note down
-        newMelody[measure_id][note_id] = Tone.Frequency(currentNote)
+        newMelody[measure_id][voice_id][note_id] = Tone.Frequency(currentNote)
           .transpose(-1)
           .toNote();
         break;

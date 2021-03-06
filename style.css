@@ -145,7 +145,9 @@ body,
   width: 100%;
   display: flex;
   flex-flow:column;
+  height: 100%;
   justify-content: center;
+/*   justify-content: start; */
 }
 
 .note {

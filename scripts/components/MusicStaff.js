@@ -71,7 +71,7 @@ const MusicStaff = props => {
           {measure.map((voices, v_i) => {
             iter++;
             return (
-              <div className="voiceWrapper">
+              <div className="voiceWrapper" key={v_i}>
                 {voices.map((note, n_i) => {
                   console.log("note", note);
 
@@ -127,7 +127,8 @@ const MusicStaff = props => {
                       onKeyDown={e => props.onNoteChange(e, m_i, v_i, n_i)}
                       value={note}
                       style={{
-                        bottom: position,
+                        bottom: 0,
+                        // bottom: position,
                         backgroundColor:
                           props.currentStep + 1 === iter ? "#ff5454" : "#602500"
                       }}
