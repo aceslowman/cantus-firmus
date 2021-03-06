@@ -75,7 +75,12 @@ const MusicStaff = props => {
                 {voices.map((note, n_i) => {
                   console.log("note", note);
 
-                  let centernote = Tone.Frequency("B4").toMidi();
+                  /*
+                    this is unfortunately dependent on my css
+                    when the element is positioned bottom:0,
+                    the resulting note is F4
+                  */
+                  let centernote = Tone.Frequency("F4").toMidi();
 
                   let withoutAccidental = note.replace(/[#b]/, "");
                   let midinote = Tone.Frequency(withoutAccidental).toMidi();
@@ -104,14 +109,35 @@ const MusicStaff = props => {
                         -4   G   -2 
                         -5   F#  -3
                         -6   F   -3
+                        
+                        ITER    REMAP
+                        +6   B   +4
+                        +5   A#  +3
+                        +4   A   +3
+                        +3   G#  +2
+                        +2   G   +2
+                        +1   F#  +1
+                         0   F4   0 <-------- center of staff
+                        -1   E   -1
+                        -2   D#  -2
+                        -3   D   -2
+                        -4   C#  -3 
+                        -5   C   -3
+                        -6   B   -4
                       */
                   if (Math.sign(diff) > 0) {
-                    // go up
-                    remap = [0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6][
+                    // go up (base b4)
+                    // remap = [0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6][
+                    //   Math.abs(diff) % 12
+                    // ];
+                    remap = [0, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6][
                       Math.abs(diff) % 12
                     ];
                   } else {
-                    // go down
+                    // go down (base b4)
+                    // remap = [0, 1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6][
+                    //   Math.abs(diff) % 12
+                    // ];
                     remap = [0, 1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6][
                       Math.abs(diff) % 12
                     ];
@@ -127,8 +153,9 @@ const MusicStaff = props => {
                       onKeyDown={e => props.onNoteChange(e, m_i, v_i, n_i)}
                       value={note}
                       style={{
-                        bottom: 0,
-                        // bottom: position,
+                        height: lineHeight*2,
+                        // bottom: 0,
+                        bottom: position,
                         backgroundColor:
                           props.currentStep + 1 === iter ? "#ff5454" : "#602500"
                       }}
