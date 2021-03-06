@@ -4,7 +4,7 @@
 */
 
 * {
-  box-sizing:border-box;
+  box-sizing: border-box;
 }
 
 html,
@@ -76,7 +76,7 @@ body,
   background-color: #fff;
   color: #602500;
   border: 1px dotted #602500;
-  min-width:0px;  
+  min-width: 0px;
 }
 
 .settingsInner > div {
@@ -140,11 +140,9 @@ body,
 }
 
 .voiceWrapper {
-  border: 1px solid red;
-  background-color:orange;
   width: 100%;
   display: flex;
-  flex-flow:column;
+  flex-flow: column;
   height: 100%;
   justify-content: center;
 }
@@ -165,12 +163,11 @@ body,
 
 .noteWrapper {
   width: 100%;
-    padding: 0px 40px;
-    align-items: center;
-    height: 10px;
-    background-color: yellow;
-  position:relative;
-  justify-content:center;
+  padding: 0px 40px;
+  align-items: center;
+  display: flex;
+  position: relative;
+  justify-content: center;
 }
 
 .measure {
@@ -207,5 +204,5 @@ body,
 }
 
 .midiLog table tr:nth-child(odd) {
-   background-color: #ccc;
+  background-color: #ccc;
 }
