@@ -111,34 +111,44 @@ const MusicStaff = props => {
                         -6   F   -3
                         
                         ITER    REMAP
-                        +6   B   +4
-                        +5   A#  +3
-                        +4   A   +3
-                        +3   G#  +2
-                        +2   G   +2
-                        +1   F#  +1
-                         0   F4   0 <-------- center of staff
+                        +11  E   +6
+                        +10  D#  +5
+                        +9   D   +5
+                        +8   C#  +4
+                        +7   C   +4
+                        +6   B   +3
+                        +5   A#  +2
+                        +4   A   +2
+                        +3   G#  +1
+                        +2   G   +1
+                        +1   F#  +0
+                         0   F4   0 <-------- bottom of staff
                         -1   E   -1
                         -2   D#  -2
                         -3   D   -2
                         -4   C#  -3 
                         -5   C   -3
                         -6   B   -4
+                        -7   A#  -5
+                        -8   A   -5
+                        -9   G#  -6
+                        -10  G   -6
+                        -11  F#  -7
                       */
                   if (Math.sign(diff) > 0) {
                     // go up (base b4)
                     // remap = [0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6][
                     //   Math.abs(diff) % 12
                     // ];
-                    remap = [0, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6][
-                      Math.abs(diff) % 12
+                    remap = [0,0,1,1,2,2,3,4,4,5,5,6,7][
+                      Math.abs(diff) % 13
                     ];
                   } else {
                     // go down (base b4)
                     // remap = [0, 1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6][
                     //   Math.abs(diff) % 12
                     // ];
-                    remap = [0, 1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6][
+                    remap = [0,1,2,2,3,3,4,5,5,6,6,7][
                       Math.abs(diff) % 12
                     ];
                   }
