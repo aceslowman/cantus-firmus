@@ -6,10 +6,13 @@ const MIDILog = props => {
 
   React.useEffect(() => {
     const handleDeviceLog = m => {
-      console.log("getting message", m);
-      let [noteon, pitch, velocity] = m.data;
-      log.push(`${}`);
-      // log.shift();
+      let [noteon, note, velocity] = m.data;
+      // noteon: 144(on) or 128(off)
+      // pitch: 0-127
+      // velocity: 0-127
+      // log.push(`noteon:${noteon}, pitch:${pitch}, velocity:${velocity} \n`);
+      log.push({noteon, note, velocity});
+      if (log.length > tail_length) log.shift();
       setLog(log);
     };
 
@@ -21,13 +24,26 @@ const MIDILog = props => {
   }, [props.device, log, setLog]);
 
   return (
-    <div
-      style={{
-        overflow: scroll
-      }}
-    >
+    <div>
       <label htmlFor="midilog">MIDI log: </label>
-      {enable && <pre id="midilog">{log}</pre>}
+      {enable && (
+        <table>
+          <th>
+            <td>noteon</td>
+            <td>note</td>
+            <td>velocity</td>
+          </th>
+          {log.map((e, i) => {
+            return (
+              <tr>
+                <td>{e.noteon}</td>
+                <td>{e.note}</td>
+                <td>{e.velocity}</td>
+              </tr>
+            );
+          })}
+        </table>
+      )}
     </div>
   );
 };
