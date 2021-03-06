@@ -122,7 +122,8 @@ const App = () => {
           activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
 
           // console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
-
+          console.log('time', time)
+          console.log('note', note)
           setCurrentStep(
             prev => (prev = (prev + 1) % (sequence.events.length * 4))
           );
