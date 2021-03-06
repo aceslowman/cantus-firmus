@@ -72,23 +72,24 @@ const MusicStaff = props => {
             iter++;
             return (
               <div className="voiceWrapper" key={v_i}>
-                {voices.map((note, n_i) => {
-                  console.log("note", note);
+                <div className="noteWrapper">
+                  {voices.map((note, n_i) => {
+                    console.log("note", note);
 
-                  /*
+                    /*
                     this is unfortunately dependent on my css
                     when the element is positioned bottom:0,
                     the resulting note is F4
                   */
-                  let centernote = Tone.Frequency("F4").toMidi();
+                    let centernote = Tone.Frequency("F4").toMidi();
 
-                  let withoutAccidental = note.replace(/[#b]/, "");
-                  let midinote = Tone.Frequency(withoutAccidental).toMidi();
+                    let withoutAccidental = note.replace(/[#b]/, "");
+                    let midinote = Tone.Frequency(withoutAccidental).toMidi();
 
-                  let diff = midinote - centernote;
-                  let remap;
+                    let diff = midinote - centernote;
+                    let remap;
 
-                  /*
+                    /*
                         these maps are worth some explaining
 
                         I mapped the distance between b4 and the given note,
@@ -137,45 +138,48 @@ const MusicStaff = props => {
                         
                         also note: the modulus is used
                       */
-                  if (Math.sign(diff) > 0) {
-                    // go up (base b4)
-                    // remap = [0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6][
-                    //   Math.abs(diff) % 12
-                    // ];
-                    // go up (base f4)
-                    remap = [0,0,1,1,2,2,3,4,4,5,5,6,7][
-                      Math.abs(diff) % 13
-                    ];
-                  } else {
-                    // go down (base b4)
-                    // remap = [0, 1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6][
-                    //   Math.abs(diff) % 12
-                    // ];
-                    // go down (base f4)
-                    remap = [0,1,2,2,3,3,4,5,5,6,6,7][
-                      Math.abs(diff) % 12
-                    ];
-                  }
+                    if (Math.sign(diff) > 0) {
+                      // go up (base b4)
+                      // remap = [0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6][
+                      //   Math.abs(diff) % 12
+                      // ];
+                      // go up (base f4)
+                      remap = [0, 0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 7][
+                        Math.abs(diff) % 13
+                      ];
+                    } else {
+                      // go down (base b4)
+                      // remap = [0, 1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6][
+                      //   Math.abs(diff) % 12
+                      // ];
+                      // go down (base f4)
+                      remap = [0, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6, 7][
+                        Math.abs(diff) % 12
+                      ];
+                    }
 
-                  // scale this new mapping by the line height and reapply the sign
-                  let position = lineHeight * (remap * Math.sign(diff));
+                    // scale this new mapping by the line height and reapply the sign
+                    let position = lineHeight * (remap * Math.sign(diff));
 
-                  return (
-                    <Note
-                      tabIndex={iter + 1}
-                      key={m_i + "_" + v_i + "_" + n_i}
-                      onKeyDown={e => props.onNoteChange(e, m_i, v_i, n_i)}
-                      value={note}
-                      style={{
-                        height: lineHeight*2,
-                        bottom: 0,
-                        // bottom: position,
-                        backgroundColor:
-                          props.currentStep + 1 === iter ? "#ff5454" : "#602500"
-                      }}
-                    />
-                  );
-                })}
+                    return (
+                      <Note
+                        tabIndex={iter + 1}
+                        key={m_i + "_" + v_i + "_" + n_i}
+                        onKeyDown={e => props.onNoteChange(e, m_i, v_i, n_i)}
+                        value={note}
+                        style={{
+                          height: lineHeight * 2,
+                          bottom: 0,
+                          // bottom: position,
+                          backgroundColor:
+                            props.currentStep + 1 === iter
+                              ? "#ff5454"
+                              : "#602500"
+                        }}
+                      />
+                    );
+                  })}
+                </div>
               </div>
             );
           })}
