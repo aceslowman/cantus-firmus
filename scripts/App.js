@@ -98,7 +98,7 @@ const App = () => {
       let newMeasure = [];
       
       for(let i = 0; i < subdivisions; i++) {
-        newMeasure.push('B4'); // TEMP: TODO: should initialize as REST
+        newMeasure.push(['B4']); // TEMP: TODO: should initialize as REST
       }
       
       setMelody(prev => [...prev, newMeasure])
