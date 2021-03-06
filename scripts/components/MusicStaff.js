@@ -69,67 +69,73 @@ const MusicStaff = props => {
             </div>
           </div>
           {measure.map((voices, v_i) => {
-            return voices.map((note, n_i) => {
-              let centernote = Tone.Frequency("B4").toMidi();
+            return (
+              <div className="voiceWrapper">
+                {voices.map((note, n_i) => {
+                console.log("note", note);
 
-              let withoutAccidental = note.replace(/[#b]/, "");
-              let midinote = Tone.Frequency(withoutAccidental).toMidi();
+                let centernote = Tone.Frequency("B4").toMidi();
 
-              let diff = midinote - centernote;
-              let remap;
+                let withoutAccidental = note.replace(/[#b]/, "");
+                let midinote = Tone.Frequency(withoutAccidental).toMidi();
 
-              /*
-                      these maps are worth some explaining
+                let diff = midinote - centernote;
+                let remap;
 
-                      I mapped the distance between b4 and the given note,
-                      and since notation includes specific half steps 
-                      (b - c, e -f), (w w h w w w h)
+                /*
+                        these maps are worth some explaining
 
-                      ITER    REMAP
-                      +6   F   +4
-                      +5   E   +3
-                      +4   D#  +2
-                      +3   D   +2
-                      +2   C#  +1
-                      +1   C   +1
-                       0   B4   0 <-------- center of staff
-                      -1   A#  -1
-                      -2   A   -1
-                      -3   G#  -2
-                      -4   G   -2 
-                      -5   F#  -3
-                      -6   F   -3
-                    */
-              if (Math.sign(diff) > 0) {
-                // go up
-                remap = [0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6][
-                  Math.abs(diff) % 12
-                ];
-              } else {
-                // go down
-                remap = [0, 1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6][
-                  Math.abs(diff) % 12
-                ];
-              }
+                        I mapped the distance between b4 and the given note,
+                        and since notation includes specific half steps 
+                        (b - c, e -f), (w w h w w w h)
 
-              // scale this new mapping by the line height and reapply the sign
-              let position = lineHeight * (remap * Math.sign(diff));
+                        ITER    REMAP
+                        +6   F   +4
+                        +5   E   +3
+                        +4   D#  +2
+                        +3   D   +2
+                        +2   C#  +1
+                        +1   C   +1
+                         0   B4   0 <-------- center of staff
+                        -1   A#  -1
+                        -2   A   -1
+                        -3   G#  -2
+                        -4   G   -2 
+                        -5   F#  -3
+                        -6   F   -3
+                      */
+                if (Math.sign(diff) > 0) {
+                  // go up
+                  remap = [0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6][
+                    Math.abs(diff) % 12
+                  ];
+                } else {
+                  // go down
+                  remap = [0, 1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6][
+                    Math.abs(diff) % 12
+                  ];
+                }
 
-              iter++;
+                // scale this new mapping by the line height and reapply the sign
+                let position = lineHeight * (remap * Math.sign(diff));
 
-              return (
-                <Note
-                  tabIndex={iter + 1}
-                  key={m_i + "_" + n_i}
-                  onKeyDown={e => props.onNoteChange(e, m_i, n_i)}
-                  value={note}
-                  style={{
-                    bottom: position,
-                    backgroundColor:
-                      props.currentStep + 1 === iter ? "#ff5454" : "#602500"
-                  }}
-                />
-              );
+                iter++;
+
+                return (
+                  <Note
+                    tabIndex={iter + 1}
+                    key={m_i + "_" + n_i}
+                    onKeyDown={e => props.onNoteChange(e, m_i, n_i)}
+                    value={note}
+                    style={{
+                      bottom: position,
+                      backgroundColor:
+                        props.currentStep + 1 === iter ? "#ff5454" : "#602500"
+                    }}
+                  />
+                )}
+                            
+              </div>              
             });
           })}
         </div>
