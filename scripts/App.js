@@ -115,23 +115,27 @@ const App = () => {
       sequence.events = melody;
     } else {
       // set up toneJS to repeat melody in sequence
-      sequence = new Tone.Sequence(
-        (time, note) => {
-          // synth.triggerAttackRelease(note, 0.1, time);
-          // [NOTE ON, NOTE, VELOCITY]
-          activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
+//       sequence = new Tone.Sequence(
+//         (time, note) => {
+//           // synth.triggerAttackRelease(note, 0.1, time);
+//           // [NOTE ON, NOTE, VELOCITY]
+//           activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
 
-          // console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
-          console.log('time', time)
-          console.log('note', note)
-          setCurrentStep(
-            prev => (prev = (prev + 1) % (sequence.events.length * 4))
-          );
-        },
-        melody,
-        "1m"
-      ).start(0);
-    }
+//           // console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
+//           console.log('time', time)
+//           console.log('note', note)
+//           setCurrentStep(
+//             prev => (prev = (prev + 1) % (sequence.events.length * 4))
+//           );
+//         },
+//         melody,
+//         "1m"
+//       ).start(0);
+//     }
+      
+    sequence = new Tone.Part((time, value) => {
+      
+    }, melody)
 
     Tone.Transport.start();
   }, [melody, activeMidiOutput]);
