@@ -140,8 +140,8 @@ const App = () => {
     setLoop(prev => !prev);
   }
 
-  function handleNoteChange(e, measure_id, note_id) {
-    let currentNote = melody[measure_id][note_id];
+  function handleNoteChange(e, measure_id, voice_id, note_id) {
+    let currentNote = melody[measure_id][][note_id];
     let newMelody = [...melody];
 
     switch (e.keyCode) {

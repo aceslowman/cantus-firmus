@@ -139,11 +139,12 @@ body,
   flex-flow: row wrap;
 }
 
-.noteWrapper {
+.voiceWrapper {
   padding: 0px 40px;
   align-self: center;
   width: 100%;
   display: flex;
+  flex-flow:column;
   justify-content: center;
 }
 

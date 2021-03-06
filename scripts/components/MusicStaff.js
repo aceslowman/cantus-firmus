@@ -69,6 +69,7 @@ const MusicStaff = props => {
             </div>
           </div>
           {measure.map((voices, v_i) => {
+            iter++;
             return (
               <div className="voiceWrapper">
                 {voices.map((note, n_i) => {
@@ -119,13 +120,11 @@ const MusicStaff = props => {
                   // scale this new mapping by the line height and reapply the sign
                   let position = lineHeight * (remap * Math.sign(diff));
 
-                  iter++;
-
                   return (
                     <Note
                       tabIndex={iter + 1}
-                      key={m_i + "_" + n_i}
-                      onKeyDown={e => props.onNoteChange(e, m_i, n_i)}
+                      key={m_i + "_" + v_i + "_" + n_i}
+                      onKeyDown={e => props.onNoteChange(e, m_i, v_i, n_i)}
                       value={note}
                       style={{
                         bottom: position,
