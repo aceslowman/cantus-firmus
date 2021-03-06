@@ -134,12 +134,15 @@ const MusicStaff = props => {
                         -9   G#  -6
                         -10  G   -6
                         -11  F#  -7
+                        
+                        also note: the modulus is used
                       */
                   if (Math.sign(diff) > 0) {
                     // go up (base b4)
                     // remap = [0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6][
                     //   Math.abs(diff) % 12
                     // ];
+                    // go up (base f4)
                     remap = [0,0,1,1,2,2,3,4,4,5,5,6,7][
                       Math.abs(diff) % 13
                     ];
@@ -148,6 +151,7 @@ const MusicStaff = props => {
                     // remap = [0, 1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6][
                     //   Math.abs(diff) % 12
                     // ];
+                    // go down (base f4)
                     remap = [0,1,2,2,3,3,4,5,5,6,6,7][
                       Math.abs(diff) % 12
                     ];
@@ -164,8 +168,8 @@ const MusicStaff = props => {
                       value={note}
                       style={{
                         height: lineHeight*2,
-                        // bottom: 0,
-                        bottom: position,
+                        bottom: 0,
+                        // bottom: position,
                         backgroundColor:
                           props.currentStep + 1 === iter ? "#ff5454" : "#602500"
                       }}

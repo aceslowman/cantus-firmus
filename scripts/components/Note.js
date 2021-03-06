@@ -10,6 +10,7 @@ const Note = props => {
   }
 
   return (
+    <div className="noteWrapper">
       <div
         className="note"
         onFocus={checkIfSelected}
@@ -24,5 +25,6 @@ const Note = props => {
       >
         {props.value}
       </div>
+    </div>
   );
 };
