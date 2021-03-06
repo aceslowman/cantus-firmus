@@ -12,7 +12,6 @@ const MIDILog = props => {
       // noteon: 144(on) or 128(off)
       // pitch: 0-127
       // velocity: 0-127
-      // log.push(`noteon:${noteon}, pitch:${pitch}, velocity:${velocity} \n`);
       log.push({ noteon, note, velocity });
       if (log.length > tail_length) log.shift();
       setLog(log);
