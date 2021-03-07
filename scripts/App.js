@@ -1,11 +1,17 @@
 /* global Tone, ReactDOM, React */
 const App = () => {
   let [melody, setMelody] = React.useState([
-    [["C4","G4"], ["D4"], ["E4"], ["F#4"]],
+    [["C4", "G4"], ["D4"], ["E4"], ["F#4"]],
     [["G4"], ["A#4"], ["G4"], ["B4"]],
     [["A#4"], ["G4"], ["F#4"], ["B4"]]
   ]);
   
+  let [part, setPart] = React.useState([{
+    "time": 0,
+    "note": "C3",
+    "velocity": "0.5"
+  }])
+
   let [numBars, setNumBars] = React.useState(3);
   let [loop, setLoop] = React.useState(false);
   let [bpm, setBPM] = React.useState(120);
@@ -96,15 +102,15 @@ const App = () => {
   React.useEffect(() => {
     if (numBars > melody.length) {
       let newMeasure = [];
-      
-      for(let i = 0; i < subdivisions; i++) {
-        newMeasure.push(['B4']); // TEMP: TODO: should initialize as REST
+
+      for (let i = 0; i < subdivisions; i++) {
+        newMeasure.push(["B4"]); // TEMP: TODO: should initialize as REST
       }
-      
-      setMelody(prev => [...prev, newMeasure])
-    } else if (numBars < melody.length && numBars > 0) {      
-      setMelody(prev => prev.splice(-1,1));
-    } 
+
+      setMelody(prev => [...prev, newMeasure]);
+    } else if (numBars < melody.length && numBars > 0) {
+      setMelody(prev => prev.splice(-1, 1));
+    }
   }, [numBars, melody]);
 
   /* create and update melody */
@@ -115,27 +121,38 @@ const App = () => {
       sequence.events = melody;
     } else {
       // set up toneJS to repeat melody in sequence
-//       sequence = new Tone.Sequence(
-//         (time, note) => {
-//           // synth.triggerAttackRelease(note, 0.1, time);
-//           // [NOTE ON, NOTE, VELOCITY]
-//           activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
+      sequence = new Tone.Sequence(
+        (time, note) => {
+          // synth.triggerAttackRelease(note, 0.1, time);
+          // [NOTE ON, NOTE, VELOCITY]
+          activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
 
-//           // console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
-//           console.log('time', time)
-//           console.log('note', note)
-//           setCurrentStep(
-//             prev => (prev = (prev + 1) % (sequence.events.length * 4))
-//           );
-//         },
-//         melody,
-//         "1m"
-//       ).start(0);
-//     }
+          console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
+          // console.log("time", time);
+          // console.log("note", note);
+          setCurrentStep(
+            prev => (prev = (prev + 1) % (sequence.events.length * 4))
+          );
+        },
+        melody,
+        "1m"
+      ).start(0);
       
-    sequence = new Tone.Part((time, value) => {
       
-    }, melody)
+      
+      // use an array of objects as long as the object has a "time" attribute
+      sequence = new Tone.Part((time, value) => {
+        console.log('value',value)
+        // the value is an object which contains both the note and the velocity
+        synth.triggerAttackRelease(
+          value.note,
+          "8n",
+          // value.duration,
+          time,
+          value.velocity
+        );
+      }, events).start(0);
+    }
 
     Tone.Transport.start();
   }, [melody, activeMidiOutput]);
@@ -180,7 +197,7 @@ const App = () => {
 
   const handleMidiOutputChange = e =>
     setActiveMidiOutput(midiOutputs[e.target.value]);
-  
+
   const handleJitterAmountChange = e => setJitterAmount(e.target.value);
 
   const handleTogglePlay = e => {
