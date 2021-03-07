@@ -1,68 +1,10 @@
 /* global Tone, ReactDOM, React */
 const App = () => {
   let [melody, setMelody] = React.useState([
-    [["C4", "G4"], ["D4"], ["E4"], ["F#4"]],
-    [["G4"], ["A#4"], ["G4"], ["B4"]],
-    [["A#4"], ["G4"], ["F#4"], ["B4"]]
+    [[{0:"C4", 1:"G4"}], [{0:"D4"}], [{0:"E4"}], [{0:"F#4"}]],
+    [[{0:"G4"}], [{0:"A#4"}], [{0:"G4"}], [{0:"B4"}]],
+    [[{0:"A#4"}], [{0:"G4"}], [{0:"F#4"}], [{0:"B4"}]]
   ]);
-  
-  let [events, setEvents] = React.useState([
-    {
-      "time": 0,
-      "notes": ["C4", "G4"],
-    }, 
-    {
-      "time": 0,
-      "notes": ["D4"],
-    }, 
-    {
-      "time": 0,
-      "notes": ["E4"],
-    }, 
-    {
-      "time": 0,
-      "notes": ["F#4"],
-    },
-    {
-      "time": 0,
-      "notes": ["G4"],
-    }, 
-    {
-      "time": 0,
-      "notes": ["A#4"],
-    }, 
-    {
-      "time": 0,
-      "notes": ["G4"],
-    }, 
-    {
-      "time": 0,
-      "notes": ["B4"],
-    },
-    {
-      "time": 0,
-      "notes": ["A#4"],
-    }, 
-    {
-      "time": 0,
-      "notes": ["G4"],
-    }, 
-    {
-      "time": 0,
-      "notes": ["F#4"],
-    }, 
-    {
-      "time": 0,
-      "notes": ["B4"],
-    }
-  ]);
-  
-  // {
-  //   "time": 0,
-  //   "note": "C3",
-  //   "velocity": "0.5"
-  // }
-  // let [part, setPart] = React.useState([]);
 
   let [numBars, setNumBars] = React.useState(3);
   let [loop, setLoop] = React.useState(false);
@@ -190,23 +132,7 @@ const App = () => {
         melody,
         "1m"
       ).start(0);
-      
-      
-      
-      // use an array of objects as long as the object has a "time" attribute
-      part = new Tone.Part((time, value) => {
-        console.log('value',value)
-        // the value is an object which contains both the note and the velocity
-        synth.triggerAttackRelease(
-          value.note,
-          "8n",
-          // value.duration,
-          time,
-          value.velocity
-        );
-      }, events).start(0);
     }
-
     Tone.Transport.start();
   }, [melody, activeMidiOutput]);
 
@@ -310,7 +236,6 @@ const App = () => {
         jitterAmount={jitterAmount}
       />
       <MusicStaff
-        events={events}
         melody={melody}
         onNoteChange={handleNoteChange}
         currentStep={currentStep}

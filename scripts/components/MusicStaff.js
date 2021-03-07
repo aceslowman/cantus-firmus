@@ -80,7 +80,8 @@ const MusicStaff = props => {
                 key={v_i}
               >
                 <div className="noteWrapper">
-                  {voices.map((note, n_i) => {
+                  {voices.map((voice, n_i) => {
+                    let note = voice[0];
                     console.log("note", note);
 
                     let centernote = Tone.Frequency("B4").toMidi();
