@@ -1,7 +1,7 @@
 /* global Tone, ReactDOM, React */
 const App = () => {
   /*
-    this format isn't the best but it works with Tone.js
+    this melody format isn't the best but it works with Tone.js
     
     the idea is that each array element is a measure,
     within the measure are voices. 
@@ -130,7 +130,6 @@ const App = () => {
       sequence = new Tone.Sequence(
         (time, voice) => {
           let note = voice[0]; // send first note of voicing
-          console.log("note", note);
           // synth.triggerAttackRelease(note, 0.1, time);
           // [NOTE ON, NOTE, VELOCITY]
           // TODO: spit out multiple voicings to make polyphonic
@@ -156,8 +155,6 @@ const App = () => {
   function handleNoteChange(e, measure_id, beat_id, voice_id) {
     let currentNote = melody[measure_id][beat_id][0][voice_id];
     let newMelody = [...melody];
-
-    // e, m_i, b_i, v_i, n_i
 
     switch (e.keyCode) {
       case 37: // prev note
@@ -208,31 +205,26 @@ const App = () => {
     }
   };
 
-  const handleRandomize = (e, type = "jitter") => {
+  const handleRandomJitter = (e) => {
     /*
       random techniques...
       
       jitter: move notes up or down at random, in variable steps
       drunk: step up or down from the beginning within a certain range
+      shuffle: keep notes and voices intact, but change order and position
     */
-    let jitter_amount = 2;
-
     setMelody(
       melody.map((measure, m_i) =>
         measure.map((beat, b_i) =>
-          beat.map((voice, v_i) => {
-            let v = {};
-        
-            Object.keys(voice).forEach((n, n_i) => {
+          beat.map((voice, v_i) => ({
+            ...Object.keys(voice).map((n, n_i) => {
               let note = voice[n];
-              let tr = (Math.random() * 2 - 1) * jitter_amount;
-              v[n] = Tone.Frequency(note)
+              let tr = (Math.random() * 2 - 1) * jitterAmount;
+              return Tone.Frequency(note)
                 .transpose(tr)
                 .toNote();
-            });
-
-            return v;
-          })
+            })
+          }))
         )
       )
     );
@@ -247,7 +239,8 @@ const App = () => {
         onToggleLoop={handleLoopToggle}
         onNumBarsChange={handleNumBarsChange}
         onBPMChange={handleBPMChange}
-        onRandomize={handleRandomize}
+        onRandomJitter={handleRandomJitter}        
+        onJitterAmountChange={handleJitterAmountChange}
         bpm={bpm}
         loop={loop}
         numBars={numBars}
@@ -257,7 +250,6 @@ const App = () => {
         activeMidiInput={activeMidiInput}
         activeMidiOutput={activeMidiOutput}
         currentStep={currentStep}
-        onJitterAmountChange={handleJitterAmountChange}
         jitterAmount={jitterAmount}
       />
       <MusicStaff

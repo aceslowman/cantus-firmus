@@ -56,7 +56,7 @@ const Settings = props => {
             value={props.jitterAmount}
           />
 
-          <button onClick={props.onRandomize} className="randomizeButton">
+          <button onClick={props.onRandomJitter} className="randomizeButton">
             random jitter
           </button>
         </div>
