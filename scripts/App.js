@@ -1,5 +1,16 @@
 /* global Tone, ReactDOM, React */
 const App = () => {
+  /*
+    this format isn't the best but it works with Tone.js
+    
+    the idea is that each array element is a measure,
+    within the measure are voices. 
+    
+    due to the way that Tone.js Sequence handles nested arrays,
+    I'm creating objects with number keys, so they behave the 
+    same way, but don't get caught up in the Tone.js Sequence
+    process.
+  */
   let [melody, setMelody] = React.useState([
     [[{0:"C4", 1:"G4"}], [{0:"D4"}], [{0:"E4"}], [{0:"F#4"}]],
     [[{0:"G4"}], [{0:"A#4"}], [{0:"G4"}], [{0:"B4"}]],
@@ -141,22 +152,22 @@ const App = () => {
     setLoop(prev => !prev);
   }
 
-  function handleNoteChange(e, measure_id, voice_id, note_id) {
-//     new format needs to separate each event
-    // let currentNote = Melody[]
-    let currentNote = melody[measure_id][voice_id][note_id];
+  function handleNoteChange(e, measure_id, beat_id, voice_id) {
+    let currentNote = melody[measure_id][beat_id][0][voice_id];
     let newMelody = [...melody];
+    
+    // e, m_i, b_i, v_i, n_i
 
     switch (e.keyCode) {
       case 37: // prev note
         break;
       case 38: // note up
-        newMelody[measure_id][voice_id][note_id] = Tone.Frequency(currentNote)
+        newMelody[measure_id][beat_id][0][voice_id] = Tone.Frequency(currentNote)
           .transpose(1)
           .toNote();
         break;
       case 40: // note down
-        newMelody[measure_id][voice_id][note_id] = Tone.Frequency(currentNote)
+        newMelody[measure_id][beat_id][0][voice_id] = Tone.Frequency(currentNote)
           .transpose(-1)
           .toNote();
         break;
