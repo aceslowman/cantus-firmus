@@ -128,14 +128,15 @@ const App = () => {
     } else {
       // set up toneJS to repeat melody in sequence
       sequence = new Tone.Sequence(
-        (time, note) => {
+        (time, voice) => {
+          let note = voice[0]; // send first note of voicing
+          
           // synth.triggerAttackRelease(note, 0.1, time);
           // [NOTE ON, NOTE, VELOCITY]
+          // TODO: spit out multiple voicings to make polyphonic
           activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
+          // console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
 
-          console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
-          // console.log("time", time);
-          // console.log("note", note);
           setCurrentStep(
             prev => (prev = (prev + 1) % (sequence.events.length * 4))
           );

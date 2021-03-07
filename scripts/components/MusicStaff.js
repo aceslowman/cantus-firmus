@@ -20,8 +20,6 @@ const MusicStaff = props => {
   // resize with window
   React.useEffect(() => {}, []);
   
-  console.log('MELODY', props.melody)
-
   let iter = 0;
   let measures =
     ready &&
@@ -47,6 +45,7 @@ const MusicStaff = props => {
           {isFirstMeasure && (
             <img
               className="CLEF"
+              alt="treble clef"
               style={{
                 height: lineRef.current.getBoundingClientRect().height * 2
               }}
@@ -85,8 +84,6 @@ const MusicStaff = props => {
                   {beats.map((voice, v_i) => {
                     return Object.keys(voice).map((n, n_i) => {
                       let note = voice[n];
-                      
-                      console.log("note", note);
 
                       let centernote = Tone.Frequency("B4").toMidi();
 
@@ -139,8 +136,7 @@ const MusicStaff = props => {
                         <Note
                           tabIndex={iter + 1}
                           key={m_i + "_" + b_i + "_" + v_i + "_" + n_i}
-
-                          onKeyDown={e => props.onNoteChange(e, m_i, b_i, v_i, n_i)}
+                          onKeyDown={e => props.onNoteChange(e, m_i, b_i, n_i)}
                           value={note}
                           style={{
                             height: lineHeight * 2,
