@@ -12,9 +12,9 @@ const App = () => {
     process.
   */
   let [melody, setMelody] = React.useState([
-    [[{0:"C4", 1:"G4"}], [{0:"D4"}], [{0:"E4"}], [{0:"F#4"}]],
-    [[{0:"G4"}], [{0:"A#4"}], [{0:"G4"}], [{0:"B4"}]],
-    [[{0:"A#4"}], [{0:"G4"}], [{0:"F#4"}], [{0:"B4"}]]
+    [[{ 0: "C4", 1: "G4" }], [{ 0: "D4" }], [{ 0: "E4" }], [{ 0: "F#4" }]],
+    [[{ 0: "G4" }], [{ 0: "A#4" }], [{ 0: "G4" }], [{ 0: "B4" }]],
+    [[{ 0: "A#4" }], [{ 0: "G4" }], [{ 0: "F#4" }], [{ 0: "B4" }]]
   ]);
 
   let [numBars, setNumBars] = React.useState(3);
@@ -130,7 +130,7 @@ const App = () => {
       sequence = new Tone.Sequence(
         (time, voice) => {
           let note = voice[0]; // send first note of voicing
-          
+          console.log("note", note);
           // synth.triggerAttackRelease(note, 0.1, time);
           // [NOTE ON, NOTE, VELOCITY]
           // TODO: spit out multiple voicings to make polyphonic
@@ -156,19 +156,23 @@ const App = () => {
   function handleNoteChange(e, measure_id, beat_id, voice_id) {
     let currentNote = melody[measure_id][beat_id][0][voice_id];
     let newMelody = [...melody];
-    
+
     // e, m_i, b_i, v_i, n_i
 
     switch (e.keyCode) {
       case 37: // prev note
         break;
       case 38: // note up
-        newMelody[measure_id][beat_id][0][voice_id] = Tone.Frequency(currentNote)
+        newMelody[measure_id][beat_id][0][voice_id] = Tone.Frequency(
+          currentNote
+        )
           .transpose(1)
           .toNote();
         break;
       case 40: // note down
-        newMelody[measure_id][beat_id][0][voice_id] = Tone.Frequency(currentNote)
+        newMelody[measure_id][beat_id][0][voice_id] = Tone.Frequency(
+          currentNote
+        )
           .transpose(-1)
           .toNote();
         break;
@@ -214,14 +218,23 @@ const App = () => {
     let jitter_amount = 2;
 
     setMelody(
-      melody.map((measure, m_i) => {
-        return measure.map((note, n_i) => {
-          let tr = (Math.random() * 2 - 1) * jitter_amount;
-          return Tone.Frequency(note)
-            .transpose(tr)
-            .toNote();
-        });
-      })
+      melody.map((measure, m_i) =>
+        measure.map((beat, b_i) =>
+          beat.map((voice, v_i) => {
+            let v = {};
+        
+            Object.keys(voice).forEach((n, n_i) => {
+              let note = voice[n];
+              let tr = (Math.random() * 2 - 1) * jitter_amount;
+              v[n] = Tone.Frequency(note)
+                .transpose(tr)
+                .toNote();
+            });
+
+            return v;
+          })
+        )
+      )
     );
   };
 
