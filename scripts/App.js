@@ -6,11 +6,63 @@ const App = () => {
     [["A#4"], ["G4"], ["F#4"], ["B4"]]
   ]);
   
-  let [part, setPart] = React.useState([{
-    "time": 0,
-    "note": "C3",
-    "velocity": "0.5"
-  }])
+  let [events, setEvents] = React.useState([
+    {
+      "time": 0,
+      "notes": ["C4", "G4"],
+    }, 
+    {
+      "time": 0,
+      "notes": ["D4"],
+    }, 
+    {
+      "time": 0,
+      "notes": ["E4"],
+    }, 
+    {
+      "time": 0,
+      "notes": ["F#4"],
+    },
+    {
+      "time": 0,
+      "notes": ["G4"],
+    }, 
+    {
+      "time": 0,
+      "notes": ["A#4"],
+    }, 
+    {
+      "time": 0,
+      "notes": ["G4"],
+    }, 
+    {
+      "time": 0,
+      "notes": ["B4"],
+    },
+    {
+      "time": 0,
+      "notes": ["A#4"],
+    }, 
+    {
+      "time": 0,
+      "notes": ["G4"],
+    }, 
+    {
+      "time": 0,
+      "notes": ["F#4"],
+    }, 
+    {
+      "time": 0,
+      "notes": ["B4"],
+    }
+  ]);
+  
+  // {
+  //   "time": 0,
+  //   "note": "C3",
+  //   "velocity": "0.5"
+  // }
+  // let [part, setPart] = React.useState([]);
 
   let [numBars, setNumBars] = React.useState(3);
   let [loop, setLoop] = React.useState(false);
@@ -27,6 +79,7 @@ const App = () => {
 
   const synth = new Tone.Synth().toDestination();
   let sequence;
+  let part;
 
   /*
     set up keybindings
@@ -141,7 +194,7 @@ const App = () => {
       
       
       // use an array of objects as long as the object has a "time" attribute
-      sequence = new Tone.Part((time, value) => {
+      part = new Tone.Part((time, value) => {
         console.log('value',value)
         // the value is an object which contains both the note and the velocity
         synth.triggerAttackRelease(
@@ -163,6 +216,8 @@ const App = () => {
   }
 
   function handleNoteChange(e, measure_id, voice_id, note_id) {
+//     new format needs to separate each event
+    // let currentNote = Melody[]
     let currentNote = melody[measure_id][voice_id][note_id];
     let newMelody = [...melody];
 
@@ -255,6 +310,7 @@ const App = () => {
         jitterAmount={jitterAmount}
       />
       <MusicStaff
+        events={events}
         melody={melody}
         onNoteChange={handleNoteChange}
         currentStep={currentStep}
