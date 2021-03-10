@@ -127,43 +127,42 @@ const App = () => {
       let newMeasure = [];
 
       for (let i = 0; i < subdivisions; i++) {
-        newMeasure.push([{0:"B4"}]); // TEMP: TODO: should initialize as REST
+        newMeasure.push([{ 0: "B4" }]); // TEMP: TODO: should initialize as REST
       }
 
       setMelody(prev => [...prev, newMeasure]);
     } else if (numBars < melody.length && numBars > 0) {
-      setMelody(prev => {prev.splice(-1, 1); return prev});
+      setMelody(prev => {
+        prev.splice(-1, 1);
+        return prev;
+      });
     }
   }, [numBars, melody]);
 
   /* create and update melody */
   React.useEffect(() => {
     if (ready) {
+      const seqCallback = (time, voice) => {
+        let note = voice[0]; // send first note of voicing
+        // synth.triggerAttackRelease(note, 0.1, time);
+        // [NOTE ON, NOTE, VELOCITY]
+        // TODO: spit out multiple voicings to make polyphonic
+        activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
+        // console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
+        setCurrentStep(prev => (prev = (prev + 1) % (numBars * 4)));
+      };
+
       if (sequence) {
         Tone.Transport.cancel();
         sequence.events = melody;
+        sequence.callback = seqCallback;
       } else {
         // set up toneJS to repeat melody in sequence
-        setSequence(
-          new Tone.Sequence(
-            (time, voice) => {
-              let note = voice[0]; // send first note of voicing
-              // synth.triggerAttackRelease(note, 0.1, time);
-              // [NOTE ON, NOTE, VELOCITY]
-              // TODO: spit out multiple voicings to make polyphonic
-              activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
-              // console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
-
-              setCurrentStep(prev => (prev = (prev + 1) % (melody.length * 4)));
-            },
-            melody,
-            "1m"
-          )
-        );
+        setSequence(seq => new Tone.Sequence(seqCallback, melody, "1m"));
       }
       Tone.Transport.start();
     }
-  }, [melody, ready, sequence]);
+  }, [melody, ready, sequence, numBars, setCurrentStep]);
   // NOTE: adding activeMidiOutput to the group causes way too many calls
 
   function handleLoopToggle(e) {
