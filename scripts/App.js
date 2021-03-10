@@ -31,7 +31,6 @@ const App = () => {
   let [jitterAmount, setJitterAmount] = React.useState(2);
   let [ready, setReady] = React.useState(false);
 
-  
   let [sequence, setSequence] = React.useState();
   let synth;
 
@@ -39,11 +38,9 @@ const App = () => {
     set up keybindings
   */
   React.useEffect(() => {
-    console.log("seq", sequence);
     const keybindings = e => {
       switch (e.keyCode) {
         case 32: // space bar
-          console.log("sequence", sequence);
           handleTogglePlay();
           break;
         default:
@@ -53,7 +50,7 @@ const App = () => {
 
     document.addEventListener("keydown", keybindings, false);
     return () => document.removeEventListener("keydown", keybindings, false);
-  }, [handleTogglePlay, sequence]);
+  }, [handleTogglePlay, sequence, setIsPlaying, isPlaying]);
 
   /*
     startup audio context
@@ -62,9 +59,9 @@ const App = () => {
     const startAudioContext = async () => {
       await Tone.start();
       console.log("audio context has started");
-      setReady(true);
-      synth = new Tone.Synth().toDestination();
       Tone.Transport.bpm.value = parseFloat(bpm);
+      synth = new Tone.Synth().toDestination();
+      setReady(true);
     };
 
     if (!ready) {
@@ -130,40 +127,39 @@ const App = () => {
       let newMeasure = [];
 
       for (let i = 0; i < subdivisions; i++) {
-        newMeasure.push(["B4"]); // TEMP: TODO: should initialize as REST
+        newMeasure.push([{0:"B4"}]); // TEMP: TODO: should initialize as REST
       }
 
       setMelody(prev => [...prev, newMeasure]);
     } else if (numBars < melody.length && numBars > 0) {
-      setMelody(prev => prev.splice(-1, 1));
+      setMelody(prev => {prev.splice(-1, 1); return prev});
     }
   }, [numBars, melody]);
 
   /* create and update melody */
   React.useEffect(() => {
-    console.log("hello");
     if (ready) {
       if (sequence) {
         Tone.Transport.cancel();
         sequence.events = melody;
       } else {
         // set up toneJS to repeat melody in sequence
-        setSequence(new Tone.Sequence(
-          (time, voice) => {
-            let note = voice[0]; // send first note of voicing
-            // synth.triggerAttackRelease(note, 0.1, time);
-            // [NOTE ON, NOTE, VELOCITY]
-            // TODO: spit out multiple voicings to make polyphonic
-            activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
-            // console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
+        setSequence(
+          new Tone.Sequence(
+            (time, voice) => {
+              let note = voice[0]; // send first note of voicing
+              // synth.triggerAttackRelease(note, 0.1, time);
+              // [NOTE ON, NOTE, VELOCITY]
+              // TODO: spit out multiple voicings to make polyphonic
+              activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
+              // console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
 
-            setCurrentStep(
-              prev => (prev = (prev + 1) % (melody.length * 4))
-            );
-          },
-          melody,
-          "1m"
-        ));
+              setCurrentStep(prev => (prev = (prev + 1) % (melody.length * 4)));
+            },
+            melody,
+            "1m"
+          )
+        );
       }
       Tone.Transport.start();
     }
@@ -218,12 +214,10 @@ const App = () => {
   const handleJitterAmountChange = e => setJitterAmount(e.target.value);
 
   const handleTogglePlay = e => {
-    if (sequence.state === "started") {
-      console.log("stop");
+    if (isPlaying) {
       sequence.stop();
       setIsPlaying(false);
     } else {
-      console.log("play");
       sequence.start();
       setIsPlaying(true);
     }
