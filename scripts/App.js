@@ -30,7 +30,7 @@ const App = () => {
   let [subdivisions, setSubdivisions] = React.useState(4);
   let [jitterAmount, setJitterAmount] = React.useState(2);
 
-  const synth = new Tone.Synth().toDestination();
+  let synth = null
   let sequence;
 
   /*
@@ -121,9 +121,9 @@ const App = () => {
 
   /* create and update melody */
   React.useEffect(() => {
-    if (Tone.Transport.state !== "started") return
+    // if (Tone.Transport.state !== "started") return
     
-    Tone.Transport.cancel();
+    // Tone.Transport.cancel();
 
     if (sequence) {
       sequence.events = melody;
@@ -135,7 +135,7 @@ const App = () => {
           // synth.triggerAttackRelease(note, 0.1, time);
           // [NOTE ON, NOTE, VELOCITY]
           // TODO: spit out multiple voicings to make polyphonic
-          activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
+          // activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
           // console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
 
           setCurrentStep(
@@ -146,7 +146,7 @@ const App = () => {
         "1m"
       ).start(0);
     }
-    Tone.Transport.start();
+    // Tone.Transport.start();
   }, [melody, activeMidiOutput]);
 
   function handleLoopToggle(e) {
@@ -203,6 +203,8 @@ const App = () => {
     } else {
       Tone.start();
       Tone.Transport.start();
+      synth = new Tone.Synth().toDestination();
+      Tone.context.resume();
       setIsPlaying(true);
     }
   };
