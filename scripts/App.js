@@ -105,6 +105,7 @@ const App = () => {
     Tone.Transport.bpm.value = parseFloat(bpm);
   }, [bpm]);
 
+  /* insert new measures */
   React.useEffect(() => {
     if (numBars > melody.length) {
       let newMeasure = [];
