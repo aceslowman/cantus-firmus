@@ -143,13 +143,11 @@ const App = () => {
   React.useEffect(() => {
     if (ready) {
       const seqCallback = (time, voice) => {
-        let note = voice[0]; // send first note of voicing
-        // synth.triggerAttackRelease(note, 0.1, time);
-        // [NOTE ON, NOTE, VELOCITY]
-        // TODO: spit out multiple voicings to make polyphonic
+        let note = voice[0]; // send first note of voicing        
+        // [NOTE ON, NOTE, VELOCITY]        
         activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
-        // console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
         setCurrentStep(prev => (prev = (prev + 1) % (numBars * 4)));
+        // synth.triggerAttackRelease(note, 0.1, time);
       };
 
       if (sequence) {
@@ -157,9 +155,9 @@ const App = () => {
         sequence.events = melody;
         sequence.callback = seqCallback;
       } else {
-        // set up toneJS to repeat melody in sequence
         setSequence(seq => new Tone.Sequence(seqCallback, melody, "1m"));
       }
+      
       Tone.Transport.start();
     }
   }, [melody, ready, sequence, numBars, setCurrentStep]);
