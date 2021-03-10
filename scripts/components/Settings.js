@@ -72,7 +72,7 @@ const Settings = props => {
             {props.isPlaying ? "stop" : "play"}
           </button>
         </div>
-        <div className="inputGroup">
+        {/* <div className="inputGroup">
           <label htmlFor="midiinputs">Midi Input</label>
           <select
             name="midiinputs"
@@ -90,7 +90,7 @@ const Settings = props => {
               })}
           </select>
           <MIDILog device={props.activeMidiInput} />
-        </div>
+        </div>*/}
         <div className="inputGroup">
           <label htmlFor="midioutputs">Midi Output</label>
           <select
@@ -107,7 +107,7 @@ const Settings = props => {
                   </option>
                 );
               })}
-          </select>          
+          </select>
           <MIDILog device={props.activeMidiOutput} />
         </div>
       </div>

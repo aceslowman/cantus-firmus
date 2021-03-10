@@ -84,10 +84,10 @@ const App = () => {
             };
           }
 
-          setMidiInputs(inputs);
+          // setMidiInputs(inputs);
           setMidiOutputs(outputs);
 
-          setActiveMidiInput(inputs[Object.keys(inputs)[0]]);
+          // setActiveMidiInput(inputs[Object.keys(inputs)[0]]);
           setActiveMidiOutput(outputs[Object.keys(outputs)[0]]);
 
           access.onstatechange = function(e) {
