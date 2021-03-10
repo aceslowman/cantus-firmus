@@ -41,9 +41,8 @@ const App = () => {
       switch (e.keyCode) {
         case 32: // space bar
           handleTogglePlay();
+          break;
         default:
-          console.log('something was pressed')
-          
           break;
       }
     };
@@ -51,6 +50,24 @@ const App = () => {
     document.addEventListener("keydown", keybindings, false);
     return () => document.removeEventListener("keydown", keybindings, false);
   }, [handleTogglePlay]);
+
+  /*
+    startup audio context
+  */
+  React.useEffect(() => {
+    const startAudioContext = async () => {
+      await Tone.start();
+      console.log("audio context has started");
+      setReady(true);
+    };
+
+    if (!ready) {
+      document.addEventListener("click", startAudioContext);
+      return () => document.removeEventListener("click", startAudioContext);
+    } else {
+      document.removeEventListener("click", startAudioContext);
+    }
+  }, [ready, synth]);
 
   /*
     set up midi
@@ -95,8 +112,7 @@ const App = () => {
   }, [midiInputs, midiOutputs]);
 
   React.useEffect(() => {
-    if(ready)
-      Tone.Transport.bpm.value = parseFloat(bpm);
+    if (ready) Tone.Transport.bpm.value = parseFloat(bpm);
   }, [bpm]);
 
   /* insert new measures */
