@@ -31,6 +31,7 @@ const App = () => {
   let [jitterAmount, setJitterAmount] = React.useState(2);
   let [ready, setReady] = React.useState(false);
 
+  
   let [sequence, setSequence] = React.useState();
   let synth;
 
@@ -38,10 +39,11 @@ const App = () => {
     set up keybindings
   */
   React.useEffect(() => {
-    const keybindings = function(e) {
+    console.log("seq", sequence);
+    const keybindings = e => {
       switch (e.keyCode) {
         case 32: // space bar
-          console.log('sequence', sequence)
+          console.log("sequence", sequence);
           handleTogglePlay();
           break;
         default:
@@ -146,7 +148,7 @@ const App = () => {
         sequence.events = melody;
       } else {
         // set up toneJS to repeat melody in sequence
-        sequence = new Tone.Sequence(
+        setSequence(new Tone.Sequence(
           (time, voice) => {
             let note = voice[0]; // send first note of voicing
             // synth.triggerAttackRelease(note, 0.1, time);
@@ -156,16 +158,16 @@ const App = () => {
             // console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
 
             setCurrentStep(
-              prev => (prev = (prev + 1) % (sequence.events.length * 4))
+              prev => (prev = (prev + 1) % (melody.length * 4))
             );
           },
           melody,
           "1m"
-        );
+        ));
       }
       Tone.Transport.start();
     }
-  }, [melody, ready]);
+  }, [melody, ready, sequence]);
   // NOTE: adding activeMidiOutput to the group causes way too many calls
 
   function handleLoopToggle(e) {
