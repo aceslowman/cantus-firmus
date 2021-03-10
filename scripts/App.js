@@ -29,9 +29,9 @@ const App = () => {
   let [isPlaying, setIsPlaying] = React.useState(false);
   let [subdivisions, setSubdivisions] = React.useState(4);
   let [jitterAmount, setJitterAmount] = React.useState(2);
+  let [ready, setReady] = React.useState(false);
 
-  let synth = null
-  let sequence;
+  let synth, sequence;
 
   /*
     set up keybindings
@@ -40,23 +40,17 @@ const App = () => {
     const keybindings = function(e) {
       switch (e.keyCode) {
         case 32: // space bar
-          if (Tone.Transport.state === "started") {
-            Tone.Transport.stop();
-            setIsPlaying(false);
-          } else {
-            Tone.start();
-            Tone.Transport.start();
-            setIsPlaying(true);
-          }
-          break;
+          handleTogglePlay();
         default:
+          console.log('something was pressed')
+          
           break;
       }
     };
 
     document.addEventListener("keydown", keybindings, false);
     return () => document.removeEventListener("keydown", keybindings, false);
-  }, []);
+  }, [handleTogglePlay]);
 
   /*
     set up midi
@@ -85,7 +79,7 @@ const App = () => {
 
           // setMidiInputs(inputs);
           setMidiOutputs(outputs);
-  
+
           // setActiveMidiInput(inputs[Object.keys(inputs)[0]]);
           setActiveMidiOutput(outputs[Object.keys(outputs)[0]]);
 
@@ -101,7 +95,8 @@ const App = () => {
   }, [midiInputs, midiOutputs]);
 
   React.useEffect(() => {
-    Tone.Transport.bpm.value = parseFloat(bpm);
+    if(ready)
+      Tone.Transport.bpm.value = parseFloat(bpm);
   }, [bpm]);
 
   /* insert new measures */
@@ -121,33 +116,35 @@ const App = () => {
 
   /* create and update melody */
   React.useEffect(() => {
-    // if (Tone.Transport.state !== "started") return
-    
-    // Tone.Transport.cancel();
+    if (ready) {
+      // if (Tone.Transport.state !== "started") return
 
-    if (sequence) {
-      sequence.events = melody;
-    } else {
-      // set up toneJS to repeat melody in sequence
-      sequence = new Tone.Sequence(
-        (time, voice) => {
-          let note = voice[0]; // send first note of voicing
-          // synth.triggerAttackRelease(note, 0.1, time);
-          // [NOTE ON, NOTE, VELOCITY]
-          // TODO: spit out multiple voicings to make polyphonic
-          // activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
-          // console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
+      // Tone.Transport.cancel();
 
-          setCurrentStep(
-            prev => (prev = (prev + 1) % (sequence.events.length * 4))
-          );
-        },
-        melody,
-        "1m"
-      ).start(0);
+      if (sequence) {
+        sequence.events = melody;
+      } else {
+        // set up toneJS to repeat melody in sequence
+        sequence = new Tone.Sequence(
+          (time, voice) => {
+            let note = voice[0]; // send first note of voicing
+            // synth.triggerAttackRelease(note, 0.1, time);
+            // [NOTE ON, NOTE, VELOCITY]
+            // TODO: spit out multiple voicings to make polyphonic
+            // activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
+            // console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
+
+            setCurrentStep(
+              prev => (prev = (prev + 1) % (sequence.events.length * 4))
+            );
+          },
+          melody,
+          "1m"
+        ).start(0);
+      }
+      // Tone.Transport.start();
     }
-    // Tone.Transport.start();
-  }, [melody, activeMidiOutput]);
+  }, [melody, activeMidiOutput, ready]);
 
   function handleLoopToggle(e) {
     if (sequence) sequence.loop.value = !loop;
@@ -201,15 +198,12 @@ const App = () => {
       Tone.Transport.stop();
       setIsPlaying(stop);
     } else {
-      Tone.start();
       Tone.Transport.start();
-      synth = new Tone.Synth().toDestination();
-      Tone.context.resume();
       setIsPlaying(true);
     }
   };
 
-  const handleRandomJitter = (e) => {
+  const handleRandomJitter = e => {
     /*
       random techniques...
       
@@ -243,7 +237,7 @@ const App = () => {
         onToggleLoop={handleLoopToggle}
         onNumBarsChange={handleNumBarsChange}
         onBPMChange={handleBPMChange}
-        onRandomJitter={handleRandomJitter}        
+        onRandomJitter={handleRandomJitter}
         onJitterAmountChange={handleJitterAmountChange}
         bpm={bpm}
         loop={loop}
