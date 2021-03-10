@@ -32,7 +32,6 @@ const App = () => {
 
   const synth = new Tone.Synth().toDestination();
   let sequence;
-  let part;
 
   /*
     set up keybindings
@@ -86,7 +85,7 @@ const App = () => {
 
           // setMidiInputs(inputs);
           setMidiOutputs(outputs);
-
+  
           // setActiveMidiInput(inputs[Object.keys(inputs)[0]]);
           setActiveMidiOutput(outputs[Object.keys(outputs)[0]]);
 
@@ -122,6 +121,8 @@ const App = () => {
 
   /* create and update melody */
   React.useEffect(() => {
+    if (Tone.Transport.state !== "started") return
+    
     Tone.Transport.cancel();
 
     if (sequence) {
