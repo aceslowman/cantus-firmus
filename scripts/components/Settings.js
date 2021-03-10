@@ -108,7 +108,7 @@ const Settings = props => {
                 );
               })}
           </select>
-          <MIDILog device={props.activeMidiOutput} />
+          <MIDILog device={props.activeMidiInput} />
         </div>
       </div>
       <div className="credits">cantus firmus by aceslowman 2021</div>

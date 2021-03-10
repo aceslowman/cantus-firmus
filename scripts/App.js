@@ -59,12 +59,16 @@ const App = () => {
       await Tone.start();
       console.log("audio context has started");
       setReady(true);
+      synth = new Tone.Synth().toDestination();
     };
 
     if (!ready) {
-      document.addEventListener("click", startAudioContext);
-      return () => document.removeEventListener("click", startAudioContext);
+      document.addEventListener("click", startAudioContext);      
     } else {
+      document.removeEventListener("click", startAudioContext);
+    }
+    
+    return () => {
       document.removeEventListener("click", startAudioContext);
     }
   }, [ready, synth]);
@@ -132,12 +136,10 @@ const App = () => {
 
   /* create and update melody */
   React.useEffect(() => {
+    console.log('hello')
     if (ready) {
-      // if (Tone.Transport.state !== "started") return
-
-      // Tone.Transport.cancel();
-
-      if (sequence) {
+      if (sequence) {        
+        Tone.Transport.cancel();
         sequence.events = melody;
       } else {
         // set up toneJS to repeat melody in sequence
@@ -147,7 +149,7 @@ const App = () => {
             // synth.triggerAttackRelease(note, 0.1, time);
             // [NOTE ON, NOTE, VELOCITY]
             // TODO: spit out multiple voicings to make polyphonic
-            // activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
+            activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
             // console.log('sending midi... ', [128, Tone.Frequency(note).toMidi(), 41])
 
             setCurrentStep(
@@ -158,9 +160,10 @@ const App = () => {
           "1m"
         ).start(0);
       }
-      // Tone.Transport.start();
+      Tone.Transport.start();
     }
-  }, [melody, activeMidiOutput, ready]);
+  }, [melody, ready]);
+  // NOTE: adding activeMidiOutput to the group causes way too many calls
 
   function handleLoopToggle(e) {
     if (sequence) sequence.loop.value = !loop;
