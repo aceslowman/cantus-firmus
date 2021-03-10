@@ -31,7 +31,8 @@ const App = () => {
   let [jitterAmount, setJitterAmount] = React.useState(2);
   let [ready, setReady] = React.useState(false);
 
-  let synth, sequence;
+  let [sequence, setSequence] = React.useState();
+  let synth;
 
   /*
     set up keybindings
@@ -40,6 +41,7 @@ const App = () => {
     const keybindings = function(e) {
       switch (e.keyCode) {
         case 32: // space bar
+          console.log('sequence', sequence)
           handleTogglePlay();
           break;
         default:
@@ -49,7 +51,7 @@ const App = () => {
 
     document.addEventListener("keydown", keybindings, false);
     return () => document.removeEventListener("keydown", keybindings, false);
-  }, [handleTogglePlay]);
+  }, [handleTogglePlay, sequence]);
 
   /*
     startup audio context
@@ -60,17 +62,18 @@ const App = () => {
       console.log("audio context has started");
       setReady(true);
       synth = new Tone.Synth().toDestination();
+      Tone.Transport.bpm.value = parseFloat(bpm);
     };
 
     if (!ready) {
-      document.addEventListener("click", startAudioContext);      
+      document.addEventListener("click", startAudioContext);
     } else {
       document.removeEventListener("click", startAudioContext);
     }
-    
+
     return () => {
       document.removeEventListener("click", startAudioContext);
-    }
+    };
   }, [ready, synth]);
 
   /*
@@ -98,10 +101,10 @@ const App = () => {
             };
           }
 
-          // setMidiInputs(inputs);
+          setMidiInputs(inputs);
           setMidiOutputs(outputs);
 
-          // setActiveMidiInput(inputs[Object.keys(inputs)[0]]);
+          setActiveMidiInput(inputs[Object.keys(inputs)[0]]);
           setActiveMidiOutput(outputs[Object.keys(outputs)[0]]);
 
           access.onstatechange = function(e) {
@@ -136,9 +139,9 @@ const App = () => {
 
   /* create and update melody */
   React.useEffect(() => {
-    console.log('hello')
+    console.log("hello");
     if (ready) {
-      if (sequence) {        
+      if (sequence) {
         Tone.Transport.cancel();
         sequence.events = melody;
       } else {
@@ -158,7 +161,7 @@ const App = () => {
           },
           melody,
           "1m"
-        ).start(0);
+        );
       }
       Tone.Transport.start();
     }
@@ -213,11 +216,13 @@ const App = () => {
   const handleJitterAmountChange = e => setJitterAmount(e.target.value);
 
   const handleTogglePlay = e => {
-    if (Tone.Transport.state === "started") {
-      Tone.Transport.stop();
-      setIsPlaying(stop);
+    if (sequence.state === "started") {
+      console.log("stop");
+      sequence.stop();
+      setIsPlaying(false);
     } else {
-      Tone.Transport.start();
+      console.log("play");
+      sequence.start();
       setIsPlaying(true);
     }
   };
