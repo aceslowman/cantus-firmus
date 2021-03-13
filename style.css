@@ -88,6 +88,13 @@ body,
   flex-flow: column;
 }
 
+.inputSection {
+  width: 100%;
+  flex-flow: column;
+  border: 1px groove #602500;
+  pp
+}
+
 .buttonGroup {
   flex-flow: row;
   width: 100%;
