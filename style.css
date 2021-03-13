@@ -61,7 +61,7 @@ body,
 }
 
 .settingsInner label {
-  padding: 5px 0px;
+  padding: 5px 5px 5px 0px;
 }
 
 .settingsInner button {
@@ -77,6 +77,14 @@ body,
   color: #602500;
   border: 1px dotted #602500;
   min-width: 0px;
+}
+
+.settingsInner select {
+  background-color: #fff;
+  color: #602500;
+  border: 1px solid #602500;
+  min-width: 0px;
+  flex-grow:2;
 }
 
 .settingsInner > div {

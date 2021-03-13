@@ -38,10 +38,11 @@ const Settings = props => {
           <h3>generate</h3>
           
           <div className="buttonGroup">
-            <label htmlFor="">key</label>
-            <select>
+            <label htmlFor="keyselect">key</label>
+            <select id="keyselect">
               <option value="major">major</option>
-              
+              <option value="naturalminor">natural minor</option>
+              <option value="harmonicminor">harmonic minor</option>              
             </select>
           </div>
 
@@ -82,8 +83,8 @@ const Settings = props => {
         </div>*/}
         <div className="inputSection">
           <h3>MIDI</h3>
-          <div className="inputGroup">
-            <label htmlFor="midioutputs">Midi Output</label>
+          <div className="buttonGroup">
+            <label htmlFor="midioutputs">output</label>
             <select
               name="midioutputs"
               value={props.activeMidiOutput ? props.activeMidiOutput.id : ""}
@@ -99,8 +100,9 @@ const Settings = props => {
                   );
                 })}
             </select>
-            <MIDILog device={props.activeMidiInput} />
           </div>
+          
+            <MIDILog device={props.activeMidiInput} />
         </div>
 
         <div className="buttonGroup">
