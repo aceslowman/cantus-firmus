@@ -104,7 +104,7 @@ body,
   padding: 15px;
 }
 
-.inputSection h3 {
+.inputSection h3, .inputSection h4 {
   margin: 0px 0px 10px 0px;
   
   /*   font-size: 1.1em; */

@@ -45,7 +45,13 @@ const Settings = props => {
               <option value="harmonicminor">harmonic minor</option>              
             </select>
           </div>
+          
+          <div className="inputSection">
+            <h4>arc</h4>
+          </div>
 
+          <div className="inputSection">
+            <h4>randomize</h4>
           <label htmlFor="jitter_amount">amount</label>
           <div className="buttonGroup">
             <input
@@ -60,6 +66,7 @@ const Settings = props => {
             <button onClick={props.onRandomJitter} className="randomizeButton">
               random jitter
             </button>
+          </div>
           </div>
         </div>
         {/* <div className="inputGroup">
