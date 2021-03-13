@@ -102,7 +102,7 @@ const Settings = props => {
                 />
               </div>
               <div className="inputGroup" style={{ width: "48%" }}>
-                <button>apply</button>
+                <button onClick={props.onApplyArc}>apply arc</button>
               </div>
             </div>
           </div>
@@ -121,8 +121,7 @@ const Settings = props => {
               />
 
               <button
-                onClick={props.onRandomJitter}
-                className="randomizeButton"
+                onClick={props.onRandomJitter}                
               >
                 random jitter
               </button>

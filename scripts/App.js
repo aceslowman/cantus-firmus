@@ -27,10 +27,17 @@ const App = () => {
   let [activeMidiOutput, setActiveMidiOutput] = React.useState(null);
   let [currentStep, setCurrentStep] = React.useState(0);
   let [isPlaying, setIsPlaying] = React.useState(false);
-  let [subdivisions, setSubdivisions] = React.useState(4);
-  let [jitterAmount, setJitterAmount] = React.useState(2);
+  let [subdivisions, setSubdivisions] = React.useState(4);  
   let [ready, setReady] = React.useState(false);
 
+  // ARC
+  let [arcFrequency, setArcFrequency] = React.useState(2);
+  let [arcAmplitude, setArcAmplitude] = React.useState(2);
+  let [arcOffset, setArcOffset] = React.useState(0);
+
+  // RANDOMIZE
+  let [jitterAmount, setJitterAmount] = React.useState(2);
+  
   let [sequence, setSequence] = React.useState();
   let synth;
 
@@ -143,8 +150,8 @@ const App = () => {
   React.useEffect(() => {
     if (ready) {
       const seqCallback = (time, voice) => {
-        let note = voice[0]; // send first note of voicing        
-        // [NOTE ON, NOTE, VELOCITY]        
+        let note = voice[0]; // send first note of voicing
+        // [NOTE ON, NOTE, VELOCITY]
         activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
         setCurrentStep(prev => (prev = (prev + 1) % (numBars * 4)));
         // synth.triggerAttackRelease(note, 0.1, time);
@@ -157,7 +164,7 @@ const App = () => {
       } else {
         setSequence(seq => new Tone.Sequence(seqCallback, melody, "1m"));
       }
-      
+
       Tone.Transport.start();
     }
   }, [melody, ready, sequence, numBars, setCurrentStep]);
@@ -245,6 +252,38 @@ const App = () => {
     );
   };
 
+  const handleArcFrequencyChange = e => {
+    setArcFrequency(e.target.value);
+  };
+
+  const handleArcAmplitudeChange = e => {
+    setArcAmplitude(e.target.value);
+  };
+
+  const handleArcOffsetChange = e => {
+    setArcOffset(e.target.value);
+  };
+
+  const handleApplyArc = e => {
+    console.log("applying arc");
+    
+    setMelody(
+      melody.map((measure, m_i) =>
+        measure.map((beat, b_i) =>
+          beat.map((voice, v_i) => ({
+            ...Object.keys(voice).map((n, n_i) => {
+              let note = voice[n];
+              let tr = (Math.random() * 2 - 1) * jitterAmount;
+              return Tone.Frequency(note)
+                .transpose(tr)
+                .toNote();
+            })
+          }))
+        )
+      )
+    );
+  };
+
   return (
     <React.Fragment>
       <Settings
@@ -266,6 +305,12 @@ const App = () => {
         activeMidiOutput={activeMidiOutput}
         currentStep={currentStep}
         jitterAmount={jitterAmount}
+        onArcFrequencyChange={handleArcFrequencyChange}
+        arcFrequency={arcFrequency}
+        onArcAmplitudeChange={handleArcAmplitudeChange}
+        arcAmplitude={arcAmplitude}
+        onArcOffsetChange={handleArcOffsetChange}
+        onApplyArc={handleApplyArc}
       />
       <MusicStaff
         melody={melody}
