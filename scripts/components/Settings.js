@@ -36,37 +36,67 @@ const Settings = props => {
         </div>
         <div className="inputSection">
           <h3>generate</h3>
-          
+
           <div className="buttonGroup">
             <label htmlFor="keyselect">key</label>
             <select id="keyselect">
-              <option value="major">major</option>
-              <option value="naturalminor">natural minor</option>
-              <option value="harmonicminor">harmonic minor</option>              
+              <option value="C">C</option>
+              <option value="C#">C#</option>
+              <option value="D">D</option>
+              <option value="D#">D#</option>
+              <option value="E">E</option>
+              <option value="F">F</option>
+              <option value="F#">F#</option>
+              <option value="G">G</option>
+              <option value="G#">G#</option>
+              <option value="A">A</option>
+              <option value="A#">A#</option>
+              <option value="B">B</option>
             </select>
           </div>
-          
+
+          <div className="buttonGroup">
+            <label htmlFor="modeselect">mode</label>
+            <select id="modeselect">
+              <option value="major">major</option>
+              <option value="naturalminor">natural minor</option>
+              <option value="harmonicminor">harmonic minor</option>
+            </select>
+          </div>
+
           <div className="inputSection">
             <h4>arc</h4>
+
+            <label>tempo</label>
+            <input
+              onChange={props.onBPMChange}
+              className="tempoInput"
+              type="number"
+              step="1"
+              value={props.bpm}
+            />
           </div>
 
           <div className="inputSection">
             <h4>randomize</h4>
-          <label htmlFor="jitter_amount">amount</label>
-          <div className="buttonGroup">
-            <input
-              id="jitter_amount"
-              onChange={props.onJitterAmountChange}
-              className="jitterAmountInput"
-              type="number"
-              step="1"
-              value={props.jitterAmount}
-            />
+            <label htmlFor="jitter_amount">amount</label>
+            <div className="buttonGroup">
+              <input
+                id="jitter_amount"
+                onChange={props.onJitterAmountChange}
+                className="jitterAmountInput"
+                type="number"
+                step="1"
+                value={props.jitterAmount}
+              />
 
-            <button onClick={props.onRandomJitter} className="randomizeButton">
-              random jitter
-            </button>
-          </div>
+              <button
+                onClick={props.onRandomJitter}
+                className="randomizeButton"
+              >
+                random jitter
+              </button>
+            </div>
           </div>
         </div>
         {/* <div className="inputGroup">
@@ -108,8 +138,8 @@ const Settings = props => {
                 })}
             </select>
           </div>
-          
-            <MIDILog device={props.activeMidiInput} />
+
+          <MIDILog device={props.activeMidiInput} />
         </div>
 
         <div className="buttonGroup">
