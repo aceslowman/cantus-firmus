@@ -20,6 +20,8 @@ const App = () => {
   let [numBars, setNumBars] = React.useState(3);
   let [loop, setLoop] = React.useState(false);
   let [bpm, setBPM] = React.useState(120);
+  let [key, setKey] = React.useState("G");
+  
   let [selectedNote, setSelectedNote] = React.useState(null);
   let [midiInputs, setMidiInputs] = React.useState(null);
   let [midiOutputs, setMidiOutputs] = React.useState(null);
@@ -29,6 +31,7 @@ const App = () => {
   let [isPlaying, setIsPlaying] = React.useState(false);
   let [subdivisions, setSubdivisions] = React.useState(4);  
   let [ready, setReady] = React.useState(false);
+  
 
   // ARC
   let [arcFrequency, setArcFrequency] = React.useState(2);
@@ -267,15 +270,20 @@ const App = () => {
   const handleApplyArc = e => {
     console.log("applying arc");
     
+    let step = 0;
     setMelody(
       melody.map((measure, m_i) =>
         measure.map((beat, b_i) =>
           beat.map((voice, v_i) => ({
             ...Object.keys(voice).map((n, n_i) => {
               let note = voice[n];
-              let tr = (Math.random() * 2 - 1) * jitterAmount;
+              let arc = Math.sin(step)
+              arc = Math.round(arc);
+              arc *= arcAmplitude;
+              console.log('arc', arc)
+              step++;
               return Tone.Frequency(note)
-                .transpose(tr)
+                .transpose(arc)
                 .toNote();
             })
           }))
@@ -283,6 +291,24 @@ const App = () => {
       )
     );
   };
+  
+  const handleResetMelody = e => {
+    setMelody(
+      melody.map((measure, m_i) =>
+        measure.map((beat, b_i) =>
+          beat.map((voice, v_i) => ({
+            ...Object.keys(voice).map((n, n_i) => {
+              return `${key}4`
+            })
+          }))
+        )
+      )
+    );
+  }
+  
+  const handleChangeKey = e => {
+    setKey(e.target.value);
+  }
 
   return (
     <React.Fragment>
@@ -296,6 +322,7 @@ const App = () => {
         onRandomJitter={handleRandomJitter}
         onJitterAmountChange={handleJitterAmountChange}
         bpm={bpm}
+        key={key}
         loop={loop}
         numBars={numBars}
         isPlaying={isPlaying}
@@ -311,6 +338,8 @@ const App = () => {
         arcAmplitude={arcAmplitude}
         onArcOffsetChange={handleArcOffsetChange}
         onApplyArc={handleApplyArc}
+        onResetMelody={handleResetMelody}
+        onChangeKey={handleChangeKey}
       />
       <MusicStaff
         melody={melody}

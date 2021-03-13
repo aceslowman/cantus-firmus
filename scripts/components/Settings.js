@@ -33,13 +33,15 @@ const Settings = props => {
             step="1"
             value={props.bpm}
           />
+          
+          <button onClick={props.onResetMelody}>reset melody</button>
         </div>
         <div className="inputSection">
           <h3>generate</h3>
 
           <div className="buttonGroup">
             <label htmlFor="keyselect">key</label>
-            <select id="keyselect">
+            <select onChange={props.onChangeKey} id="keyselect" value={props.key}>
               <option value="C">C</option>
               <option value="C#">C#</option>
               <option value="D">D</option>
