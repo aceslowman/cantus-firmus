@@ -81,7 +81,7 @@ body,
 
 .settingsInner > div {
   display: flex;
-  padding-bottom: 15px;
+/*   padding-bottom: 15px; */
 }
 
 .inputGroup {
@@ -89,13 +89,21 @@ body,
 }
 
 .inputSection {
+  margin: 5px 0px;
   width: 100%;
   flex-flow: column;
   border: 1px groove #602500;
-  pp
+  padding: 15px;
+}
+
+.inputSection h3 {
+  margin: 0px 0px 10px 0px;
+  
+  /*   font-size: 1.1em; */
 }
 
 .buttonGroup {
+  display:flex;
   flex-flow: row;
   width: 100%;
   align-items: center;
