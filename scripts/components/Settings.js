@@ -33,7 +33,7 @@ const Settings = props => {
             step="1"
             value={props.bpm}
           />
-          
+          <br />
           <button onClick={props.onResetMelody}>reset melody</button>
         </div>
         <div className="inputSection">
@@ -41,7 +41,11 @@ const Settings = props => {
 
           <div className="buttonGroup">
             <label htmlFor="keyselect">key</label>
-            <select onChange={props.onChangeKey} id="keyselect" value={props.key}>
+            <select
+              onChange={props.onChangeMelodyKey}
+              id="keyselect"
+              value={props.melodyKey}
+            >
               <option value="C">C</option>
               <option value="C#">C#</option>
               <option value="D">D</option>
@@ -122,11 +126,7 @@ const Settings = props => {
                 value={props.jitterAmount}
               />
 
-              <button
-                onClick={props.onRandomJitter}                
-              >
-                random jitter
-              </button>
+              <button onClick={props.onRandomJitter}>random jitter</button>
             </div>
           </div>
         </div>
