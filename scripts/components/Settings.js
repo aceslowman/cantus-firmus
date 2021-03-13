@@ -90,15 +90,21 @@ const Settings = props => {
                 />
               </div>
             </div>
-
-            <label htmlFor="arcOffset">offset</label>
-            <input
-              onChange={props.onArcOffsetChange}
-              id="arcOffset"
-              type="number"
-              step="1"
-              value={props.arcOffset}
-            />
+            <div className="buttonGroup">
+              <div className="inputGroup" style={{ width: "48%" }}>
+                <label htmlFor="arcOffset">offset</label>
+                <input
+                  onChange={props.onArcOffsetChange}
+                  id="arcOffset"
+                  type="number"
+                  step="1"
+                  value={props.arcOffset}
+                />
+              </div>
+              <div className="inputGroup" style={{ width: "48%" }}>
+                <button>apply</button>
+              </div>
+            </div>
           </div>
 
           <div className="inputSection">
