@@ -92,10 +92,12 @@ body,
 }
 
 .inputGroup {
+  display: flex;
   flex-flow: column;
 }
 
 .inputSection {
+  display: flex;
   margin: 5px 0px;
   width: 100%;
   flex-flow: column;
@@ -113,6 +115,7 @@ body,
   flex-flow: row;
   width: 100%;
   align-items: center;
+  justify-content: space-between;
 }
 
 .credits {

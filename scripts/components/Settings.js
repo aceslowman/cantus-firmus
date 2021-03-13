@@ -67,13 +67,37 @@ const Settings = props => {
           <div className="inputSection">
             <h4>arc</h4>
 
-            <label>tempo</label>
+            <div className="buttonGroup">
+              <div className="inputGroup" style={{ width: "48%" }}>
+                <label htmlFor="arcFrequency">frequency</label>
+                <input
+                  onChange={props.onArcFrequencyChange}
+                  id="arcFrequency"
+                  type="number"
+                  step="1"
+                  value={props.arcFrequency}
+                />
+              </div>
+
+              <div className="inputGroup" style={{ width: "48%" }}>
+                <label htmlFor="arcAmplitude">amplitude</label>
+                <input
+                  onChange={props.onArcAmplitudeChange}
+                  id="arcAmplitude"
+                  type="number"
+                  step="1"
+                  value={props.arcAmplitude}
+                />
+              </div>
+            </div>
+
+            <label htmlFor="arcOffset">offset</label>
             <input
-              onChange={props.onBPMChange}
-              className="tempoInput"
+              onChange={props.onArcOffsetChange}
+              id="arcOffset"
               type="number"
               step="1"
-              value={props.bpm}
+              value={props.arcOffset}
             />
           </div>
 
