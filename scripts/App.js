@@ -242,6 +242,12 @@ const App = () => {
     );
   };
   
+  const getNoteDistance = (a,b) => {
+    console.log(`distance between ${Tone.Frequency(a,'midi').toNote()} and ${Tone.Frequency(b,'midi').toNote()}`, b - a)
+    
+    return b - a;
+  }
+  
   const handleApplyKey = e => {
     console.log("applying key", melodyKey);
     let major_consonance = [0, 2, 4, 5, 7, 9, 11];
@@ -261,14 +267,16 @@ const App = () => {
           beat.map((voice, v_i) => ({
             ...Object.keys(voice).map((n, n_i) => {
               let note = voice[n];
-              let midi_note = Tone.Frequency(note).toMidi();
+              let note_octave = note.split('').pop();
+              
               console.log('note in midi form', Tone.Frequency(note).toMidi())
+              console.log('octave', note_octave)
               
               let distances = keyScale.map(val => {
-                console.log()
+                let midi_note = Tone.Frequency(note).toMidi();
                 let midi_keynote = Tone.Frequency(val).toMidi();
                 // adjust to same octave
-                return midi_keynote - midi_note;
+                return getNoteDistance(midi_note, midi_keynote);
               })
               
               console.log('distances',distances)
