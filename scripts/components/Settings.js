@@ -21,7 +21,7 @@ const Settings = props => {
   }
 
   return (
-    <div className="SETTINGS" style={{ width: expanded ? "28%" : "0%" }}>
+    <div className="SETTINGS" style={{ width: expanded ? "300px" : "0%" }}>
       <div className="settingsInner">
         <InputPanel title="basic">
           <label>number of bars</label>
@@ -77,9 +77,7 @@ const Settings = props => {
             </select>
           </div>
 
-          <div className="inputSection">
-            <h4>arc</h4>
-
+          <InputPanel title="arc">
             <div className="inputRow">
               <div className="inputGroup" style={{ width: "48%" }}>
                 <label htmlFor="arcFrequency">frequency</label>
@@ -118,7 +116,7 @@ const Settings = props => {
                 <button onClick={props.onApplyArc}>apply arc</button>
               </div>
             </div>
-          </div>
+          </InputPanel>
 
           <InputPanel title="randomize">
             <label htmlFor="jitter_amount">amount</label>
@@ -155,8 +153,7 @@ const Settings = props => {
           </select>
           <MIDILog device={props.activeMidiInput} />
         </div>*/}
-        <div className="inputSection">
-          <h3>MIDI</h3>
+        <InputPanel title="MIDI">
           <div className="inputRow">
             <label htmlFor="midioutputs">output</label>
             <select
@@ -177,7 +174,7 @@ const Settings = props => {
           </div>
 
           <MIDILog device={props.activeMidiInput} />
-        </div>
+        </InputPanel>
 
         <div className="inputRow">
           <div className="inputGroup">
