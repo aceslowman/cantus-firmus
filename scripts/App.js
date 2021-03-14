@@ -244,6 +244,14 @@ const App = () => {
   
   const handleApplyKey = e => {
     console.log("applying key", melodyKey);
+    let major_consonance = [0, 2, 4, 5, 7, 9, 11];
+    let minor_consonance = [0, 2, 3, 5, 7, 8, 10]; // 11 for harmonic minor
+    
+    let keyScale = major_consonance.map(e => {
+      return Tone.Frequency(`${melodyKey}4`).transpose(e).toNote();
+    });
+    
+    console.log('major scale in key is: ', keyScale)
         
     setMelody(
       melody.map((measure, m_i) =>
@@ -252,6 +260,12 @@ const App = () => {
             ...Object.keys(voice).map((n, n_i) => {
               let note = voice[n];
               let shift = null;
+              
+              console.log('note in midi form', Tone.Frequency(note).toMidi())
+              
+              keyScale.forEach(e=>{
+                
+              })
               
               return Tone.Frequency(note)
                 .transpose(shift)
