@@ -245,8 +245,8 @@ const Settings = props => {
             {props.isPlaying ? "stop" : "play"}
           </button>
         </InputPanel>
-      </div>
-      <div className="credits">cantus firmus by aceslowman 2021</div>
+        <div className="credits">cantus firmus by <a href="https://linktr.ee/aceslowman">aceslowman</a> 2021</div>
+      </div>      
       <div className="toggleSettings" onClick={toggleSettings}></div>
     </div>
   );

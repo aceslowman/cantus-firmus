@@ -55,14 +55,19 @@ body,
   background-color: #FAEBD7;
   padding: 15px;
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column;
   color: #602500;
   width: 100%;
   box-sizing: border-box;
   align-content: stretch;
   z-index: 2;
   padding-right: 25px;
-  align-self: start;
+  justify-content: space-between;
+  
+/*   align-self: start; */
+/*   align-self: space-between; */
+  
+  height: 100%;
 }
 
 .settingsInner label {
@@ -100,11 +105,12 @@ body,
 
 
 .credits {
-  position: absolute;
-  bottom: 5px;
+/*   position: absolute; */
+/*   bottom: 5px; */
   color: #602500;
   line-break: anywhere;
   white-space: pre;
+  margin: 15px 0px;
 }
 
 /* MUSIC STAFF */
