@@ -77,14 +77,25 @@ const MusicStaff = props => {
             iter++;
             return (
               <div
-                className="voiceWrapper"
-                //style={{
-                //  backgroundColor:
-                //    props.currentStep + 1 === iter ? "#ff5454" : "transparent"
-                //}}
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  flexFlow: "column",
+                  height: "100%",
+                  justifyContent: "center"
+                }}
                 key={b_i}
               >
-                <div className="noteWrapper">
+                <div
+                  style={{
+                    width: "100%",
+                    padding: "0px 40px",
+                    alignItems: "center",
+                    display: "flex",
+                    position: "relative",
+                    justifyContent: "center"
+                  }}
+                >
                   {beats.map((voice, v_i) => {
                     return Object.keys(voice).map((n, n_i) => {
                       let note = voice[n];
@@ -175,7 +186,15 @@ const MusicStaff = props => {
             this LINES div gives me the reference height for the measures.
             these aren't visible
         */}
-        <div className="LINES" ref={lineRef}>
+        <div
+          className="lines"
+          style={{
+            display: "flex",
+            flexFlow: "column",
+            justifyContent: "space-between"
+          }}
+          ref={lineRef}
+        >
           <div></div>
           <div></div>
           <div></div>
@@ -184,7 +203,15 @@ const MusicStaff = props => {
         </div>
       </div>
       <div className="flex-fix">
-        <div className="NOTES">{measures}</div>
+        <div
+          className="measures"
+          style={{
+            display: "flex",
+            flexFlow: "row wrap"
+          }}
+        >
+          {measures}
+        </div>
       </div>
     </div>
   );
