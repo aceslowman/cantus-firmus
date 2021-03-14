@@ -241,6 +241,28 @@ const App = () => {
       )
     );
   };
+  
+  const handleApplyKey = e => {
+    console.log("applying key", melodyKey);
+        
+    setMelody(
+      melody.map((measure, m_i) =>
+        measure.map((beat, b_i) =>
+          beat.map((voice, v_i) => ({
+            ...Object.keys(voice).map((n, n_i) => {
+              let note = voice[n];
+              let shift = null;
+              
+              return Tone.Frequency(note)
+                .transpose(shift)
+                .toNote();
+            })
+          }))
+        )
+      )
+    );
+    
+  }
 
   const handleApplyArc = e => {
     console.log("applying arc");
@@ -320,9 +342,10 @@ const App = () => {
         onArcAmplitudeChange={handleArcAmplitudeChange}
         arcAmplitude={arcAmplitude}
         onArcOffsetChange={handleArcOffsetChange}
+        onApplyKey={handleApplyKey}
         onApplyArc={handleApplyArc}
         onResetMelody={handleResetMelody}
-        onChangeMelodyKey={handleChangeMelodyKey}
+        onChangeMelodyKey={handleChangeMelodyKey}        
       />
       <MusicStaff
         melody={melody}
