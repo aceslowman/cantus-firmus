@@ -89,6 +89,7 @@ body,
 
 .settingsInner > div {
   display: flex;
+  box-shadow: 2px 2px 6px 0px;
 }
 
 .inputGroup {

@@ -175,30 +175,31 @@ const Settings = props => {
 
           <MIDILog device={props.activeMidiInput} />
         </InputPanel>
-
-        <div className="inputRow">
-          <div className="inputGroup">
-            <label>
-              loop
-              <input
-                onChange={props.onToggleLoop}
-                checked={props.loop}
-                className="loopButton"
-                type="checkbox"
-              />
-            </label>
+        <InputPanel title="playback">
+          <div className="inputRow">
+            <div className="inputGroup">
+              <label>
+                loop
+                <input
+                  onChange={props.onToggleLoop}
+                  checked={props.loop}
+                  className="loopButton"
+                  type="checkbox"
+                />
+              </label>
+            </div>
+            <button
+              onClick={props.onTogglePlay}
+              className="playButton"
+              style={{
+                color: props.isPlaying ? "#fff" : "#602500",
+                backgroundColor: props.isPlaying ? "#602500" : "#fff"
+              }}
+            >
+              {props.isPlaying ? "stop" : "play"}
+            </button>
           </div>
-          <button
-            onClick={props.onTogglePlay}
-            className="playButton"
-            style={{
-              color: props.isPlaying ? "#fff" : "#602500",
-              backgroundColor: props.isPlaying ? "#602500" : "#fff"
-            }}
-          >
-            {props.isPlaying ? "stop" : "play"}
-          </button>
-        </div>
+        </InputPanel>
       </div>
       <div className="credits">cantus firmus by aceslowman 2021</div>
       <div className="toggleSettings" onClick={toggleSettings}></div>
