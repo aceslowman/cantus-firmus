@@ -29,6 +29,8 @@ const App = () => {
   let [activeMidiOutput, setActiveMidiOutput] = React.useState(null);
   let [currentStep, setCurrentStep] = React.useState(0);
   let [isPlaying, setIsPlaying] = React.useState(false);
+  let [setSoundOn, soundOn] = T
+  
   let [subdivisions, setSubdivisions] = React.useState(4);
   let [ready, setReady] = React.useState(false);
 
@@ -130,8 +132,11 @@ const App = () => {
     if (ready) Tone.Transport.bpm.value = parseFloat(bpm);
   }, [bpm]);
 
-  /* insert new measures */
-  React.useEffect(() => {
+  /* 
+    insert new measures 
+  */
+  React.useLayoutEffect(() => {
+    console.log('numbars', numBars)
     if (numBars > melody.length) {
       let newMeasure = [];
 
@@ -142,13 +147,15 @@ const App = () => {
       setMelody(prev => [...prev, newMeasure]);
     } else if (numBars < melody.length && numBars > 0) {
       setMelody(prev => {
-        prev.splice(-1, 1);
-        return prev;
+        prev.pop();
+        return [...prev];
       });
     }
   }, [numBars, melody, setMelody, subdivisions]);
 
-  /* create and update melody */
+  /* 
+    create and update melody 
+  */
   React.useEffect(() => {
     if (ready) {
       const seqCallback = (time, voice) => {
@@ -329,6 +336,8 @@ const App = () => {
     );
   };
   
+  const handleToggleSoundOn = e => setSoundOn(prev => !prev)
+  
   const handleArcFrequencyChange = e => setArcFrequency(e.target.value);
   const handleArcAmplitudeChange = e => setArcAmplitude(e.target.value);
   const handleArcOffsetChange = e => setArcOffset(e.target.value);
@@ -372,7 +381,9 @@ const App = () => {
         onApplyArc={handleApplyArc}
         onResetMelody={handleResetMelody}
         onChangeMelodyKey={handleChangeMelodyKey}        
-      />
+        onToggleSoundOn={handleToggleSoundOn}
+        soundOn={soundOn}
+        />
       <MusicStaff
         melody={melody}
         onNoteChange={handleNoteChange}

@@ -199,6 +199,18 @@ const Settings = props => {
                 />
               </label>
             </div>
+            <div className="inputGroup">
+              <label>
+                sound
+                <input
+                  onChange={props.onToggleSoundOn}
+                  checked={props.soundOn}
+                  className="toggleSoundOnButton"
+                  type="checkbox"
+                />
+              </label>
+            </div>
+          </div>
             <button
               onClick={props.onTogglePlay}
               className="playButton"
@@ -208,8 +220,8 @@ const Settings = props => {
               }}
             >
               {props.isPlaying ? "stop" : "play"}
-            </button>
-          </div>
+            </button>            
+
         </InputPanel>
       </div>
       <div className="credits">cantus firmus by aceslowman 2021</div>
