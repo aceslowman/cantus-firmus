@@ -21,8 +21,10 @@ const App = () => {
   let [loop, setLoop] = React.useState(false);
   let [bpm, setBPM] = React.useState(120);
   let [melodyKey, setMelodyKey] = React.useState("G");
-  let [sequence, setSequence] = React.useState();
+  let [melodyMode, setMelodyMode] = React.useState(0); // IONIAN
+  
   let [soundOn, setSoundOn] = React.useState(false);
+  let [sequence, setSequence] = React.useState();
   let [synth, setSynth] = React.useState();
 
   let [midiInputs, setMidiInputs] = React.useState(null);
@@ -261,7 +263,7 @@ const App = () => {
   const handleApplyKey = e => {
     console.log("applying key", melodyKey);
     let major_consonance = [0, 2, 4, 5, 7, 9, 11];
-    let minor_consonance = [0, 2, 3, 5, 7, 8, 10]; // 11 for harmonic minor
+    // let minor_consonance = [0, 2, 3, 5, 7, 8, 10]; // 11 for harmonic minor
 
     let base_octave = 4;
 
@@ -338,6 +340,8 @@ const App = () => {
       )
     );
   };
+  
+  const handleChangeMelodyMode = e => setMelodyMode(e.target.value);
 
   const handleToggleSoundOn = e => setSoundOn(prev => !prev);
 
@@ -386,6 +390,8 @@ const App = () => {
         onChangeMelodyKey={handleChangeMelodyKey}
         onToggleSoundOn={handleToggleSoundOn}
         soundOn={soundOn}
+        onChangeMelodyMode={handleChangeMelodyMode}
+        melodyMode={melodyMode}
       />
       <MusicStaff
         melody={melody}

@@ -112,10 +112,15 @@ const Settings = props => {
             </InputGroup>
             <InputGroup>
               <label htmlFor="modeselect">mode</label>
-              <select id="modeselect">
-                <option value="major">major</option>
-                <option value="naturalminor">natural minor</option>
-                <option value="harmonicminor">harmonic minor</option>
+              <select id="modeselect" onChange={props.onChangeMelodyMode}
+                value={props.melodyMode}>
+                <option value="0">Ionian (major)</option>
+                <option value="1">Dorian</option>
+                <option value="2">Phrygian</option>
+                <option value="3">Lydian</option>
+                <option value="4">Mixolydian</option>
+                <option value="5">Aeolian (natural minor)</option>
+                <option value="6">Locrian</option>
               </select>
             </InputGroup>
           </InputRow>
