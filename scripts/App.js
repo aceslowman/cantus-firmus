@@ -146,7 +146,7 @@ const App = () => {
         return prev;
       });
     }
-  }, [numBars, melody, setMelody]);
+  }, [numBars, melody, setMelody, subdivisions]);
 
   /* create and update melody */
   React.useEffect(() => {
