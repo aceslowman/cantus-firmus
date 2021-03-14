@@ -267,7 +267,22 @@ const App = () => {
                 return midi_keynote - midi_note;
               })
               console.log('distances',distances)
-              let shift = Math.min(...distances);
+              // let shift = Math.min(...distances);
+              
+              let closest = 12;
+              distances.forEach(key_note => {
+//                 console.log('ch',Math.abs(key_note))
+//                 if(Math.abs(key_note - midi_note) < Math.abs(closest)) {
+//                   closest = key_note - midi_note;
+//                 } else {
+                  
+//                 }
+                
+                
+              })
+              
+              console.log('closest', closest)
+              let shift;
               
               // let shift = keyScale.reduce((acc,val)=>{
               //   let midi_keynote = Tone.Frequency(val).toMidi()
