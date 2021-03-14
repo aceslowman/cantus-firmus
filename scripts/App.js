@@ -1,4 +1,13 @@
 /* global Tone, ReactDOM, React */
+const modes = [
+  [0, 2, 4, 5, 7, 9, 11],
+  [0, 2, 3, 5, 7, 9, 11],
+  [0, 2, 4, 5, 7, 9, 11],
+  [0, 2, 4, 5, 7, 9, 11],
+  [0, 2, 4, 5, 7, 9, 11],
+  [0, 2, 4, 5, 7, 9, 11]
+]
+
 const App = () => {
   /*
     this melody format isn't the best but it works with Tone.js
