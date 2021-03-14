@@ -97,23 +97,7 @@ body,
   box-shadow: 2px 2px 6px 0px;
 }
 
-.inputGroup {
-  display: flex;
-  flex-flow: column;
-  align-self: flex-end;
-  
-  width: 48%;
-}
 
-.inputRow {
-  display: flex;
-  flex-flow: row;
-  width: 100%;
-  align-items: center;
-/*   align-items: stretch; */
-  justify-content: space-between;
-  padding-bottom: 5px;
-}
 
 .credits {
   position: absolute;

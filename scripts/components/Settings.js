@@ -16,9 +16,33 @@ const InputPanel = props => {
   );
 };
 
-const InputGroup = props => {
-  return <div className="inputGroup">{props.children}</div>;
-};
+const InputGroup = props => (
+  <div
+    style={{
+      display: "flex",
+      flexFlow: "column",
+      alignSelf: "flex-end",
+      width: "48%"
+    }}
+  >
+    {props.children}
+  </div>
+);
+
+const InputRow = props => (
+  <div
+    style={{
+      display: "flex",
+      flexFlow: "row",
+      width: "100%",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingBottom: "5px"
+    }}
+  >
+    {props.children}
+  </div>
+);
 
 /* global Tone, ReactDOM, React */
 const Settings = props => {
@@ -36,8 +60,9 @@ const Settings = props => {
   return (
     <div className="SETTINGS" style={{ width: expanded ? "300px" : "0%" }}>
       <div className="settingsInner">
+        
         <InputPanel title="basic">
-          <div className="inputRow">
+          <InputRow>
             <InputGroup>
               <label>number of bars</label>
               <input
@@ -48,7 +73,7 @@ const Settings = props => {
                 value={props.numBars}
               />
             </InputGroup>
-            <div className="inputGroup">
+            <InputGroup>
               <label>tempo</label>
               <input
                 onChange={props.onBPMChange}
@@ -57,14 +82,14 @@ const Settings = props => {
                 step="1"
                 value={props.bpm}
               />
-            </div>
-          </div>
-          <br />
+            </InputGroup>
+          </InputRow>
           <button onClick={props.onResetMelody}>reset melody</button>
         </InputPanel>
+        
         <InputPanel title="generate">
-          <div className="inputRow">
-            <div className="inputGroup">
+          <InputRow>
+            <InputGroup>
               <label htmlFor="keyselect">key</label>
               <select
                 id="keyselect"
@@ -84,23 +109,22 @@ const Settings = props => {
                 <option value="A#">A#</option>
                 <option value="B">B</option>
               </select>
-            </div>
-
-            <div className="inputGroup">
+            </InputGroup>
+            <InputGroup>
               <label htmlFor="modeselect">mode</label>
               <select id="modeselect">
                 <option value="major">major</option>
                 <option value="naturalminor">natural minor</option>
                 <option value="harmonicminor">harmonic minor</option>
               </select>
-            </div>
-          </div>
+            </InputGroup>
+          </InputRow>
 
           <button onClick={props.onApplyKey}>nudge to key</button>
 
           <InputPanel title="arc">
-            <div className="inputRow">
-              <div className="inputGroup">
+            <InputRow>
+              <InputGroup>
                 <label htmlFor="arcFrequency">frequency</label>
                 <input
                   onChange={props.onArcFrequencyChange}
@@ -109,9 +133,9 @@ const Settings = props => {
                   step="1"
                   value={props.arcFrequency}
                 />
-              </div>
+              </InputGroup>
 
-              <div className="inputGroup">
+              <InputGroup>
                 <label htmlFor="arcAmplitude">amplitude</label>
                 <input
                   onChange={props.onArcAmplitudeChange}
@@ -120,10 +144,10 @@ const Settings = props => {
                   step="1"
                   value={props.arcAmplitude}
                 />
-              </div>
-            </div>
-            <div className="inputRow">
-              <div className="inputGroup">
+              </InputGroup>
+            </InputRow>
+            <InputRow>
+              <InputGroup>
                 <label htmlFor="arcOffset">offset</label>
                 <input
                   onChange={props.onArcOffsetChange}
@@ -132,16 +156,16 @@ const Settings = props => {
                   step="1"
                   value={props.arcOffset}
                 />
-              </div>
-              <div className="inputGroup">
+              </InputGroup>
+              <InputGroup>
                 <button onClick={props.onApplyArc}>apply arc</button>
-              </div>
-            </div>
+              </InputGroup>
+            </InputRow>
           </InputPanel>
 
           <InputPanel title="randomize">
-            <div className="inputRow">
-              <div className="inputGroup">
+            <InputRow>
+              <InputGroup>
                 <label htmlFor="jitter_amount">amount</label>
                 <input
                   id="jitter_amount"
@@ -151,34 +175,15 @@ const Settings = props => {
                   step="1"
                   value={props.jitterAmount}
                 />
-              </div>
-              <div className="inputGroup">
+              </InputGroup>
+              <InputGroup>
                 <button onClick={props.onRandomJitter}>random jitter</button>
-              </div>
-            </div>
+              </InputGroup>
+            </InputRow>
           </InputPanel>
         </InputPanel>
-        {/* <div className="inputGroup">
-          <label htmlFor="midiinputs">Midi Input</label>
-          <select
-            name="midiinputs"
-            value={props.activeMidiInput ? props.activeMidiInput.id : ""}
-            onChange={props.onMidiInputChange}
-          >
-            <option>select an input</option>
-            {props.midiInputs &&
-              Object.keys(props.midiInputs).map(e => {
-                return (
-                  <option key={e} value={props.midiInputs[e].id}>
-                    {props.midiInputs[e].name}
-                  </option>
-                );
-              })}
-          </select>
-          <MIDILog device={props.activeMidiInput} />
-        </div>*/}
         <InputPanel title="MIDI">
-          <div className="inputRow">
+          <InputRow>
             <label htmlFor="midioutputs">output</label>
             <select
               name="midioutputs"
@@ -195,13 +200,13 @@ const Settings = props => {
                   );
                 })}
             </select>
-          </div>
+          </InputRow>
 
           <MIDILog device={props.activeMidiInput} />
         </InputPanel>
         <InputPanel title="playback">
-          <div className="inputRow">
-            <div className="inputGroup">
+          <InputRow>
+            <InputGroup>
               <label>
                 loop
                 <input
@@ -211,8 +216,8 @@ const Settings = props => {
                   type="checkbox"
                 />
               </label>
-            </div>
-            <div className="inputGroup">
+            </InputGroup>
+            <InputGroup>
               <label>
                 sound
                 <input
@@ -222,8 +227,8 @@ const Settings = props => {
                   type="checkbox"
                 />
               </label>
-            </div>
-          </div>
+            </InputGroup>
+          </InputRow>
           <button
             onClick={props.onTogglePlay}
             className="playButton"
