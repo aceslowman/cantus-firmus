@@ -23,7 +23,7 @@ const App = () => {
   let [melodyKey, setMelodyKey] = React.useState("G");
   let [sequence, setSequence] = React.useState();
   let [soundOn, setSoundOn] = React.useState(false);
-  let synth;
+  let [synth, setSynth] = React.useState();
 
   let [midiInputs, setMidiInputs] = React.useState(null);
   let [midiOutputs, setMidiOutputs] = React.useState(null);
@@ -71,7 +71,7 @@ const App = () => {
       await Tone.start();
       console.log("audio context has started");
       Tone.Transport.bpm.value = parseFloat(bpm);
-      synth = new Tone.Synth().toDestination();
+      setSynth(new Tone.PolySynth().toDestination());
       setReady(true);
     };
 
@@ -84,7 +84,7 @@ const App = () => {
     return () => {
       document.removeEventListener("click", startAudioContext);
     };
-  }, [ready, synth]);
+  }, [ready, synth, setSynth]);
 
   /*
     set up midi
@@ -163,7 +163,7 @@ const App = () => {
         // [NOTE ON, NOTE, VELOCITY]
         activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
         setCurrentStep(prev => (prev = (prev + 1) % (numBars * 4)));
-        synth.triggerAttackRelease(note, 0.1, time);
+        if(soundOn) synth.triggerAttackRelease(note, 0.1, time);
       };
 
       if (sequence) {
@@ -176,7 +176,7 @@ const App = () => {
 
       Tone.Transport.start();
     }
-  }, [melody, ready, sequence, numBars, setCurrentStep]);
+  }, [melody, ready, sequence, numBars, setCurrentStep, soundOn]);
   // NOTE: adding activeMidiOutput to the group causes way too many calls
 
   function handleLoopToggle(e) {

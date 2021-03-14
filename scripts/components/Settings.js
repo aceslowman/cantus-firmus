@@ -1,10 +1,23 @@
 const InputPanel = props => {
   return (
-    <div className="inputSection">
-      <h3>{props.title}</h3>
+    <div
+      style={{
+        display: "flex",
+        margin: "5px 0px",
+        width: "100%",
+        flexFlow: "column",
+        border: "1px groove #602500",
+        padding: "10px"
+      }}
+    >
+      <h3 style={{ margin: "0px 0px 8px 0px" }}>{props.title}</h3>
       {props.children}
     </div>
   );
+};
+
+const InputGroup = props => {
+  return <div className="inputGroup">{props.children}</div>;
 };
 
 /* global Tone, ReactDOM, React */
@@ -19,15 +32,13 @@ const Settings = props => {
   function toggleSettings() {
     setExpanded(prev => !prev);
   }
-  
-  console.log(props.soundOn)
 
   return (
     <div className="SETTINGS" style={{ width: expanded ? "300px" : "0%" }}>
       <div className="settingsInner">
         <InputPanel title="basic">
           <div className="inputRow">
-            <div className="inputGroup">
+            <InputGroup>
               <label>number of bars</label>
               <input
                 onChange={props.onNumBarsChange}
@@ -36,7 +47,7 @@ const Settings = props => {
                 step="1"
                 value={props.numBars}
               />
-            </div>
+            </InputGroup>
             <div className="inputGroup">
               <label>tempo</label>
               <input
@@ -132,14 +143,14 @@ const Settings = props => {
             <div className="inputRow">
               <div className="inputGroup">
                 <label htmlFor="jitter_amount">amount</label>
-                  <input
-                    id="jitter_amount"
-                    onChange={props.onJitterAmountChange}
-                    className="jitterAmountInput"
-                    type="number"
-                    step="1"
-                    value={props.jitterAmount}
-                  />
+                <input
+                  id="jitter_amount"
+                  onChange={props.onJitterAmountChange}
+                  className="jitterAmountInput"
+                  type="number"
+                  step="1"
+                  value={props.jitterAmount}
+                />
               </div>
               <div className="inputGroup">
                 <button onClick={props.onRandomJitter}>random jitter</button>
@@ -213,17 +224,16 @@ const Settings = props => {
               </label>
             </div>
           </div>
-            <button
-              onClick={props.onTogglePlay}
-              className="playButton"
-              style={{
-                color: props.isPlaying ? "#fff" : "#602500",
-                backgroundColor: props.isPlaying ? "#602500" : "#fff"
-              }}
-            >
-              {props.isPlaying ? "stop" : "play"}
-            </button>            
-
+          <button
+            onClick={props.onTogglePlay}
+            className="playButton"
+            style={{
+              color: props.isPlaying ? "#fff" : "#602500",
+              backgroundColor: props.isPlaying ? "#602500" : "#fff"
+            }}
+          >
+            {props.isPlaying ? "stop" : "play"}
+          </button>
         </InputPanel>
       </div>
       <div className="credits">cantus firmus by aceslowman 2021</div>

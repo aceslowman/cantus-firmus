@@ -105,22 +105,6 @@ body,
   width: 48%;
 }
 
-.inputSection {
-  display: flex;
-  margin: 5px 0px;
-  width: 100%;
-/*   max-width: 300px; */
-  flex-flow: column;
-  border: 1px groove #602500;
-  padding: 10px;
-  
-}
-
-.inputSection h3,
-.inputSection h4 {
-  margin: 0px 0px 8px 0px;
-}
-
 .inputRow {
   display: flex;
   flex-flow: row;
