@@ -247,8 +247,10 @@ const App = () => {
     let major_consonance = [0, 2, 4, 5, 7, 9, 11];
     let minor_consonance = [0, 2, 3, 5, 7, 8, 10]; // 11 for harmonic minor
     
+    let base_octave = 4;
+    
     let keyScale = major_consonance.map(e => {
-      return Tone.Frequency(`${melodyKey}4`).transpose(e).toNote();
+      return Tone.Frequency(`${melodyKey}${base_octave}`).transpose(e).toNote();
     });
     
     console.log('major scale in key is: ', keyScale)
@@ -263,45 +265,26 @@ const App = () => {
               console.log('note in midi form', Tone.Frequency(note).toMidi())
               
               let distances = keyScale.map(val => {
+                console.log()
                 let midi_keynote = Tone.Frequency(val).toMidi();
+                // adjust to same octave
                 return midi_keynote - midi_note;
               })
-              console.log('distances',distances)
-              // let shift = Math.min(...distances);
               
-              let closest = 12;
-              distances.forEach(key_note => {
-//                 console.log('ch',Math.abs(key_note))
-                if(Math.abs(key_note - midi_note) < Math.abs(closest)) {
-//                   closest = key_note - midi_note;
-                } else {
-                  
-                }
-                
-                
+              console.log('distances',distances)
+              
+              let a = 12;
+              distances.forEach((d,i) => {                
+                if(Math.abs(d) <= Math.abs(a)) a = d;
               })
               
-              distances.indexOf(Math.min())
+              let shift = Tone.Frequency(note).transpose(a).toNote();
               
-              console.log('closest', closest)
-              let shift;
+              console.log('distance',a)
+              console.log('old note is', Tone.Frequency(note).toNote())
+              console.log('new note is', shift)
               
-              // let shift = keyScale.reduce((acc,val)=>{
-              //   let midi_keynote = Tone.Frequency(val).toMidi()
-              //   if(midi_note - midi_keynote < acc) {
-              //     return midi_note - midi_keynote;
-              //   } else {
-              //     return acc;
-              //   }                
-              // })
-              
-              
-              // Tone.Frequency(shift,'midi').toNote()
-              console.log('shift',shift)
-              
-              return Tone.Frequency(note)
-                .transpose(shift)
-                .toNote();
+              return shift;
             })
           }))
         )
