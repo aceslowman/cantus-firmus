@@ -244,8 +244,12 @@ const App = () => {
   
   const getNoteDistance = (a,b) => {
     console.log(`distance between ${Tone.Frequency(a,'midi').toNote()} and ${Tone.Frequency(b,'midi').toNote()}`, b - a)
+    let result = b - a;
+    if(result%12===0) a = 0;                
     
-    return b - a;
+    if(Math.abs(result) >= 6) result = (12 - result) * -1;
+    
+    return result;
   }
   
   const handleApplyKey = e => {
@@ -268,10 +272,7 @@ const App = () => {
             ...Object.keys(voice).map((n, n_i) => {
               let note = voice[n];
               let note_octave = note.split('').pop();
-              
-              console.log('note in midi form', Tone.Frequency(note).toMidi())
-              console.log('octave', note_octave)
-              
+                          
               let distances = keyScale.map(val => {
                 let midi_note = Tone.Frequency(note).toMidi();
                 let midi_keynote = Tone.Frequency(val).toMidi();
@@ -285,15 +286,17 @@ const App = () => {
               distances.forEach((d,i) => {    
                 console.log('d',d)
                 
+//                 if(Math.abs(d) > 6) d = (12 - d) * -1;
                 
-                if(Math.abs(d) > 6) d = 12 - d * -1;
-                
-                // console.log('new d ',d % 6)
+                console.log('new d ',d)
                 
                 
-                if(d % 12 <= a) {
-                  a = d;
-                }
+                // if(d % 12 <= a) {
+                //   a = d;
+                // }
+                if(Math.abs(d) <= Math.abs(a)) a = d
+                
+//                 if(Math.abs(d) <= a) a = d
                 
                 // if(Math.abs(d) > 6) {
                 //   if(12 - Math.abs(d) <= Math.abs(a)) {
@@ -306,7 +309,7 @@ const App = () => {
                 //   }
                 // }
                 
-                console.log('new a', a)
+                // console.log('new a', a)
                 
                 
                 // if((12 - Math.abs(d)) <= Math.abs(a)) {
