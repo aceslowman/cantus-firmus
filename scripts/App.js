@@ -262,17 +262,14 @@ const App = () => {
     let keyScale = major_consonance.map(e => {
       return Tone.Frequency(`${melodyKey}${base_octave}`).transpose(e).toNote();
     });
-    
-    console.log('major scale in key is: ', keyScale)
-        
+      
     setMelody(
       melody.map((measure, m_i) =>
         measure.map((beat, b_i) =>
           beat.map((voice, v_i) => ({
             ...Object.keys(voice).map((n, n_i) => {
               let note = voice[n];
-              let note_octave = note.split('').pop();
-                          
+                     
               let distances = keyScale.map(val => {
                 let midi_note = Tone.Frequency(note).toMidi();
                 let midi_keynote = Tone.Frequency(val).toMidi();
@@ -280,51 +277,12 @@ const App = () => {
                 return getNoteDistance(midi_note, midi_keynote);
               })
               
-              console.log('distances',distances)
-              
               let a = 12;
               distances.forEach((d,i) => {    
-                console.log('d',d)
-                
-//                 if(Math.abs(d) > 6) d = (12 - d) * -1;
-                
-                console.log('new d ',d)
-                
-                
-                // if(d % 12 <= a) {
-                //   a = d;
-                // }
-                if(Math.abs(d) <= Math.abs(a)) a = d
-                
-//                 if(Math.abs(d) <= a) a = d
-                
-                // if(Math.abs(d) > 6) {
-                //   if(12 - Math.abs(d) <= Math.abs(a)) {
-                //     console.log('new d', 12 - d)
-                //     a = 12 - d;
-                //   }
-                // }else{
-                //   if(Math.abs(d) <= Math.abs(a)) {
-                //     a = d;
-                //   }
-                // }
-                
-                // console.log('new a', a)
-                
-                
-                // if((12 - Math.abs(d)) <= Math.abs(a)) {
-                //   a = 12 - Math.abs(d);
-                // }
-                
+                if(Math.abs(d) <= Math.abs(a)) a = d                
               })
-              
-              let shift = Tone.Frequency(note).transpose(a).toNote();
-              
-              console.log('distance',a)
-              console.log('old note is', Tone.Frequency(note).toNote())
-              console.log('new note is', shift)
-              
-              return shift;
+             
+              return Tone.Frequency(note).transpose(a).toNote();
             })
           }))
         )

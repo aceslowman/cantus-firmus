@@ -111,12 +111,14 @@ body,
   margin: 0px 0px 8px 0px;
 }
 
-.buttonGroup {
+.inputRow {
   display: flex;
   flex-flow: row;
   width: 100%;
   align-items: center;
+/*   align-items: stretch; */
   justify-content: space-between;
+  padding-bottom: 5px;
 }
 
 .credits {
