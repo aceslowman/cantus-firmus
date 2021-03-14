@@ -22,7 +22,7 @@ const App = () => {
   let [bpm, setBPM] = React.useState(120);
   let [melodyKey, setMelodyKey] = React.useState("G");
   let [melodyMode, setMelodyMode] = React.useState(0); // IONIAN
-  
+
   let [soundOn, setSoundOn] = React.useState(false);
   let [sequence, setSequence] = React.useState();
   let [synth, setSynth] = React.useState();
@@ -165,7 +165,7 @@ const App = () => {
         // [NOTE ON, NOTE, VELOCITY]
         activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
         setCurrentStep(prev => (prev = (prev + 1) % (numBars * 4)));
-        if(soundOn) synth.triggerAttackRelease(note, 0.1, time);
+        if (soundOn) synth.triggerAttackRelease(note, 0.1, time);
       };
 
       if (sequence) {
@@ -252,6 +252,13 @@ const App = () => {
   };
 
   const getNoteDistance = (a, b) => {
+    /*
+      this method gets the 'absolute' difference
+      between two notes. This means that an interval
+      of an octave is 0, this is essentially:
+    
+      distance from either 0 or 12
+    */
     let result = b - a;
     if (result % 12 === 0) a = 0;
 
@@ -259,21 +266,21 @@ const App = () => {
 
     return result;
   };
-  
+
   // https://stackoverflow.com/questions/1985260/rotate-the-elements-in-an-array-in-javascript
   const arrayRotate = (arr, reverse) => {
     if (reverse) arr.unshift(arr.pop());
     else arr.push(arr.shift());
     return arr;
-  }
+  };
 
   const handleApplyKey = e => {
     let base_mode = [2, 2, 1, 2, 2, 2, 1];
-        
-    for(let i = 0; i < melodyMode; i++) {
+
+    for (let i = 0; i < melodyMode; i++) {
       base_mode = arrayRotate(base_mode);
     }
-    
+
     let base_octave = 4;
 
     let acc = 0;
@@ -281,12 +288,12 @@ const App = () => {
       let next_note = Tone.Frequency(`${melodyKey}${base_octave}`)
         .transpose(acc)
         .toNote();
-      
+
       acc = acc + e;
-      
+
       return next_note;
     });
-    
+
     setMelody(
       melody.map((measure, m_i) =>
         measure.map((beat, b_i) =>
@@ -354,7 +361,7 @@ const App = () => {
       )
     );
   };
-  
+
   const handleChangeMelodyMode = e => setMelodyMode(e.target.value);
 
   const handleToggleSoundOn = e => setSoundOn(prev => !prev);

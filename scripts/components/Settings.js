@@ -174,8 +174,7 @@ const Settings = props => {
                 <label htmlFor="jitter_amount">amount</label>
                 <input
                   id="jitter_amount"
-                  onChange={props.onJitterAmountChange}
-                  className="jitterAmountInput"
+                  onChange={props.onJitterAmountChange}                  
                   type="number"
                   step="1"
                   value={props.jitterAmount}
@@ -217,7 +216,6 @@ const Settings = props => {
                 <input
                   onChange={props.onToggleLoop}
                   checked={props.loop}
-                  className="loopButton"
                   type="checkbox"
                 />
               </label>
@@ -228,7 +226,6 @@ const Settings = props => {
                 <input
                   onChange={props.onToggleSoundOn}
                   checked={props.soundOn}
-                  className="toggleSoundOnButton"
                   type="checkbox"
                 />
               </label>
@@ -236,7 +233,6 @@ const Settings = props => {
           </InputRow>
           <button
             onClick={props.onTogglePlay}
-            className="playButton"
             style={{
               color: props.isPlaying ? "#fff" : "#602500",
               backgroundColor: props.isPlaying ? "#602500" : "#fff"
@@ -245,7 +241,7 @@ const Settings = props => {
             {props.isPlaying ? "stop" : "play"}
           </button>
         </InputPanel>
-        <div className="credits">cantus firmus by <a href="https://linktr.ee/aceslowman">aceslowman</a> 2021</div>
+        <div className="credits">cantus firmus by <a href="https://linktr.ee/aceslowman" target="_blank">aceslowman</a> 2021</div>
       </div>      
       <div className="toggleSettings" onClick={toggleSettings}></div>
     </div>
