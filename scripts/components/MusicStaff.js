@@ -19,7 +19,7 @@ const MusicStaff = props => {
 
   // resize with window
   React.useEffect(() => {}, []);
-  
+
   let iter = 0;
   let measures =
     ready &&
@@ -34,20 +34,24 @@ const MusicStaff = props => {
       return (
         <div
           key={m_i}
-          className="measure"
           style={{
             height: staffHeight,
             borderRight: `${isLastMeasure ? "8px solid" : "1px solid"} #6e2a00`,
             margin: `${lineHeight * 3}px 0px`,
-            paddingRight: isLastMeasure ? "20px" : "0px"
+            paddingRight: isLastMeasure ? "20px" : "0px",
+            display: "flex",
+            flexFlow: "row",
+            justifyContent: "flex-start",
+            flexGrow: 2,
+            position: "relative"
           }}
         >
           {isFirstMeasure && (
             <img
-              className="CLEF"
               alt="treble clef"
               style={{
-                height: lineRef.current.getBoundingClientRect().height * 2
+                height: lineRef.current.getBoundingClientRect().height * 2,
+                alignSelf: "center"
               }}
               src="https://cdn.glitch.com/5952eddf-3ee4-437e-93ff-001a65fa1cf4%2FTreble_clef.svg?v=1614749305855"
             />
@@ -159,7 +163,13 @@ const MusicStaff = props => {
     });
 
   return (
-    <div className="STAFF">
+    <div
+      style={{
+        flexGrow: 2,
+        position: "relative",
+        overflow: "overlay"
+      }}
+    >
       <div className="flex-fix">
         {/*
             this LINES div gives me the reference height for the measures.

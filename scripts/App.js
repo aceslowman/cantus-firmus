@@ -138,7 +138,6 @@ const App = () => {
     insert new measures 
   */
   React.useLayoutEffect(() => {
-    console.log("numbars", numBars);
     if (numBars > melody.length) {
       let newMeasure = [];
 
@@ -324,8 +323,6 @@ const App = () => {
   };
 
   const handleApplyArc = e => {
-    console.log("applying arc");
-
     let step = 0;
     setMelody(
       melody.map((measure, m_i) =>

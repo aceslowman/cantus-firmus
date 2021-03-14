@@ -111,18 +111,6 @@ body,
 
 /* MUSIC STAFF */
 
-.CLEF {
-  height: 100%;
-  align-self: center;
-}
-
-.STAFF {
-  flex-grow: 2;
-  /*  allows child to grow  */
-  position: relative;
-  overflow: overlay;
-}
-
 .LINES {
   display: flex;
   flex-flow: column;
@@ -154,20 +142,6 @@ body,
   justify-content: center;
 }
 
-.note {
-  width: 50px;
-  justify-content: center;
-  align-items: center;
-  background-color: #602500;
-  cursor: grab;
-  position: absolute;
-  display: flex;
-  flex-flow: row;
-  font-size: 1.4em;
-  color: #FAEBD7;
-  box-sizing: border-box;
-}
-
 .noteWrapper {
   width: 100%;
   padding: 0px 40px;
@@ -175,14 +149,6 @@ body,
   display: flex;
   position: relative;
   justify-content: center;
-}
-
-.measure {
-  display: flex;
-  flex-flow: row;
-  justify-content: flex-start;
-  flex-grow: 2;
-  position: relative;
 }
 
 .flex-fix {
