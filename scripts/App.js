@@ -1,13 +1,4 @@
 /* global Tone, ReactDOM, React */
-const modes = [
-  [0, 2, 4, 5, 7, 9, 11],
-  [0, 2, 3, 5, 7, 9, 11],
-  [0, 2, 4, 5, 7, 9, 11],
-  [0, 2, 4, 5, 7, 9, 11],
-  [0, 2, 4, 5, 7, 9, 11],
-  [0, 2, 4, 5, 7, 9, 11]
-]
-
 const App = () => {
   /*
     this melody format isn't the best but it works with Tone.js
@@ -268,19 +259,42 @@ const App = () => {
 
     return result;
   };
+  
+  // https://stackoverflow.com/questions/1985260/rotate-the-elements-in-an-array-in-javascript
+  const arrayRotate = (arr, reverse) => {
+    if (reverse) arr.unshift(arr.pop());
+    else arr.push(arr.shift());
+    return arr;
+  }
 
   const handleApplyKey = e => {
     console.log("applying key", melodyKey);
-    let major_consonance = [0, 2, 4, 5, 7, 9, 11];
+    // let major_consonance = [0, 2, 4, 5, 7, 9, 11];
     // let minor_consonance = [0, 2, 3, 5, 7, 8, 10]; // 11 for harmonic minor
 
+    let major_consonance = [0, 2, 2, 1, 2, 2, 2];
+    let base_mode = [2, 2, 1, 2, 2, 2, 1];
+        
+    for(let i = 0; i < melodyMode; i++) {
+      base_mode = arrayRotate(base_mode);
+    }
+    
+    console.log('base_mode', base_mode)
+    
     let base_octave = 4;
 
-    let keyScale = major_consonance.map(e => {
-      return Tone.Frequency(`${melodyKey}${base_octave}`)
-        .transpose(e)
+    let acc = 0;
+    let keyScale = base_mode.map(e => {
+      let next_note = Tone.Frequency(`${melodyKey}${base_octave}`)
+        .transpose(acc)
         .toNote();
+      
+      acc = acc + e;
+      
+      return next_note;
     });
+    
+    console.log('check', keyScale)
 
     setMelody(
       melody.map((measure, m_i) =>
