@@ -282,8 +282,23 @@ const App = () => {
               console.log('distances',distances)
               
               let a = 12;
-              distances.forEach((d,i) => {                
-                if(Math.abs(d) <= Math.abs(a)) a = d;
+              distances.forEach((d,i) => {    
+                console.log('d',d % 12)
+                // if(Math.abs(d) <= Math.abs(a)) {
+                //   a = d;
+                // }
+                
+                if(d > 6) {
+                  if(Math.abs(d) <= Math.abs(a)) {
+                    a = d;
+                  }
+                }
+                
+                
+                // if((12 - Math.abs(d)) <= Math.abs(a)) {
+                //   a = 12 - Math.abs(d);
+                // }
+                
               })
               
               let shift = Tone.Frequency(note).transpose(a).toNote();
