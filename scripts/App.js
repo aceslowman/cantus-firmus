@@ -21,16 +21,19 @@ const App = () => {
   let [loop, setLoop] = React.useState(false);
   let [bpm, setBPM] = React.useState(120);
   let [melodyKey, setMelodyKey] = React.useState("G");
+  let [sequence, setSequence] = React.useState();
+  let [soundOn, setSoundOn] = React.useState(false);
+  let synth;
 
-  let [selectedNote, setSelectedNote] = React.useState(null);
   let [midiInputs, setMidiInputs] = React.useState(null);
   let [midiOutputs, setMidiOutputs] = React.useState(null);
   let [activeMidiInput, setActiveMidiInput] = React.useState(null);
   let [activeMidiOutput, setActiveMidiOutput] = React.useState(null);
+
+  let [selectedNote, setSelectedNote] = React.useState(null);
   let [currentStep, setCurrentStep] = React.useState(0);
   let [isPlaying, setIsPlaying] = React.useState(false);
-  let [setSoundOn, soundOn] = T
-  
+
   let [subdivisions, setSubdivisions] = React.useState(4);
   let [ready, setReady] = React.useState(false);
 
@@ -41,9 +44,6 @@ const App = () => {
 
   // RANDOMIZE
   let [jitterAmount, setJitterAmount] = React.useState(2);
-
-  let [sequence, setSequence] = React.useState();
-  let synth;
 
   /*
     set up keybindings
@@ -136,7 +136,7 @@ const App = () => {
     insert new measures 
   */
   React.useLayoutEffect(() => {
-    console.log('numbars', numBars)
+    console.log("numbars", numBars);
     if (numBars > melody.length) {
       let newMeasure = [];
 
@@ -163,7 +163,7 @@ const App = () => {
         // [NOTE ON, NOTE, VELOCITY]
         activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
         setCurrentStep(prev => (prev = (prev + 1) % (numBars * 4)));
-        // synth.triggerAttackRelease(note, 0.1, time);
+        synth.triggerAttackRelease(note, 0.1, time);
       };
 
       if (sequence) {
@@ -248,54 +248,57 @@ const App = () => {
       )
     );
   };
-  
-  const getNoteDistance = (a,b) => {
+
+  const getNoteDistance = (a, b) => {
     let result = b - a;
-    if(result%12===0) a = 0;                
-    
-    if(Math.abs(result) >= 6) result = (12 - result) * -1;
-    
+    if (result % 12 === 0) a = 0;
+
+    if (Math.abs(result) >= 6) result = (12 - result) * -1;
+
     return result;
-  }
-  
+  };
+
   const handleApplyKey = e => {
     console.log("applying key", melodyKey);
     let major_consonance = [0, 2, 4, 5, 7, 9, 11];
     let minor_consonance = [0, 2, 3, 5, 7, 8, 10]; // 11 for harmonic minor
-    
+
     let base_octave = 4;
-    
+
     let keyScale = major_consonance.map(e => {
-      return Tone.Frequency(`${melodyKey}${base_octave}`).transpose(e).toNote();
+      return Tone.Frequency(`${melodyKey}${base_octave}`)
+        .transpose(e)
+        .toNote();
     });
-      
+
     setMelody(
       melody.map((measure, m_i) =>
         measure.map((beat, b_i) =>
           beat.map((voice, v_i) => ({
             ...Object.keys(voice).map((n, n_i) => {
               let note = voice[n];
-                     
+
               let distances = keyScale.map(val => {
                 let midi_note = Tone.Frequency(note).toMidi();
                 let midi_keynote = Tone.Frequency(val).toMidi();
                 // adjust to same octave
                 return getNoteDistance(midi_note, midi_keynote);
-              })
-              
+              });
+
               let a = 12;
-              distances.forEach((d,i) => {    
-                if(Math.abs(d) <= Math.abs(a)) a = d                
-              })
-             
-              return Tone.Frequency(note).transpose(a).toNote();
+              distances.forEach((d, i) => {
+                if (Math.abs(d) <= Math.abs(a)) a = d;
+              });
+
+              return Tone.Frequency(note)
+                .transpose(a)
+                .toNote();
             })
           }))
         )
       )
     );
-    
-  }
+  };
 
   const handleApplyArc = e => {
     console.log("applying arc");
@@ -307,7 +310,7 @@ const App = () => {
           beat.map((voice, v_i) => ({
             ...Object.keys(voice).map((n, n_i) => {
               let note = voice[n];
-              let arc = Math.sin(step*arcFrequency);
+              let arc = Math.sin(step * arcFrequency);
               arc = Math.round(arc);
               arc *= arcAmplitude;
               console.log("arc", arc);
@@ -335,9 +338,9 @@ const App = () => {
       )
     );
   };
-  
-  const handleToggleSoundOn = e => setSoundOn(prev => !prev)
-  
+
+  const handleToggleSoundOn = e => setSoundOn(prev => !prev);
+
   const handleArcFrequencyChange = e => setArcFrequency(e.target.value);
   const handleArcAmplitudeChange = e => setArcAmplitude(e.target.value);
   const handleArcOffsetChange = e => setArcOffset(e.target.value);
@@ -380,10 +383,10 @@ const App = () => {
         onApplyKey={handleApplyKey}
         onApplyArc={handleApplyArc}
         onResetMelody={handleResetMelody}
-        onChangeMelodyKey={handleChangeMelodyKey}        
+        onChangeMelodyKey={handleChangeMelodyKey}
         onToggleSoundOn={handleToggleSoundOn}
         soundOn={soundOn}
-        />
+      />
       <MusicStaff
         melody={melody}
         onNoteChange={handleNoteChange}

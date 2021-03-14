@@ -19,6 +19,8 @@ const Settings = props => {
   function toggleSettings() {
     setExpanded(prev => !prev);
   }
+  
+  console.log(props.soundOn)
 
   return (
     <div className="SETTINGS" style={{ width: expanded ? "300px" : "0%" }}>
