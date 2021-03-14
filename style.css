@@ -32,11 +32,14 @@ body,
   display: flex;
   justify-content: flex-end;
   align-items: center;
+/*   align */
   -webkit-transition: width 1s ease-in-out;
   -moz-transition: width 1s ease-in-out;
   -o-transition: width 1s ease-in-out;
   transition: width 1s ease-in-out;
   z-index: 2;
+  
+  overflow-y: overlay;
 }
 
 .toggleSettings {
@@ -58,6 +61,8 @@ body,
   box-sizing: border-box;
   align-content: stretch;
   z-index: 2;
+  padding-right: 25px;
+  align-self: start;
 }
 
 .settingsInner label {
@@ -102,9 +107,11 @@ body,
   display: flex;
   margin: 5px 0px;
   width: 100%;
+/*   max-width: 300px; */
   flex-flow: column;
   border: 1px groove #602500;
   padding: 10px;
+  
 }
 
 .inputSection h3,

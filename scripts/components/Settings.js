@@ -65,7 +65,7 @@ const Settings = props => {
               <option value="A#">A#</option>
               <option value="B">B</option>
             </select>
-            <button onClick={props.onApplyKey}>apply key</button>
+            <button onClick={props.onApplyKey}>nudge to key</button>
           </div>
 
           <div className="inputRow">
