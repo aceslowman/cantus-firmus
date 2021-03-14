@@ -283,16 +283,30 @@ const App = () => {
               
               let a = 12;
               distances.forEach((d,i) => {    
-                console.log('d',d % 12)
-                // if(Math.abs(d) <= Math.abs(a)) {
-                //   a = d;
+                console.log('d',d)
+                
+                
+                if(Math.abs(d) > 6) d = 12 - d * -1;
+                
+                // console.log('new d ',d % 6)
+                
+                
+                if(d % 12 <= a) {
+                  a = d;
+                }
+                
+                // if(Math.abs(d) > 6) {
+                //   if(12 - Math.abs(d) <= Math.abs(a)) {
+                //     console.log('new d', 12 - d)
+                //     a = 12 - d;
+                //   }
+                // }else{
+                //   if(Math.abs(d) <= Math.abs(a)) {
+                //     a = d;
+                //   }
                 // }
                 
-                if(d > 6) {
-                  if(Math.abs(d) <= Math.abs(a)) {
-                    a = d;
-                  }
-                }
+                console.log('new a', a)
                 
                 
                 // if((12 - Math.abs(d)) <= Math.abs(a)) {
