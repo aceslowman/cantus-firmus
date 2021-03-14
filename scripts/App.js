@@ -259,13 +259,28 @@ const App = () => {
           beat.map((voice, v_i) => ({
             ...Object.keys(voice).map((n, n_i) => {
               let note = voice[n];
-              let shift = null;
-              
+              let midi_note = Tone.Frequency(note).toMidi();
               console.log('note in midi form', Tone.Frequency(note).toMidi())
               
-              keyScale.forEach(e=>{
-                
+              let distances = keyScale.map(val => {
+                let midi_keynote = Tone.Frequency(val).toMidi();
+                return midi_keynote - midi_note;
               })
+              console.log('distances',distances)
+              let shift = Math.min(...distances);
+              
+              // let shift = keyScale.reduce((acc,val)=>{
+              //   let midi_keynote = Tone.Frequency(val).toMidi()
+              //   if(midi_note - midi_keynote < acc) {
+              //     return midi_note - midi_keynote;
+              //   } else {
+              //     return acc;
+              //   }                
+              // })
+              
+              
+              // Tone.Frequency(shift,'midi').toNote()
+              console.log('shift',shift)
               
               return Tone.Frequency(note)
                 .transpose(shift)
