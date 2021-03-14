@@ -272,14 +272,16 @@ const App = () => {
               let closest = 12;
               distances.forEach(key_note => {
 //                 console.log('ch',Math.abs(key_note))
-//                 if(Math.abs(key_note - midi_note) < Math.abs(closest)) {
+                if(Math.abs(key_note - midi_note) < Math.abs(closest)) {
 //                   closest = key_note - midi_note;
-//                 } else {
+                } else {
                   
-//                 }
+                }
                 
                 
               })
+              
+              distances.indexOf(Math.min())
               
               console.log('closest', closest)
               let shift;
