@@ -138,16 +138,3 @@ body,
   margin: 15%;
 }
 
-.tempo-marker {
-  width: auto;
-  align-self: start;
-  margin: 0px !important;
-}
-
-.midiLog table {
-  width: 100%;
-}
-
-.midiLog table tr:nth-child(odd) {
-  background-color: #ccc;
-}
