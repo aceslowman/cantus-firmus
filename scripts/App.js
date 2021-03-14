@@ -140,13 +140,13 @@ const App = () => {
       }
 
       setMelody(prev => [...prev, newMeasure]);
-    } else if (numBars < melody.length && numBars > 0) {
+    } else if (numBars <= melody.length && numBars > 0) {
       setMelody(prev => {
         prev.splice(-1, 1);
         return prev;
       });
     }
-  }, [numBars, melody]);
+  }, [numBars, melody, setMelody]);
 
   /* create and update melody */
   React.useEffect(() => {
@@ -243,7 +243,6 @@ const App = () => {
   };
   
   const getNoteDistance = (a,b) => {
-    console.log(`distance between ${Tone.Frequency(a,'midi').toNote()} and ${Tone.Frequency(b,'midi').toNote()}`, b - a)
     let result = b - a;
     if(result%12===0) a = 0;                
     

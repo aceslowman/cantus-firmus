@@ -101,6 +101,8 @@ body,
   display: flex;
   flex-flow: column;
   align-self: flex-end;
+  
+  width: 48%;
 }
 
 .inputSection {

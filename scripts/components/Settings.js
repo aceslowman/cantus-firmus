@@ -24,62 +24,70 @@ const Settings = props => {
     <div className="SETTINGS" style={{ width: expanded ? "300px" : "0%" }}>
       <div className="settingsInner">
         <InputPanel title="basic">
-          <label>number of bars</label>
-          <input
-            onChange={props.onNumBarsChange}
-            className="numBarsInput"
-            type="number"
-            step="1"
-            value={props.numBars}
-          />
-
-          <label>tempo</label>
-          <input
-            onChange={props.onBPMChange}
-            className="tempoInput"
-            type="number"
-            step="1"
-            value={props.bpm}
-          />
+          <div className="inputRow">
+            <div className="inputGroup">
+              <label>number of bars</label>
+              <input
+                onChange={props.onNumBarsChange}
+                className="numBarsInput"
+                type="number"
+                step="1"
+                value={props.numBars}
+              />
+            </div>
+            <div className="inputGroup">
+              <label>tempo</label>
+              <input
+                onChange={props.onBPMChange}
+                className="tempoInput"
+                type="number"
+                step="1"
+                value={props.bpm}
+              />
+            </div>
+          </div>
           <br />
           <button onClick={props.onResetMelody}>reset melody</button>
         </InputPanel>
         <InputPanel title="generate">
           <div className="inputRow">
-            <label htmlFor="keyselect">key</label>
-            <select
-              onChange={props.onChangeMelodyKey}
-              id="keyselect"
-              value={props.melodyKey}
-            >
-              <option value="C">C</option>
-              <option value="C#">C#</option>
-              <option value="D">D</option>
-              <option value="D#">D#</option>
-              <option value="E">E</option>
-              <option value="F">F</option>
-              <option value="F#">F#</option>
-              <option value="G">G</option>
-              <option value="G#">G#</option>
-              <option value="A">A</option>
-              <option value="A#">A#</option>
-              <option value="B">B</option>
-            </select>
-            <button onClick={props.onApplyKey}>nudge to key</button>
+            <div className="inputGroup">
+              <label htmlFor="keyselect">key</label>
+              <select
+                id="keyselect"
+                onChange={props.onChangeMelodyKey}
+                value={props.melodyKey}
+              >
+                <option value="C">C</option>
+                <option value="C#">C#</option>
+                <option value="D">D</option>
+                <option value="D#">D#</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="F#">F#</option>
+                <option value="G">G</option>
+                <option value="G#">G#</option>
+                <option value="A">A</option>
+                <option value="A#">A#</option>
+                <option value="B">B</option>
+              </select>
+            </div>
+
+            <div className="inputGroup">
+              <label htmlFor="modeselect">mode</label>
+              <select id="modeselect">
+                <option value="major">major</option>
+                <option value="naturalminor">natural minor</option>
+                <option value="harmonicminor">harmonic minor</option>
+              </select>
+            </div>
           </div>
 
-          <div className="inputRow">
-            <label htmlFor="modeselect">mode</label>
-            <select id="modeselect">
-              <option value="major">major</option>
-              <option value="naturalminor">natural minor</option>
-              <option value="harmonicminor">harmonic minor</option>
-            </select>
-          </div>
+          <button onClick={props.onApplyKey}>nudge to key</button>
 
           <InputPanel title="arc">
             <div className="inputRow">
-              <div className="inputGroup" style={{ width: "48%" }}>
+              <div className="inputGroup">
                 <label htmlFor="arcFrequency">frequency</label>
                 <input
                   onChange={props.onArcFrequencyChange}
@@ -90,7 +98,7 @@ const Settings = props => {
                 />
               </div>
 
-              <div className="inputGroup" style={{ width: "48%" }}>
+              <div className="inputGroup">
                 <label htmlFor="arcAmplitude">amplitude</label>
                 <input
                   onChange={props.onArcAmplitudeChange}
@@ -102,7 +110,7 @@ const Settings = props => {
               </div>
             </div>
             <div className="inputRow">
-              <div className="inputGroup" style={{ width: "48%" }}>
+              <div className="inputGroup">
                 <label htmlFor="arcOffset">offset</label>
                 <input
                   onChange={props.onArcOffsetChange}
@@ -112,25 +120,28 @@ const Settings = props => {
                   value={props.arcOffset}
                 />
               </div>
-              <div className="inputGroup" style={{ width: "48%" }}>
+              <div className="inputGroup">
                 <button onClick={props.onApplyArc}>apply arc</button>
               </div>
             </div>
           </InputPanel>
 
           <InputPanel title="randomize">
-            <label htmlFor="jitter_amount">amount</label>
             <div className="inputRow">
-              <input
-                id="jitter_amount"
-                onChange={props.onJitterAmountChange}
-                className="jitterAmountInput"
-                type="number"
-                step="1"
-                value={props.jitterAmount}
-              />
-
-              <button onClick={props.onRandomJitter}>random jitter</button>
+              <div className="inputGroup">
+                <label htmlFor="jitter_amount">amount</label>
+                  <input
+                    id="jitter_amount"
+                    onChange={props.onJitterAmountChange}
+                    className="jitterAmountInput"
+                    type="number"
+                    step="1"
+                    value={props.jitterAmount}
+                  />
+              </div>
+              <div className="inputGroup">
+                <button onClick={props.onRandomJitter}>random jitter</button>
+              </div>
             </div>
           </InputPanel>
         </InputPanel>
