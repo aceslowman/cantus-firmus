@@ -140,7 +140,7 @@ const App = () => {
       }
 
       setMelody(prev => [...prev, newMeasure]);
-    } else if (numBars <= melody.length && numBars > 0) {
+    } else if (numBars < melody.length && numBars > 0) {
       setMelody(prev => {
         prev.splice(-1, 1);
         return prev;
