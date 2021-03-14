@@ -52,7 +52,7 @@ body,
   background-color: #FAEBD7;
   padding: 15px;
   display: flex;
-  flex-flow: column;
+  flex-flow: column wrap;
   color: #602500;
   width: 100%;
   box-sizing: border-box;
