@@ -258,6 +258,9 @@ const App = () => {
     
       distance from either 0 or 12
     */
+    a = Tone.Frequency(a).toMidi();
+    b = Tone.Frequency(b).toMidi();
+    
     let result = b - a;
     if (result % 12 === 0) a = 0;
 
@@ -300,11 +303,9 @@ const App = () => {
             ...Object.keys(voice).map((n, n_i) => {
               let note = voice[n];
 
-              let distances = keyScale.map(val => {
-                let midi_note = Tone.Frequency(note).toMidi();
-                let midi_keynote = Tone.Frequency(val).toMidi();
+              let distances = keyScale.map(val => {                
                 // adjust to same octave
-                return getNoteDistance(midi_note, midi_keynote);
+                return getNoteDistance(note, val);
               });
 
               let a = 12;
