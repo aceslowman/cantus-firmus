@@ -1,20 +1,19 @@
-const InputPanel = props => {
-  return (
-    <div
-      style={{
-        display: "flex",
-        margin: "5px 0px",
-        width: "100%",
-        flexFlow: "column",
-        border: "1px groove #602500",
-        padding: "10px"
-      }}
-    >
-      <h3 style={{ margin: "0px 0px 8px 0px" }}>{props.title}</h3>
-      {props.children}
-    </div>
-  );
-};
+/* global Tone, ReactDOM, React */
+const InputPanel = props => (
+  <div
+    style={{
+      display: "flex",
+      margin: "5px 0px",
+      width: "100%",
+      flexFlow: "column",
+      border: "1px groove #602500",
+      padding: "10px"
+    }}
+  >
+    <h3 style={{ margin: "0px 0px 8px 0px" }}>{props.title}</h3>
+    {props.children}
+  </div>
+);
 
 const InputGroup = props => (
   <div
@@ -44,7 +43,6 @@ const InputRow = props => (
   </div>
 );
 
-/* global Tone, ReactDOM, React */
 const Settings = props => {
   let [expanded, setExpanded] = React.useState();
 
@@ -60,7 +58,6 @@ const Settings = props => {
   return (
     <div className="SETTINGS" style={{ width: expanded ? "300px" : "0%" }}>
       <div className="settingsInner">
-        
         <InputPanel title="basic">
           <InputRow>
             <InputGroup>
@@ -86,7 +83,7 @@ const Settings = props => {
           </InputRow>
           <button onClick={props.onResetMelody}>reset melody</button>
         </InputPanel>
-        
+
         <InputPanel title="generate">
           <InputRow>
             <InputGroup>
@@ -112,8 +109,11 @@ const Settings = props => {
             </InputGroup>
             <InputGroup>
               <label htmlFor="modeselect">mode</label>
-              <select id="modeselect" onChange={props.onChangeMelodyMode}
-                value={props.melodyMode}>
+              <select
+                id="modeselect"
+                onChange={props.onChangeMelodyMode}
+                value={props.melodyMode}
+              >
                 <option value="0">Ionian (major)</option>
                 <option value="1">Dorian</option>
                 <option value="2">Phrygian</option>
@@ -174,7 +174,7 @@ const Settings = props => {
                 <label htmlFor="jitter_amount">amount</label>
                 <input
                   id="jitter_amount"
-                  onChange={props.onJitterAmountChange}                  
+                  onChange={props.onJitterAmountChange}
                   type="number"
                   step="1"
                   value={props.jitterAmount}
@@ -241,8 +241,14 @@ const Settings = props => {
             {props.isPlaying ? "stop" : "play"}
           </button>
         </InputPanel>
-        <div className="credits">cantus firmus by <a href="https://linktr.ee/aceslowman" target="_blank">aceslowman</a> 2021</div>
-      </div>      
+        <div className="credits">
+          cantus firmus by{" "}
+          <a href="https://linktr.ee/aceslowman" target="_blank">
+            aceslowman
+          </a>{" "}
+          2021
+        </div>
+      </div>
       <div className="toggleSettings" onClick={toggleSettings}></div>
     </div>
   );
