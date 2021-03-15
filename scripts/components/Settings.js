@@ -246,7 +246,7 @@ const Settings = props => {
           <a href="https://linktr.ee/aceslowman" target="_blank">
             aceslowman
           </a>{" "}
-          2021
+           &nbsp; 2021
         </div>
       </div>
       <div className="toggleSettings" onClick={toggleSettings}></div>

@@ -333,7 +333,6 @@ const App = () => {
               let arc = Math.sin(step * arcFrequency);
               arc = Math.round(arc);
               arc *= arcAmplitude;
-              console.log("arc", arc);
               step++;
               return Tone.Frequency(note)
                 .transpose(arc)
