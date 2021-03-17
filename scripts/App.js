@@ -166,22 +166,24 @@ const App = () => {
         setCurrentStep(prev => (prev = (prev + 1) % (numBars * 4)));
         if (soundOn) synth.triggerAttackRelease(note, 0.1, time);
       };
+      
+      if(isPlaying) Tone.Transport.cancel();
 
       if (sequence) {
-        Tone.Transport.cancel();
+        
         sequence.events = melody;
         sequence.callback = seqCallback;
       } else {
         setSequence(seq => new Tone.Sequence(seqCallback, melody, "1m"));
       }
 
-      Tone.Transport.start();
+      // Tone.Transport.start();
     }
   }, [melody, ready, sequence, numBars, setCurrentStep, soundOn]);
   // NOTE: adding activeMidiOutput to the group causes way too many calls
 
   function handleLoopToggle(e) {
-    if (sequence) sequence.loop.value = !loop;
+    if (sequence) sequence.loop = !loop;
     setLoop(prev => !prev);
   }
 
@@ -219,13 +221,10 @@ const App = () => {
     if (isPlaying) {
       sequence.stop();
       Tone.Transport.cancel();
-      // Tone.Transport.pause();
       setIsPlaying(false);
     } else {
       sequence.start();
-      setCurrentStep(-1)
-      // can I resume sequence?
-      // Tone.Transport.resume();
+      setCurrentStep(-1);
       Tone.Transport.start();
       setIsPlaying(true);
     }
