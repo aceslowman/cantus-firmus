@@ -164,23 +164,27 @@ const App = () => {
       const seqCallback = (time, voice) => {
         let note = voice[0]; // send first note of voicing        
         activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
-        setCurrentStep(Math.floor(sequence.progress * sequence.length));
+        let step = Math.floor(sequence.progress * sequence.length)
+        setCurrentStep(step);
+        if(!loop && step === sequence.length-1) {
+          sequence.stop()
+        }
         if (soundOn) synth.triggerAttackRelease(note, 0.1, time);
       };      
 
       if (sequence) {
         sequence.events = melody;
         sequence.callback = seqCallback;
-        sequence.loop = loop;
+        // sequence.loop = loop;
       } else {
         let newSequence = new Tone.Sequence(seqCallback, melody, "1m");
-        newSequence.loop = loop;
+        // newSequence.loop = loop;
         setSequence(newSequence);
       }
       
       
     }
-  }, [melody, ready, sequence, numBars, setCurrentStep, soundOn]);
+  }, [melody, ready, sequence, numBars, setCurrentStep, soundOn, loop]);
   // NOTE: adding activeMidiOutput to the group causes way too many calls
 
   function handleLoopToggle(e) {
