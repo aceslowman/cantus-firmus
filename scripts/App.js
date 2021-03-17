@@ -226,7 +226,9 @@ const App = () => {
       sequence.stop();      
       setIsPlaying(false);
     } else {      
-      sequence.cancel();
+      // sequence.cancel();
+      
+      Tone.Transport.cancel();
       sequence.start();
       Tone.Transport.start();
       setIsPlaying(true);
