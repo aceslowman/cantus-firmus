@@ -156,31 +156,26 @@ const App = () => {
 
   /* 
     create and update melody 
+    
+    // [NOTE ON, NOTE, VELOCITY]
   */
   React.useEffect(() => {
     if (ready) {
       const seqCallback = (time, voice) => {
-        let note = voice[0]; // send first note of voicing
-        // [NOTE ON, NOTE, VELOCITY]
+        let note = voice[0]; // send first note of voicing        
         activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
-        setCurrentStep(prev => (prev = (prev + 1) % (numBars * 4)));
+        // setCurrentStep(prev => (prev = (prev + 1) % (numBars * 4)));
+        console.log('check here', sequence.progress)
+        setCurrentStep()
         if (soundOn) synth.triggerAttackRelease(note, 0.1, time);
-      };
-      
-      
+      };      
 
       if (sequence) {
-        Tone.Transport.cancel();
-        // sequence.stop();
-        sequence.cancel();
         sequence.events = melody;
         sequence.callback = seqCallback;
       } else {
         setSequence(seq => new Tone.Sequence(seqCallback, melody, "1m"));
       }
-
-//       can't restart if this is here
-      // Tone.Transport.start();
     }
   }, [melody, ready, sequence, numBars, setCurrentStep, soundOn]);
   // NOTE: adding activeMidiOutput to the group causes way too many calls
