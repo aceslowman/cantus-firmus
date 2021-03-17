@@ -219,9 +219,13 @@ const App = () => {
     if (isPlaying) {
       sequence.stop();
       Tone.Transport.cancel();
+      // Tone.Transport.pause();
       setIsPlaying(false);
     } else {
       sequence.start();
+      setCurrentStep(-1)
+      // can I resume sequence?
+      // Tone.Transport.resume();
       Tone.Transport.start();
       setIsPlaying(true);
     }
