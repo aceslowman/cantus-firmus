@@ -166,25 +166,22 @@ const App = () => {
         activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
         let step = Math.floor(sequence.progress * sequence.length)
         setCurrentStep(step);
-        if(!loop && step === sequence.length-1) {
-          sequence.stop()
-        }
         if (soundOn) synth.triggerAttackRelease(note, 0.1, time);
       };      
 
       if (sequence) {
         sequence.events = melody;
         sequence.callback = seqCallback;
-        // sequence.loop = loop;
+        sequence.loop = loop ? true : 1;
       } else {
         let newSequence = new Tone.Sequence(seqCallback, melody, "1m");
-        // newSequence.loop = loop;
+        newSequence.loop = loop ? true : 1;
         setSequence(newSequence);
       }
       
       
     }
-  }, [melody, ready, sequence, numBars, setCurrentStep, soundOn, loop]);
+  }, [melody, ready, sequence, numBars, setCurrentStep, soundOn, loop, isPlaying, setIsPlaying, handleTogglePlay]);
   // NOTE: adding activeMidiOutput to the group causes way too many calls
 
   function handleLoopToggle(e) {
@@ -224,10 +221,12 @@ const App = () => {
 
   const handleTogglePlay = e => {
     if (isPlaying) {
-      sequence.stop();
       Tone.Transport.cancel();
+      sequence.cancel();
+      sequence.stop();      
       setIsPlaying(false);
-    } else {
+    } else {      
+      sequence.cancel();
       sequence.start();
       Tone.Transport.start();
       setIsPlaying(true);
