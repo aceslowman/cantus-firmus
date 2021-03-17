@@ -33,7 +33,7 @@ const App = () => {
   let [activeMidiOutput, setActiveMidiOutput] = React.useState(null);
 
   let [selectedNote, setSelectedNote] = React.useState(null);
-  let [currentStep, setCurrentStep] = React.useState(0);
+  let [currentStep, setCurrentStep] = React.useState(-1);
   let [isPlaying, setIsPlaying] = React.useState(false);
 
   let [subdivisions, setSubdivisions] = React.useState(4);
@@ -218,9 +218,11 @@ const App = () => {
   const handleTogglePlay = e => {
     if (isPlaying) {
       sequence.stop();
+      Tone.Transport.cancel();
       setIsPlaying(false);
     } else {
       sequence.start();
+      Tone.Transport.start();
       setIsPlaying(true);
     }
   };
