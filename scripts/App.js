@@ -167,16 +167,19 @@ const App = () => {
         if (soundOn) synth.triggerAttackRelease(note, 0.1, time);
       };
       
-      if(isPlaying) Tone.Transport.cancel();
+      
 
       if (sequence) {
-        
+        Tone.Transport.cancel();
+        // sequence.stop();
+        sequence.cancel();
         sequence.events = melody;
         sequence.callback = seqCallback;
       } else {
         setSequence(seq => new Tone.Sequence(seqCallback, melody, "1m"));
       }
 
+//       can't restart if this is here
       // Tone.Transport.start();
     }
   }, [melody, ready, sequence, numBars, setCurrentStep, soundOn]);
