@@ -33,7 +33,7 @@ const App = () => {
   let [activeMidiOutput, setActiveMidiOutput] = React.useState(null);
 
   let [selectedNote, setSelectedNote] = React.useState(null);
-  let [currentStep, setCurrentStep] = React.useState(-1);
+  let [currentStep, setCurrentStep] = React.useState(0);
   let [isPlaying, setIsPlaying] = React.useState(false);
 
   let [subdivisions, setSubdivisions] = React.useState(4);
@@ -164,18 +164,21 @@ const App = () => {
       const seqCallback = (time, voice) => {
         let note = voice[0]; // send first note of voicing        
         activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
-        // setCurrentStep(prev => (prev = (prev + 1) % (numBars * 4)));
-        console.log('check here', sequence.progress)
-        setCurrentStep()
+        setCurrentStep(Math.floor(sequence.progress * sequence.length));
         if (soundOn) synth.triggerAttackRelease(note, 0.1, time);
       };      
 
       if (sequence) {
         sequence.events = melody;
         sequence.callback = seqCallback;
+        sequence.loop = loop;
       } else {
-        setSequence(seq => new Tone.Sequence(seqCallback, melody, "1m"));
+        let newSequence = new Tone.Sequence(seqCallback, melody, "1m");
+        newSequence.loop = loop;
+        setSequence(newSequence);
       }
+      
+      
     }
   }, [melody, ready, sequence, numBars, setCurrentStep, soundOn]);
   // NOTE: adding activeMidiOutput to the group causes way too many calls
@@ -222,7 +225,6 @@ const App = () => {
       setIsPlaying(false);
     } else {
       sequence.start();
-      setCurrentStep(-1);
       Tone.Transport.start();
       setIsPlaying(true);
     }

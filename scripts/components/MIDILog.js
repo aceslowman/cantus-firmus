@@ -1,6 +1,6 @@
 /* global Tone, ReactDOM, React */
 const MIDILog = props => {
-  const [enable, setEnable] = React.useState(true);
+  const [enable, setEnable] = React.useState(false);
   const [log, setLog] = React.useState([]);
   const tail_length = 10; // limit length of log
 
