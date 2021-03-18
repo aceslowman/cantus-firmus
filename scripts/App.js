@@ -370,9 +370,7 @@ const App = () => {
   };
 
   const handleChangeMelodyMode = e => setMelodyMode(e.target.value);
-
   const handleToggleSoundOn = e => setSoundOn(prev => !prev);
-
   const handleArcFrequencyChange = e => setArcFrequency(e.target.value);
   const handleArcAmplitudeChange = e => setArcAmplitude(e.target.value);
   const handleArcOffsetChange = e => setArcOffset(e.target.value);
