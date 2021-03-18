@@ -231,12 +231,11 @@ const App = () => {
   const handleTogglePlay = e => {
     if (isPlaying) {
       Tone.Transport.cancel();
+      Tone.Transport.stop();
       sequence.cancel();
       sequence.stop();
       setIsPlaying(false);
     } else {
-      // sequence.cancel();
-
       Tone.Transport.cancel();
       sequence.start();
       Tone.Transport.start();
