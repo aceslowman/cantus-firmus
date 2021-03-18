@@ -162,12 +162,11 @@ const App = () => {
   React.useEffect(() => {
     if (ready) {
       const seqCallback = (time, voice) => {
-        let note = voice[0]; // send first note of voicing        
+        let note = voice[0]; // send first note of voicing
         activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
-        let step = Math.floor(sequence.progress * sequence.length)
-        setCurrentStep(step);
+        setCurrentStep(Math.floor(sequence.progress * sequence.length));
         if (soundOn) synth.triggerAttackRelease(note, 0.1, time);
-      };      
+      };
 
       if (sequence) {
         sequence.events = melody;
@@ -178,14 +177,24 @@ const App = () => {
         newSequence.loop = loop ? true : 1;
         setSequence(newSequence);
       }
-      
-      
     }
-  }, [melody, ready, sequence, numBars, setCurrentStep, soundOn, loop, isPlaying, setIsPlaying, handleTogglePlay]);
+  }, [
+    melody,
+    ready,
+    sequence,
+    setSequence,
+    numBars,
+    setCurrentStep,
+    soundOn,
+    loop,
+    isPlaying,
+    setIsPlaying,
+    handleTogglePlay
+  ]);
   // NOTE: adding activeMidiOutput to the group causes way too many calls
 
   function handleLoopToggle(e) {
-    if (sequence) sequence.loop = !loop;
+    // if (sequence) sequence.loop = !loop;
     setLoop(prev => !prev);
   }
 
@@ -223,11 +232,11 @@ const App = () => {
     if (isPlaying) {
       Tone.Transport.cancel();
       sequence.cancel();
-      sequence.stop();      
+      sequence.stop();
       setIsPlaying(false);
-    } else {      
+    } else {
       // sequence.cancel();
-      
+
       Tone.Transport.cancel();
       sequence.start();
       Tone.Transport.start();
@@ -270,7 +279,7 @@ const App = () => {
     */
     a = Tone.Frequency(a).toMidi();
     b = Tone.Frequency(b).toMidi();
-    
+
     let result = b - a;
     if (result % 12 === 0) a = 0;
 
@@ -313,7 +322,7 @@ const App = () => {
             ...Object.keys(voice).map((n, n_i) => {
               let note = voice[n];
 
-              let distances = keyScale.map(val => {                
+              let distances = keyScale.map(val => {
                 // adjust to same octave
                 return getNoteDistance(note, val);
               });
