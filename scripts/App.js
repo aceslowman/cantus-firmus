@@ -192,6 +192,32 @@ const App = () => {
     handleTogglePlay
   ]);
   // NOTE: adding activeMidiOutput to the group causes way too many calls
+  
+  
+  // TODO: DOING: 
+  React.useLayoutEffect(()=> {
+    console.log('input changed...');
+    const handleMidiIn = m => {
+      console.log('midi incoming!', m)
+      // check for notes coming in on channel 2
+      
+      let [noteon, currentNote, velocity] = m.data;
+      currentNote = Tone.Frequency(currentNote, "midi").toNote();
+      console.log('[noteon, currentNote, velocity]', [noteon, currentNote, velocity])
+      
+      // if this matches the same kind of note sent from ditdah
+      if(noteon === 0x91) {
+        console.log('hey')
+        if(syncRhythm) setCurrentStep(prev => )
+      }
+    }
+    
+    if (activeMidiInput) {
+      activeMidiInput.addEventListener("midimessage", handleMidiIn);
+      return () =>
+        activeMidiInput.removeEventListener("midimessage", handleMidiIn);
+    }
+  }, [activeMidiInput])
 
   function handleLoopToggle(e) {
     // if (sequence) sequence.loop = !loop;
