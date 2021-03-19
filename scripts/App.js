@@ -199,6 +199,13 @@ const App = () => {
   // TODO: DOING: 
   React.useLayoutEffect(()=> {
     console.log('input changed...');
+    const getNote = step => {
+      let currentMeasure = Math.floor(currentStep / 4) % numBars;
+      let currentBeat = currentStep % 4;
+      
+      return melody[currentMeasure][currentBeat];
+    }
+    
     const handleMidiIn = m => {
       console.log('midi incoming!', m)
       // check for notes coming in on channel 2
@@ -211,6 +218,15 @@ const App = () => {
       if(noteon === 0x91) {
         console.log('hey')
         // if(syncRhythm) setCurrentStep(prev => )
+        if(syncRhythm) {
+          // WORKING WORKING WORKING ON THIS
+          // activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
+          // setCurrentStep(Math.floor(sequence.progress * sequence.length));
+          let note = getNote(currentStep);
+          if (soundOn) synth.triggerAttackRelease(note[0][0], 0.1);
+          // HEADS UP this is out of sync
+          setCurrentStep(prev => (prev + 1) % (numBars * 4));
+        }
       }
     }
     
@@ -219,7 +235,7 @@ const App = () => {
       return () =>
         activeMidiInput.removeEventListener("midimessage", handleMidiIn);
     }
-  }, [activeMidiInput])
+  }, [activeMidiInput, melody, currentStep, setCurrentStep, soundOn, syncRhythm])
 
   function handleLoopToggle(e) {
     // if (sequence) sequence.loop = !loop;
