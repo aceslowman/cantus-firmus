@@ -207,6 +207,17 @@ const Settings = props => {
           </InputRow>
 
           <MIDILog device={props.activeMidiInput} />
+
+          <InputGroup>
+            <label>
+              sync rhythm to incoming midi (ch2))
+              <input
+                onChange={props.onToggleSyncRhythm}
+                checked={props.syncRhythm}
+                type="checkbox"
+              />
+            </label>
+          </InputGroup>
         </InputPanel>
         <InputPanel title="playback">
           <InputRow>
@@ -243,7 +254,7 @@ const Settings = props => {
         </InputPanel>
         <div className="credits">
           <a href="https://github.com/aceslowman/cantus-firmus" target="_blank">
-            <strong>cantus firmus</strong>           
+            <strong>cantus firmus</strong>
           </a>
           &nbsp;by&nbsp;
           <a href="https://linktr.ee/aceslowman" target="_blank">

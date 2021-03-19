@@ -32,6 +32,8 @@ const App = () => {
   let [activeMidiInput, setActiveMidiInput] = React.useState(null);
   let [activeMidiOutput, setActiveMidiOutput] = React.useState(null);
 
+  let [syncRhythm, setSyncRhythm] = React.useState(false);
+  
   let [selectedNote, setSelectedNote] = React.useState(null);
   let [currentStep, setCurrentStep] = React.useState(0);
   let [isPlaying, setIsPlaying] = React.useState(false);
@@ -208,7 +210,7 @@ const App = () => {
       // if this matches the same kind of note sent from ditdah
       if(noteon === 0x91) {
         console.log('hey')
-        if(syncRhythm) setCurrentStep(prev => )
+        // if(syncRhythm) setCurrentStep(prev => )
       }
     }
     
@@ -416,6 +418,8 @@ const App = () => {
     setActiveMidiInput(midiInputs[e.target.value]);
   const handleMidiOutputChange = e =>
     setActiveMidiOutput(midiOutputs[e.target.value]);
+    
+  const handleToggleSyncRhythm = e => setSyncRhythm(prev => !prev)
 
   return (
     <React.Fragment>
@@ -452,6 +456,8 @@ const App = () => {
         soundOn={soundOn}
         onChangeMelodyMode={handleChangeMelodyMode}
         melodyMode={melodyMode}
+        syncRhythm={syncRhythm}
+        onToggleSyncRhythm={handleToggleSyncRhythm}
       />
       <MusicStaff
         melody={melody}
