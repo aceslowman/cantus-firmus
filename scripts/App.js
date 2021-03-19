@@ -12,17 +12,17 @@ const App = () => {
     process.
   */
   let [melody, setMelody] = React.useState([
-    [[{ 0: "C4" }], [{ 0: "D4" }], [{ 0: "F4" }], [{ 0: "F4" }]],
-    [[{ 0: "G4" }], [{ 0: "A#4" }], [{ 0: "G4" }], [{ 0: "A4" }]],
-    [[{ 0: "A4" }], [{ 0: "G4" }], [{ 0: "F4" }], [{ 0: "B4" }]],
-    [[{ 0: "A4" }], [{ 0: "G4" }], [{ 0: "F4" }], [{ 0: "B4" }]],
+    [[{ 0: "C4" }], [{ 0: "D4" }], [{ 0: "G4" }], [{ 0: "F4" }]],
+    [[{ 0: "G4" }], [{ 0: "A#4" }], [{ 0: "G4" }], [{ 0: "F4" }]],
+    [[{ 0: "G4" }], [{ 0: "C5" }], [{ 0: "A#4" }], [{ 0: "G4" }]],
+    [[{ 0: "D5" }], [{ 0: "G4" }], [{ 0: "F4" }], [{ 0: "G4" }]],
   ]);
 
   let [numBars, setNumBars] = React.useState(4);
   let [loop, setLoop] = React.useState(false);
   let [bpm, setBPM] = React.useState(120);
   let [melodyKey, setMelodyKey] = React.useState("C");
-  let [melodyMode, setMelodyMode] = React.useState(5); // IONIAN
+  let [melodyMode, setMelodyMode] = React.useState(5); // 
 
   let [soundOn, setSoundOn] = React.useState(true);
   let [sequence, setSequence] = React.useState();
@@ -200,7 +200,7 @@ const App = () => {
   
   // TODO: DOING: 
   React.useLayoutEffect(()=> {
-    console.log('input changed...');
+    // console.log('input changed...');
     const getNote = step => {
       let currentMeasure = Math.floor((currentStep+1) / 4) % numBars;
       let currentBeat = ((currentStep+1)) % 4;
@@ -209,15 +209,15 @@ const App = () => {
     }
     
     const handleMidiIn = m => {
-      console.log('midi incoming!', m)
+      // console.log('midi incoming!', m)
       // check for notes coming in on channel 2
       
       let [noteon, currentNote, velocity] = m.data;
       currentNote = Tone.Frequency(currentNote, "midi").toNote();
-      console.log('[noteon, currentNote, velocity]', [noteon, currentNote, velocity])
+      // console.log('[noteon, currentNote, velocity]', [noteon, currentNote, velocity])
       
       // if this matches the same kind of note sent from ditdah
-      if(noteon === 0x91) {
+      if(noteon === 0x91 && synth) {
         if(syncRhythm) {
           // WORKING WORKING WORKING ON THIS
           let note = getNote(currentStep);            
@@ -234,7 +234,7 @@ const App = () => {
       return () =>
         activeMidiInput.removeEventListener("midimessage", handleMidiIn);
     }
-  }, [activeMidiInput, melody, currentStep, setCurrentStep, soundOn, syncRhythm])
+  }, [activeMidiInput, melody, currentStep, setCurrentStep, soundOn, syncRhythm, synth])
 
   function handleLoopToggle(e) {
     // if (sequence) sequence.loop = !loop;
