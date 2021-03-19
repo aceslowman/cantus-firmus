@@ -12,18 +12,19 @@ const App = () => {
     process.
   */
   let [melody, setMelody] = React.useState([
-    [[{ 0: "C4" }], [{ 0: "D4" }], [{ 0: "E4" }], [{ 0: "F#4" }]],
-    [[{ 0: "G4" }], [{ 0: "A#4" }], [{ 0: "G4" }], [{ 0: "B4" }]],
-    [[{ 0: "A#4" }], [{ 0: "G4" }], [{ 0: "F#4" }], [{ 0: "B4" }]]
+    [[{ 0: "C4" }], [{ 0: "D4" }], [{ 0: "F4" }], [{ 0: "F4" }]],
+    [[{ 0: "G4" }], [{ 0: "A#4" }], [{ 0: "G4" }], [{ 0: "A4" }]],
+    [[{ 0: "A4" }], [{ 0: "G4" }], [{ 0: "F4" }], [{ 0: "B4" }]],
+    [[{ 0: "A4" }], [{ 0: "G4" }], [{ 0: "F4" }], [{ 0: "B4" }]],
   ]);
 
-  let [numBars, setNumBars] = React.useState(3);
+  let [numBars, setNumBars] = React.useState(4);
   let [loop, setLoop] = React.useState(false);
   let [bpm, setBPM] = React.useState(120);
-  let [melodyKey, setMelodyKey] = React.useState("G");
-  let [melodyMode, setMelodyMode] = React.useState(0); // IONIAN
+  let [melodyKey, setMelodyKey] = React.useState("C");
+  let [melodyMode, setMelodyMode] = React.useState(5); // IONIAN
 
-  let [soundOn, setSoundOn] = React.useState(false);
+  let [soundOn, setSoundOn] = React.useState(true);
   let [sequence, setSequence] = React.useState();
   let [synth, setSynth] = React.useState();
 
@@ -32,7 +33,7 @@ const App = () => {
   let [activeMidiInput, setActiveMidiInput] = React.useState(null);
   let [activeMidiOutput, setActiveMidiOutput] = React.useState(null);
 
-  let [syncRhythm, setSyncRhythm] = React.useState(false);
+  let [syncRhythm, setSyncRhythm] = React.useState(true);
   
   let [selectedNote, setSelectedNote] = React.useState(null);
   let [currentStep, setCurrentStep] = React.useState(0);
@@ -201,8 +202,8 @@ const App = () => {
   React.useLayoutEffect(()=> {
     console.log('input changed...');
     const getNote = step => {
-      let currentMeasure = Math.floor(currentStep / 4) % numBars;
-      let currentBeat = currentStep % 4;
+      let currentMeasure = Math.floor((currentStep+1) / 4) % numBars;
+      let currentBeat = ((currentStep+1)) % 4;
       
       return melody[currentMeasure][currentBeat];
     }
