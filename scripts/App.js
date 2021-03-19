@@ -162,7 +162,7 @@ const App = () => {
     // [NOTE ON, NOTE, VELOCITY]
   */
   React.useEffect(() => {
-    if (ready) {
+    if (ready && !syncRhythm) {
       const seqCallback = (time, voice) => {
         let note = voice[0]; // send first note of voicing
         activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
@@ -191,7 +191,8 @@ const App = () => {
     loop,
     isPlaying,
     setIsPlaying,
-    handleTogglePlay
+    handleTogglePlay,
+    syncRhythm
   ]);
   // NOTE: adding activeMidiOutput to the group causes way too many calls
   
@@ -216,13 +217,10 @@ const App = () => {
       
       // if this matches the same kind of note sent from ditdah
       if(noteon === 0x91) {
-        console.log('hey')
-        // if(syncRhythm) setCurrentStep(prev => )
         if(syncRhythm) {
           // WORKING WORKING WORKING ON THIS
-          // activeMidiOutput.send([128, Tone.Frequency(note).toMidi(), 41]);
-          // setCurrentStep(Math.floor(sequence.progress * sequence.length));
-          let note = getNote(currentStep);
+          let note = getNote(currentStep);            
+          activeMidiOutput.send([128, Tone.Frequency(note[0][0]).toMidi(), velocity]);
           if (soundOn) synth.triggerAttackRelease(note[0][0], 0.1);
           // HEADS UP this is out of sync
           setCurrentStep(prev => (prev + 1) % (numBars * 4));
